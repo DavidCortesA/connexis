@@ -1,20 +1,27 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { SITE, NAV, cleanPath } from '../data/site';
+import { SITE, NAV, cleanPath, fullAddress, socialLinks } from '../data/site';
 import { services } from '../data/services';
 
 interface Props { variant?: 'default' | 'landing' }
 const { variant = 'default' } = Astro.props;
 const path = cleanPath(Astro.url.pathname);
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+const socials = socialLinks();
 const isActive = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(href + '/'));
 ---
 {variant === 'default' && (
   <div class="topbar" aria-label="Datos de contacto">
     <div class="wrap topbar__in">
-      <span><Icon name="MapPin" size={15} /> {SITE.address.locality}, {SITE.address.regionCode}</span>
+      <a href={mapsUrl} target="_blank" rel="noopener"><Icon name="MapPin" size={15} /> {SITE.address.street.split(',')[0]}, {SITE.address.locality}, {SITE.address.regionCode}<span class="sr-only"> (abre Google Maps)</span></a>
       <a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="topbar"><Icon name="Phone" size={15} /> {SITE.phone}</a>
       <a href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="topbar"><Icon name="Mail" size={15} /> {SITE.email}</a>
+      {socials.length > 0 && (
+        <ul class="topbar__social" aria-label="Redes sociales">
+          {socials.map((s) => <li><a href={s.href} target="_blank" rel="noopener" data-track="click_social" data-track-loc={s.name}><Icon name={s.icon} size={15} label={`ConneXis en ${s.name} (abre en otra pestaña)`} /></a></li>)}
+        </ul>
+      )}
     </div>
   </div>
 )}
@@ -68,6 +75,9 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
   .topbar span, .topbar a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
   .topbar a:hover { color: var(--text); }
   .topbar :global(svg) { color: var(--lime); }
+  .topbar__social { list-style: none; display: flex; gap: 14px; margin-left: auto; }
+  .topbar__social a { display: inline-flex; padding: 4px; }
+  .topbar__social a:hover :global(svg) { color: var(--text); }
   @media (max-width: 899px) { .topbar { display: none; } }
 
   .site-header { position: sticky; top: 0; z-index: 100; background: rgba(10, 13, 16, 0.82); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-bottom: 1px solid transparent; transition: border-color 0.3s; }

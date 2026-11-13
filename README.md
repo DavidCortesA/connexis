@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <img alt="Versión" src="https://img.shields.io/badge/versión-1.0.0-8CD336?style=flat-square" />
+  <img alt="Versión" src="https://img.shields.io/badge/versión-1.1.0-8CD336?style=flat-square" />
   <img alt="Etapa" src="https://img.shields.io/badge/etapa-1%20de%203-5BC8DC?style=flat-square" />
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7-0B1B2E?style=flat-square&logo=astro" />
   <img alt="Motion" src="https://img.shields.io/badge/Motion-14-0B1B2E?style=flat-square" />
@@ -25,7 +25,7 @@
 
 El sitio de ConneXis, construido con **Astro** sobre la *Propuesta 3 · Operación*: fondo carbón con verde lima, fotografía en blanco y negro, radar animado con el isotipo, servicios numerados y animaciones con **Motion**.
 
-Esta versión **1.0.0** cubre la **Etapa 1: Sitio y captación de prospectos**: un sitio renovado, una página por servicio y una landing para Google Ads que convierte visitas en solicitudes. Las etapas 2 y 3 ya están diseñadas en la propuesta y parte de su código está listo pero comentado (ver [Siguientes etapas](#siguientes-etapas)).
+Esta versión **1.1.0** cubre la **Etapa 1: Sitio y captación de prospectos**: un sitio renovado, una página por servicio y una landing para Google Ads que convierte visitas en solicitudes. Las etapas 2 y 3 ya están diseñadas en la propuesta y parte de su código está listo pero comentado (ver [Siguientes etapas](#siguientes-etapas)).
 
 📄 Propuesta completa: [`doc/connexis-propuesta-operacion-etapas.pdf`](doc/connexis-propuesta-operacion-etapas.pdf) · páginas en imagen en [`doc/propuesta/`](doc/propuesta).
 
@@ -86,13 +86,17 @@ Implementada en [`src/scripts/motion.ts`](src/scripts/motion.ts) con [Motion](ht
 
 | Momento | Qué hace |
 |---|---|
-| Entrada del hero | Titular, texto y CTA suben en secuencia; el radar entra con resorte |
-| Scroll | Tarjetas y secciones aparecen una a una (`inView` + `stagger`) |
+| Hero | Titular, texto y CTA suben en secuencia; el radar entra con resorte |
+| Radar | El barrido gira "buscando" y cada punto se enciende cuando el haz pasa encima, con pulsos desde el isotipo |
+| Títulos H2 | Las palabras suben una a una desde una máscara |
+| Etiquetas | La línea verde de cada etiqueta se dibuja de izquierda a derecha |
+| Fotos | Revelado tipo cortina al entrar y parallax suave mientras se hace scroll |
+| Bloques y tarjetas | Aparecen en secuencia: tarjetas, tablas, FAQ, listas, formularios, CTA y footer |
 | Progreso de lectura | Barra verde superior ligada al scroll |
 | Botones | Respuesta táctil al presionar |
 | Gracias | Ícono de confirmación con resorte |
 
-Además: **loader animado** con el isotipo (primera visita de la sesión), radar y cinta de servicios en CSS. Con `prefers-reduced-motion` todo queda estático, y si Motion no carga el contenido se muestra igual.
+Además: **loader animado** con el isotipo (primera visita de la sesión), radar y cinta de servicios en CSS. Con `prefers-reduced-motion` solo hay desvanecidos suaves y el radar gira lento, sin desplazamientos ni parallax; si Motion no carga, el contenido se muestra igual.
 
 ### Accesibilidad (WCAG 2.2 AA)
 

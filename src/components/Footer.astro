@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Icon from './Icon.astro';
-import { SITE, fullAddress } from '../data/site';
+import { SITE, fullAddress, socialLinks } from '../data/site';
 import { services } from '../data/services';
 // ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
 // import { posts } from '../data/posts';
@@ -9,11 +9,7 @@ import { services } from '../data/services';
 interface Props { variant?: 'default' | 'landing' }
 const { variant = 'default' } = Astro.props;
 const year = new Date().getFullYear();
-const socials = [
-  { name: 'LinkedIn', href: SITE.social.linkedin, icon: 'LinkedIn' },
-  { name: 'Facebook', href: SITE.social.facebook, icon: 'Facebook' },
-  { name: 'Instagram', href: SITE.social.instagram, icon: 'Instagram' },
-].filter((s) => s.href) as { name: string; href: string; icon: 'LinkedIn' | 'Facebook' | 'Instagram' }[];
+const socials = socialLinks();
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
 ---
 <footer class="footer">
@@ -25,7 +21,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         {socials.length > 0 && (
           <ul class="socials">
             {socials.map((s) => (
-              <li><a href={s.href} rel="noopener" target="_blank"><Icon name={s.icon} size={18} label={`${SITE.name} en ${s.name}`} /></a></li>
+              <li><a href={s.href} rel="noopener" target="_blank"><Icon name={s.icon} size={18} label={`${SITE.name} en ${s.name} (abre en otra pestaña)`} /></a></li>
             ))}
           </ul>
         )}

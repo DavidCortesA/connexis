@@ -9,7 +9,7 @@ import Tldr from '../components/Tldr.astro';
 import Photo from '../components/Photo.astro';
 import Faq from '../components/Faq.astro';
 import LeadForm from '../components/LeadForm.astro';
-import { SITE, whatsappUrl, fullAddress } from '../data/site';
+import { SITE, whatsappUrl, fullAddress, socialLinks } from '../data/site';
 import { getService, mentionOnly } from '../data/services';
 // ETAPA 2 · Casos de éxito / ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
 // import { cases } from '../data/cases.mjs';
@@ -265,7 +265,8 @@ const steps = [
             <li><Icon name="Phone" /> <a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="home-form">{SITE.phone}</a></li>
             <li><Icon name="Mail" /> <a href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="home-form">{SITE.email}</a></li>
             <li><Icon name="WhatsApp" /> <a href={whatsappUrl()} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="home-form">Escribir por WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a></li>
-            <li><Icon name="MapPin" /> <span>{fullAddress}</span></li>
+            <li><Icon name="MapPin" /> <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`} target="_blank" rel="noopener">{fullAddress}<span class="sr-only"> (abre Google Maps)</span></a></li>
+            {socialLinks().map((s) => <li><Icon name={s.icon} /> <a href={s.href} target="_blank" rel="noopener" data-track="click_social" data-track-loc={`home-${s.name}`}>{s.name}<span class="sr-only"> (abre en otra pestaña)</span></a></li>)}
           </ul>
         </div>
         <LeadForm id="form-home" source="home" title="Solicite su diagnóstico" submitLabel="Identificar vulnerabilidades" />

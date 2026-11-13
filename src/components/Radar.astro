@@ -1,8 +1,25 @@
 ---
-// Radar animado con el isotipo al centro (dirección visual de la propuesta "Operación").
+// Radar animado con el isotipo al centro: el barrido gira en sentido horario "buscando" y cada
+// punto se enciende justo cuando el haz pasa encima (el retraso se calcula por su ángulo).
+// Con prefers-reduced-motion el barrido sigue, pero mucho más lento y sin pulsos expansivos.
 import { ISO_D } from '../data/brand-paths';
 interface Props { class?: string }
 const { class: cls } = Astro.props;
+
+// Duración de cada vuelta: --period en el CSS (4.8s; 14s con reducir movimiento)
+// Posición de cada detección (porcentaje del radar) y tipo
+const blips = [
+  { x: 72, y: 30, warn: false },
+  { x: 32, y: 26, warn: false },
+  { x: 26, y: 66, warn: false },
+  { x: 63, y: 76, warn: true },
+  { x: 84, y: 58, warn: false },
+].map((b) => {
+  // Ángulo desde las 12 en punto, en sentido horario (igual que el barrido)
+  const deg = (Math.atan2(b.x - 50, -(b.y - 50)) * 180) / Math.PI;
+  const angle = (deg + 360) % 360;
+  return { ...b, frac: (angle / 360).toFixed(3) };
+});
 ---
 <div class:list={['radar', cls]} aria-hidden="true">
   <svg viewBox="0 0 600 600" class="radar__grid">
@@ -22,37 +39,57 @@ const { class: cls } = Astro.props;
       return <line x1={300 + Math.cos(a) * r1} y1={300 + Math.sin(a) * r1} x2={300 + Math.cos(a) * 290} y2={300 + Math.sin(a) * 290} stroke="#8CD336" stroke-opacity="0.35" />;
     })}
   </svg>
-  <div class="radar__sweep"></div>
-  <span class="blip" style="--x:72%;--y:30%;--d:0.2s"></span>
-  <span class="blip" style="--x:28%;--y:66%;--d:1.1s"></span>
-  <span class="blip blip--warn" style="--x:63%;--y:74%;--d:2.3s"></span>
-  <span class="blip" style="--x:35%;--y:24%;--d:3.1s"></span>
+  <div class="radar__ping"></div>
+  <div class="radar__ping radar__ping--2"></div>
+  <div class="radar__sweep"><span class="radar__beam"></span></div>
+  {blips.map((b) => (
+    <span class:list={['blip', { 'blip--warn': b.warn }]} style={`--x:${b.x}%;--y:${b.y}%;--f:${b.frac}`}></span>
+  ))}
   <div class="radar__core">
     <svg viewBox="346 201 610 610"><path fill="url(#rg-iso)" d={ISO_D} /></svg>
   </div>
 </div>
 
 <style>
-  .radar { --size: min(560px, 88vw); position: relative; width: var(--size); aspect-ratio: 1; }
+  .radar { --period: 4.8s; --size: min(560px, 88vw); position: relative; width: var(--size); aspect-ratio: 1; }
   .radar__grid { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* Barrido: el borde brillante va al frente (12 en punto) y la estela queda detrás. */
   .radar__sweep {
     position: absolute; inset: 1.6%; border-radius: 50%;
-    background: conic-gradient(from 0deg, rgba(140, 211, 54, 0.38), rgba(140, 211, 54, 0.08) 40deg, transparent 90deg);
-    mask: radial-gradient(circle, #000 98%, transparent 100%);
-    -webkit-mask: radial-gradient(circle, #000 98%, transparent 100%);
-    animation: sweep 4s linear infinite;
+    background: conic-gradient(from 0deg, transparent 0deg 250deg, rgba(140, 211, 54, 0.05) 290deg, rgba(140, 211, 54, 0.22) 340deg, rgba(140, 211, 54, 0.5) 360deg);
+    animation: sweep var(--period) linear infinite;
+    will-change: transform;
   }
+  .radar__beam { position: absolute; left: 50%; top: 0; width: 2px; height: 50%; margin-left: -1px; background: linear-gradient(to top, rgba(163, 226, 86, 0.2), #a3e256); box-shadow: 0 0 12px rgba(140, 211, 54, 0.8); border-radius: 2px; }
   @keyframes sweep { to { transform: rotate(360deg); } }
+
+  /* Pulsos que salen del centro */
+  .radar__ping { position: absolute; left: 50%; top: 50%; width: 22%; aspect-ratio: 1; margin: -11% 0 0 -11%; border-radius: 50%; border: 1px solid rgba(140, 211, 54, 0.55); opacity: 0; animation: ping calc(var(--period) * 0.75) ease-out infinite; }
+  .radar__ping--2 { animation-delay: calc(var(--period) * 0.375); }
+  @keyframes ping { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(4.4); opacity: 0; } }
+
   .radar__core {
     position: absolute; left: 50%; top: 50%; width: 22%; aspect-ratio: 1; transform: translate(-50%, -50%);
     border-radius: 50%; display: grid; place-items: center; background: var(--bg);
     box-shadow: 0 0 0 2px rgba(140, 211, 54, 0.8), 0 0 0 10px rgba(140, 211, 54, 0.08), 0 0 60px rgba(91, 200, 220, 0.25);
+    animation: core var(--period) ease-in-out infinite;
   }
+  @keyframes core { 0%, 100% { box-shadow: 0 0 0 2px rgba(140, 211, 54, 0.8), 0 0 0 10px rgba(140, 211, 54, 0.08), 0 0 50px rgba(91, 200, 220, 0.2); } 50% { box-shadow: 0 0 0 2px rgba(140, 211, 54, 1), 0 0 0 14px rgba(140, 211, 54, 0.12), 0 0 80px rgba(91, 200, 220, 0.35); } }
   .radar__core svg { width: 62%; }
-  .blip { position: absolute; left: var(--x); top: var(--y); width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--lime); opacity: 0; animation: blip 4s var(--d) ease-out infinite; }
-  .blip::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid var(--lime); animation: inherit; }
-  .blip--warn { background: var(--cyan); }
+
+  /* Detecciones: se encienden cuando pasa el haz y se desvanecen hasta la siguiente vuelta */
+  .blip { position: absolute; left: var(--x); top: var(--y); width: 10px; height: 10px; margin: -5px; border-radius: 50%; background: var(--lime); opacity: 0.08; animation: blip var(--period) calc(var(--period) * var(--f)) linear infinite; box-shadow: 0 0 12px rgba(140, 211, 54, 0.9); }
+  .blip::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 1px solid var(--lime); opacity: 0; animation: blip-ring var(--period) calc(var(--period) * var(--f)) ease-out infinite; }
+  .blip--warn { background: var(--cyan); box-shadow: 0 0 12px rgba(91, 200, 220, 0.9); }
   .blip--warn::after { border-color: var(--cyan); }
-  @keyframes blip { 0% { opacity: 0; transform: scale(0.6); } 6% { opacity: 1; transform: scale(1); } 60% { opacity: 0.15; } 100% { opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) { .radar__sweep { animation: none; transform: rotate(35deg); } .blip { animation: none; opacity: 0.8; } }
+  @keyframes blip { 0% { opacity: 1; transform: scale(1.25); } 8% { opacity: 1; transform: scale(1); } 70% { opacity: 0.12; } 100% { opacity: 0.08; } }
+  @keyframes blip-ring { 0% { opacity: 0.9; transform: scale(0.6); } 30% { opacity: 0; transform: scale(2.2); } 100% { opacity: 0; } }
+
+  /* Reducir movimiento: barrido lento, sin pulsos expansivos */
+  @media (prefers-reduced-motion: reduce) {
+    .radar { --period: 14s; }
+    .radar__sweep, .blip, .radar__core { animation-duration: var(--period) !important; animation-iteration-count: infinite !important; }
+    .radar__ping, .blip::after { display: none; }
+  }
 </style>

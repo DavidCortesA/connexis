@@ -11,7 +11,7 @@ export const SITE = {
   tagline: 'Ciberseguridad, redes y seguridad electrónica para PyMEs en Monterrey',
   description:
     'Soluciones de ciberseguridad, redes y seguridad electrónica para pequeñas y medianas empresas en Monterrey y su área metropolitana.',
-  phone: '+52 81 2912 9134',
+  phone: '+52 8129129134',
   phoneHref: 'tel:+528129129134',
   whatsapp: '528129129134', // CONFIRMAR que el número tiene WhatsApp Business
   whatsappText: 'Hola ConneXis, me interesa una evaluación de ciberseguridad para mi empresa.',
@@ -33,9 +33,9 @@ export const SITE = {
   responseTime: '1 día hábil', // CONFIRMAR tiempo de respuesta que se promete en formularios
   // Deja vacío lo que no exista; el footer y el schema solo muestran lo que tenga URL.
   social: {
-    linkedin: '',
-    facebook: '',
-    instagram: '',
+    linkedin: 'https://www.linkedin.com/company/connexis-mx/',
+    facebook: 'https://www.facebook.com/share/14GhoWJVgx4/',
+    instagram: '', // pendiente
   },
 } as const;
 
@@ -65,3 +65,11 @@ export const cleanPath = (pathname: string) => {
   const p = pathname.replace(/\.html$/, '').replace(/\/index$/, '/').replace(/(.)\/$/, '$1');
   return p === '' ? '/' : p;
 };
+
+/** Redes con URL definida (el footer, el header y el schema solo muestran estas). */
+export const socialLinks = () =>
+  ([
+    { name: 'LinkedIn', href: SITE.social.linkedin, icon: 'LinkedIn' },
+    { name: 'Facebook', href: SITE.social.facebook, icon: 'Facebook' },
+    { name: 'Instagram', href: SITE.social.instagram, icon: 'Instagram' },
+  ] as const).filter((s) => s.href) as { name: string; href: string; icon: 'LinkedIn' | 'Facebook' | 'Instagram' }[];

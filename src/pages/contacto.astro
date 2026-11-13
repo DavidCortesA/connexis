@@ -6,7 +6,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Icon from '../components/Icon.astro';
 import LeadForm from '../components/LeadForm.astro';
 import Faq from '../components/Faq.astro';
-import { SITE, whatsappUrl, fullAddress } from '../data/site';
+import { SITE, whatsappUrl, fullAddress, socialLinks } from '../data/site';
 
 const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Contacto', href: '/contacto' }];
 const faqs = [
@@ -14,6 +14,8 @@ const faqs = [
   { q: '¿Dónde están ubicados?', a: `En ${fullAddress}. Atendemos en sitio en Monterrey y su área metropolitana.` },
   { q: '¿Qué información necesitan para cotizar?', a: 'El tipo de instalación, número aproximado de usuarios o equipos y la ubicación. Con eso agendamos una visita o una llamada de diagnóstico.' },
 ];
+const socials = socialLinks();
+const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(fullAddress)}&output=embed`;
 const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
 const contactSchema = [{ '@type': 'ContactPage', name: 'Contacto ConneXis', url: `${SITE.url}/contacto`, about: { '@id': `${SITE.url}/#negocio` } }];
 ---
@@ -40,12 +42,28 @@ const contactSchema = [{ '@type': 'ContactPage', name: 'Contacto ConneXis', url:
             <li><a class="channel" href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="contacto"><Icon name="Mail" size={22} /><span><strong>Correo</strong>{SITE.email}</span></a></li>
             <li><a class="channel" href={mapsUrl} target="_blank" rel="noopener"><Icon name="MapPin" size={22} /><span><strong>Oficina</strong>{fullAddress}<span class="sr-only"> (abre Google Maps)</span></span></a></li>
             <li><div class="channel"><Icon name="Clock" size={22} /><span><strong>Horario</strong>{SITE.hoursLabel}</span></div></li>
+            {socials.map((s) => (
+              <li><a class="channel" href={s.href} target="_blank" rel="noopener" data-track="click_social" data-track-loc={`contacto-${s.name}`}><Icon name={s.icon} size={22} /><span><strong>{s.name}</strong>Síganos en {s.name}<span class="sr-only"> (abre en otra pestaña)</span></span></a></li>
+            ))}
           </ul>
         </div>
         <LeadForm id="form-contacto" variant="full" source="contacto" title="Envíenos sus datos" subtitle="Le contactamos para entender su necesidad." submitLabel="Enviar solicitud" />
       </div>
     </div>
   </section>
+  <section class="section--tight" aria-labelledby="h-mapa">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Ubicación</p>
+        <h2 id="h-mapa">Dónde estamos</h2>
+        <p class="muted">{fullAddress}. <a class="link-arrow" href={mapsUrl} target="_blank" rel="noopener">Cómo llegar<span class="sr-only"> (abre Google Maps)</span> <Icon name="ArrowRight" /></a></p>
+      </div>
+      <div class="map">
+        <iframe src={mapEmbed} title={`Mapa de la oficina de ConneXis en ${SITE.address.locality}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
   <Faq faqs={faqs} title="Antes de escribirnos" />
 </BaseLayout>
 
@@ -64,6 +82,9 @@ const contactSchema = [{ '@type': 'ContactPage', name: 'Contacto ConneXis', url:
   .channel { display: grid; grid-template-columns: 24px 1fr; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-decoration: none; color: var(--muted); transition: border-color 0.2s; }
   a.channel:hover { border-color: var(--lime); }
   .channel :global(svg) { color: var(--lime); }
+  .map { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 7; background: var(--surface); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; filter: grayscale(1) invert(0.92) hue-rotate(180deg) contrast(0.9); }
+  @media (max-width: 720px) { .map { aspect-ratio: 4 / 5; } }
   .channel strong { display: block; color: var(--text); font-weight: 600; }
   @media (max-width: 899px) { .contact { grid-template-columns: 1fr; } }
 </style>
