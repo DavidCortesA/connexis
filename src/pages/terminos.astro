@@ -1,0 +1,44 @@
+---
+// ⚠️ Plantilla general. Debe revisarla un asesor legal antes de publicar.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../data/site';
+const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Términos y condiciones', href: '/terminos' }];
+---
+<BaseLayout
+  title="Términos y condiciones de uso | ConneXis"
+  description="Condiciones de uso del sitio web de ConneXis: contenido, propiedad intelectual, enlaces externos y responsabilidad."
+  shareTitle="Términos y condiciones de ConneXis"
+  breadcrumbs={crumbs}
+>
+  <section class="section--tight">
+    <div class="wrap prose-wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>Términos y condiciones del sitio</h1>
+      <p class="muted">Última actualización: 13 de noviembre de 2026</p>
+      <div class="prose">
+        <h2>Uso del sitio</h2>
+        <p>Este sitio presenta información general sobre los servicios de {SITE.name}. Al usarlo, usted acepta estos términos. Si no está de acuerdo, le pedimos no utilizarlo.</p>
+        <h2>Información y cotizaciones</h2>
+        <p>El contenido es informativo y no constituye una oferta vinculante. Alcances, precios y tiempos se definen en una propuesta por escrito para cada proyecto.</p>
+        <h2>Propiedad intelectual</h2>
+        <p>La marca, el logotipo y los textos de este sitio pertenecen a {SITE.name}. Las fotografías provienen de Unsplash bajo su licencia. No se permite reproducir el contenido con fines comerciales sin autorización.</p>
+        <h2>Enlaces a terceros</h2>
+        <p>El sitio puede enlazar a servicios de terceros (WhatsApp, Google Maps, redes sociales). No somos responsables de su contenido ni de sus políticas de privacidad.</p>
+        <h2>Limitación de responsabilidad</h2>
+        <p>Procuramos que la información sea exacta y esté actualizada, pero no garantizamos que esté libre de errores. Las guías del blog no sustituyen una evaluación profesional de su caso.</p>
+        <h2>Datos personales</h2>
+        <p>El tratamiento de sus datos se rige por nuestro <a href="/aviso-privacidad">aviso de privacidad</a>.</p>
+        <h2>Legislación aplicable</h2>
+        <p>Estos términos se rigen por las leyes de los Estados Unidos Mexicanos. Cualquier controversia se someterá a los tribunales competentes de Monterrey, Nuevo León.</p>
+        <h2>Contacto</h2>
+        <p>Para dudas sobre estos términos escriba a <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .prose-wrap { max-width: calc(820px + var(--gutter) * 2); }
+  h1 { font-size: clamp(2rem, 4vw, 3rem); }
+  .prose { margin-top: 24px; }
+</style>

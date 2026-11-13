@@ -1,0 +1,45 @@
+---
+// Página de error 404 personalizada (Netlify y Vercel sirven /404.html automáticamente).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import Radar from '../components/Radar.astro';
+import { services } from '../data/services';
+---
+<BaseLayout
+  title="Página no encontrada (404) | ConneXis"
+  description="La página que busca no existe o cambió de dirección. Vuelva al inicio o elija uno de nuestros servicios."
+  noindex
+  showShare={false}
+>
+  <section class="section err" aria-labelledby="h-404">
+    <div class="wrap err__grid">
+      <div>
+        <p class="eyebrow">Error 404</p>
+        <h1 id="h-404">Esta página salió <span class="hl">del radar</span></h1>
+        <p class="lead">La dirección no existe o cambió. Puede que el enlace esté incompleto. Estas rutas sí están activas:</p>
+        <ul class="err__links">
+          <li><a href="/"><Icon name="ArrowRight" size={16} /> Inicio</a></li>
+          {services.map((s) => <li><a href={`/servicios/${s.slug}`}><Icon name="ArrowRight" size={16} /> {s.name}</a></li>)}
+          {/* ETAPA 3 · <li><a href="/blog"><Icon name="ArrowRight" size={16} /> Blog</a></li> */}
+          <li><a href="/evaluacion"><Icon name="ArrowRight" size={16} /> Evaluación de ciberseguridad</a></li>
+          <li><a href="/contacto"><Icon name="ArrowRight" size={16} /> Contacto</a></li>
+        </ul>
+        <div class="btn-row">
+          <a class="btn" href="/">Volver al inicio <Icon name="ArrowRight" class="i-arrow" /></a>
+          <a class="btn btn--ghost" href="/contacto">Reportar enlace roto</a>
+        </div>
+      </div>
+      <div class="err__radar"><Radar /></div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .err__grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; }
+  .err .lead { margin: 18px 0 20px; }
+  .err__links { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin-bottom: 32px; }
+  .err__links a { display: inline-flex; gap: 8px; align-items: center; color: var(--lime); text-decoration: none; }
+  .err__links a:hover { text-decoration: underline; }
+  .err__radar :global(.radar) { --size: min(420px, 80vw); }
+  @media (max-width: 899px) { .err__grid { grid-template-columns: 1fr; } .err__radar { order: -1; } .err__radar :global(.radar) { --size: 220px; } }
+</style>
+<script is:inline>window.cxTrack && window.cxTrack('page_not_found', { ruta: location.pathname, origen: document.referrer });</script>

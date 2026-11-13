@@ -1,0 +1,77 @@
+---
+// ETAPA 3 · Blog — DESACTIVADA en la Etapa 1.
+// El prefijo "_" de src/pages/_blog hace que Astro no genere estas rutas. Para activarlas,
+// renombra src/pages/_blog → src/pages/blog y descomenta lo marcado "ETAPA 3".
+// Cluster de: /servicios/seguridad-electronica · Intención: informacional-comercial.
+import PostLayout from '../../layouts/PostLayout.astro';
+
+const faqs = [
+  { q: '¿Cuántos días de grabación necesito?', a: 'Para la mayoría de empresas, entre 15 y 30 días es suficiente para revisar incidentes. Más días requieren más almacenamiento en el grabador.' },
+  { q: '¿Puedo usar cámaras Wi‑Fi?', a: 'Para negocios recomendamos cámaras cableadas con alimentación PoE: son más estables, no dependen de la señal y son más difíciles de interferir.' },
+  { q: '¿Es legal grabar a mis empleados?', a: 'En México puede videovigilar sus instalaciones, pero debe informarlo con avisos visibles y en su aviso de privacidad, y evitar zonas privadas como baños o vestidores. Consulte a su asesor legal para su caso.' },
+  { q: '¿Cómo veo las cámaras desde mi celular de forma segura?', a: 'Con una aplicación del fabricante o una VPN, usuarios propios y contraseñas robustas. Nunca dejando el grabador abierto a internet con la contraseña de fábrica.' },
+];
+const tldr = [
+  'Tipo de cámara: IP para empresas; analógica solo si ya tiene cableado coaxial que reutilizar.',
+  'Resolución: 4 MP como base; más en accesos donde necesite reconocer rostros o placas.',
+  'Grabación: 15 a 30 días en un grabador (NVR) dentro de la empresa.',
+  'Ubicación: accesos, cajas, almacenes, estacionamiento y perímetro.',
+  'Seguridad: cámaras en una red separada y acceso remoto cifrado.',
+];
+---
+<PostLayout
+  slug="videovigilancia-empresas"
+  answer="Para elegir videovigilancia en una empresa, defina primero qué necesita ver (accesos, cajas, almacén o perímetro), luego el tipo de cámara (IP en la mayoría de los casos), cuántos días grabar y cómo verla desde el celular sin exponer su red. Con esas cuatro decisiones se dimensiona el sistema correcto."
+  tldr={tldr}
+  faqs={faqs}
+>
+  <h2>Cámaras IP o analógicas: ¿cuál conviene?</h2>
+  <div class="table-wrap">
+    <table>
+      <caption>Comparativa entre cámaras IP y analógicas para empresas</caption>
+      <thead><tr><th scope="col">Aspecto</th><th scope="col">Cámaras IP</th><th scope="col">Cámaras analógicas (HD)</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Calidad de imagen</th><td>Mayor resolución y mejor detalle</td><td>Buena, con límites de resolución</td></tr>
+        <tr><th scope="row">Cableado</th><td>Cable de red con alimentación PoE</td><td>Cable coaxial y alimentación aparte</td></tr>
+        <tr><th scope="row">Funciones inteligentes</th><td>Detección de personas, vehículos y líneas</td><td>Limitadas</td></tr>
+        <tr><th scope="row">Crecimiento</th><td>Fácil de ampliar sobre la red</td><td>Depende de canales del grabador</td></tr>
+        <tr><th scope="row">Cuándo elegirla</th><td>Instalaciones nuevas o renovaciones</td><td>Si ya hay coaxial en buen estado</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>¿Dónde colocar las cámaras?</h2>
+  <ul>
+    <li><strong>Accesos peatonales y vehiculares:</strong> a la altura adecuada para reconocer rostros o placas.</li>
+    <li><strong>Cajas y mostradores:</strong> enfocadas a la operación, no a la pantalla del cliente.</li>
+    <li><strong>Almacenes y andenes:</strong> pasillos y puntos de carga y descarga.</li>
+    <li><strong>Perímetro y estacionamiento:</strong> con visión nocturna o iluminación de apoyo.</li>
+  </ul>
+
+  <h2>¿Cuánto almacenamiento necesita?</h2>
+  <p>Depende de tres variables: número de cámaras, resolución y días de grabación. Como referencia, el grabador se dimensiona para guardar entre 15 y 30 días; grabar solo con movimiento reduce el espacio necesario.</p>
+
+  <h2>Cómo verlas desde el celular sin poner en riesgo su red</h2>
+  <h3>Lo que sí</h3>
+  <ul>
+    <li>Cámaras en una red separada (VLAN) de las computadoras de la empresa.</li>
+    <li>Usuarios propios para cada persona y contraseñas robustas.</li>
+    <li>Acceso remoto mediante la aplicación del fabricante o una VPN.</li>
+    <li>Actualizar el firmware del grabador y de las cámaras.</li>
+  </ul>
+  <h3>Lo que no</h3>
+  <ul>
+    <li>Abrir puertos del grabador directamente a internet.</li>
+    <li>Dejar la contraseña de fábrica.</li>
+  </ul>
+
+  <h2>Checklist antes de cotizar</h2>
+  <ol>
+    <li>Plano o croquis de las áreas que quiere vigilar.</li>
+    <li>Qué necesita lograr en cada punto: ver, reconocer o identificar.</li>
+    <li>Días de grabación requeridos.</li>
+    <li>Quién verá las cámaras y desde dónde.</li>
+    <li>Si lo integrará con control de acceso o alarmas.</li>
+  </ol>
+  <blockquote>ConneXis diseña la <a href="/servicios/seguridad-electronica">seguridad electrónica</a> de su empresa e instala las cámaras sobre una <a href="/blog/segmentacion-red-empresarial">red segmentada</a>, para que vigilar no abra un hueco de <a href="/servicios/ciberseguridad">ciberseguridad</a>.</blockquote>
+</PostLayout>

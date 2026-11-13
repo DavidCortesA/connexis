@@ -1,0 +1,30 @@
+---
+// Banda de cierre con CTA primaria + WhatsApp.
+import Icon from './Icon.astro';
+import { whatsappUrl } from '../data/site';
+interface Props { title: string; highlight?: string; text: string; href?: string; label?: string; loc: string }
+const { title, highlight, text, href = '/contacto', label = 'Solicitar diagnóstico', loc } = Astro.props;
+---
+<section class="section--tight" aria-labelledby={`cta-${loc}`}>
+  <div class="wrap">
+    <div class="ctaband" data-reveal>
+      <svg class="ctaband__arc" viewBox="346 201 610 610" aria-hidden="true"><path fill="currentColor" d="M954.24 473.28A305.00 305.00 0 1 0 532.37 786.98A352.00 352.00 0 0 1 954.24 473.28ZM952.52 551.93A305.00 305.00 0 0 1 608.18 807.98A275.00 275.00 0 0 1 952.52 551.93Z"/></svg>
+      <div>
+        <h2 id={`cta-${loc}`}>{title} {highlight && <span class="hl">{highlight}</span>}</h2>
+        <p class="muted">{text}</p>
+      </div>
+      <div class="btn-row">
+        <a class="btn" href={href} data-track="cta_click" data-track-loc={loc}>{label} <Icon name="ArrowRight" class="i-arrow" /></a>
+        <a class="btn btn--wa" href={whatsappUrl()} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc={loc}><Icon name="WhatsApp" /> WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .ctaband { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.4fr auto; gap: 32px; align-items: center; padding: clamp(28px, 5vw, 56px); border-radius: 20px; background: linear-gradient(135deg, #141a20, #0f1418); border: 1px solid var(--line); }
+  .ctaband h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); max-width: 22ch; }
+  .ctaband p { margin: 0; max-width: 52ch; }
+  .ctaband__arc { position: absolute; right: -120px; bottom: -220px; width: 420px; color: rgba(91, 200, 220, 0.07); pointer-events: none; }
+  .ctaband > div { position: relative; }
+  @media (max-width: 899px) { .ctaband { grid-template-columns: 1fr; } }
+</style>

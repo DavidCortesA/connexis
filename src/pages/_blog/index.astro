@@ -1,0 +1,76 @@
+---
+// ETAPA 3 · Blog — DESACTIVADA en la Etapa 1.
+// El prefijo "_" de src/pages/_blog hace que Astro no genere estas rutas. Para activarlas,
+// renombra src/pages/_blog → src/pages/blog y descomenta lo marcado "ETAPA 3".
+// Índice del blog: agrupa los artículos por pilar (topic cluster).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import { posts } from '../../data/posts';
+import { services } from '../../data/services';
+
+const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Blog', href: '/blog' }];
+const schema = [{
+  '@type': 'ItemList',
+  name: 'Guías de ConneXis',
+  itemListElement: posts.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: `${Astro.site?.origin}/blog/${p.slug}`, name: p.h1 })),
+}];
+---
+<BaseLayout
+  title="Blog de ciberseguridad, redes y seguridad electrónica | ConneXis"
+  description="Guías claras para decidir sobre ciberseguridad, redes empresariales y videovigilancia en su empresa, escritas por el equipo de ConneXis en Monterrey."
+  shareTitle="Guías de ConneXis para PyMEs"
+  breadcrumbs={crumbs}
+  schema={schema}
+>
+  <section class="section--tight" aria-labelledby="h-blog">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <p class="eyebrow">Blog</p>
+      <h1 id="h-blog">Guías para proteger y conectar <span class="hl">su empresa</span></h1>
+      <p class="lead">Respuestas directas a las preguntas que más nos hacen los dueños y gerentes de PyMEs, organizadas por servicio.</p>
+    </div>
+  </section>
+
+  {services.map((s) => {
+    const list = posts.filter((p) => p.pillar === s.slug);
+    return list.length > 0 && (
+      <section class="section--tight cluster" aria-labelledby={`c-${s.slug}`}>
+        <div class="wrap">
+          <div class="cluster__head">
+            <h2 id={`c-${s.slug}`}>{s.name}</h2>
+            <a class="link-arrow" href={`/servicios/${s.slug}`}>Ver el servicio de {s.name.toLowerCase()} <Icon name="ArrowRight" /></a>
+          </div>
+          <ul class="posts">
+            {list.map((p) => (
+              <li data-reveal>
+                <a class="post" href={`/blog/${p.slug}`}>
+                  <Photo name={p.image} alt={p.imageAlt} ratio="16/9" sizes="(min-width: 900px) 40vw, 100vw" widths={[480, 800]} />
+                  <div>
+                    <h3>{p.h1}</h3>
+                    <p class="muted">{p.excerpt}</p>
+                    <span class="post__meta"><Icon name="Clock" size={15} /> {p.readingMinutes} min</span>
+                  </div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
+  })}
+</BaseLayout>
+
+<style>
+  .lead { margin-top: 16px; }
+  .cluster { border-top: 1px solid var(--line); }
+  .cluster__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  .cluster__head h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); margin: 0; }
+  .posts { list-style: none; display: grid; gap: 16px; }
+  .post { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(20px, 3vw, 40px); align-items: center; text-decoration: none; }
+  .post h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); margin-bottom: 10px; }
+  .post:hover h3 { color: var(--lime); }
+  .post__meta { display: inline-flex; gap: 6px; align-items: center; color: var(--faint); font-size: 0.88rem; }
+  @media (max-width: 720px) { .post { grid-template-columns: 1fr; } }
+</style>

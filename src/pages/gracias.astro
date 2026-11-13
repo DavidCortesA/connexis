@@ -1,0 +1,61 @@
+---
+// Página de agradecimiento: confirma el envío, explica qué sigue y registra la conversión
+// (GA4 generate_lead + conversión de Google Ads) solo si viene de un envío real del formulario.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { SITE, whatsappUrl } from '../data/site';
+---
+<BaseLayout
+  title="Solicitud recibida | ConneXis"
+  description="Recibimos su solicitud. Un especialista de ConneXis revisará su información y se comunicará con usted."
+  noindex
+  variant="landing"
+  showShare={false}
+>
+  <section class="section thanks-wrap" aria-labelledby="h-gracias">
+    <div class="wrap">
+      <div class="thanks">
+        <span class="thanks__ok" data-pop><Icon name="Check" size={28} /></span>
+        <h1 id="h-gracias">Recibimos su solicitud</h1>
+        <p class="muted">Gracias por contactar a ConneXis. Un especialista revisará su información y se comunicará con usted.</p>
+        <ol class="next">
+          <li><span class="num">1</span><div><h2>Revisamos su solicitud</h2><p>Identificamos el servicio y el especialista adecuado.</p></div></li>
+          <li><span class="num">2</span><div><h2>Le contactamos</h2><p>Por teléfono o correo en menos de <strong>{SITE.responseTime}</strong>.</p></div></li>
+          <li><span class="num">3</span><div><h2>Agendamos la evaluación</h2><p>En el día y horario que le acomode.</p></div></li>
+        </ol>
+        <div class="btn-row center-row">
+          <a class="btn btn--wa" href={whatsappUrl('Hola ConneXis, acabo de enviar una solicitud desde su sitio web.')} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="gracias"><Icon name="WhatsApp" /> Adelantar por WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
+          <a class="btn btn--ghost" href="/servicios">Ver servicios</a>
+        </div>
+        <p class="small">¿Es urgente? Llame al <a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="gracias">{SITE.phone}</a>.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Conversión: solo una vez por envío (evita contar recargas o visitas directas).
+  let lead: { servicio?: string; origen?: string } | null = null;
+  try { lead = JSON.parse(sessionStorage.getItem('cx-lead') || 'null'); sessionStorage.removeItem('cx-lead'); } catch {}
+  const w = window as any;
+  if (lead && w.gtag) {
+    w.gtag('event', 'generate_lead', { servicio: lead.servicio, formulario: lead.origen });
+    const { ads, adsLabel } = w.CX_ANALYTICS || {};
+    if (ads && adsLabel) w.gtag('event', 'conversion', { send_to: `${ads}/${adsLabel}` });
+  }
+</script>
+
+<style>
+  .thanks-wrap { min-height: 70vh; display: grid; align-items: center; }
+  .thanks { max-width: 640px; margin: 0 auto; text-align: center; padding: clamp(28px, 5vw, 48px); border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
+  .thanks__ok { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: rgba(140, 211, 54, 0.14); color: var(--lime); margin-bottom: 20px; }
+  .thanks h1 { font-size: clamp(2rem, 4vw, 2.8rem); }
+  .next { list-style: none; display: grid; gap: 10px; margin: 28px 0; text-align: left; }
+  .next li { display: grid; grid-template-columns: 32px 1fr; gap: 14px; padding: 14px 16px; border-radius: 12px; background: var(--bg-2); border: 1px solid var(--line); }
+  .next .num { width: 28px; height: 28px; border-radius: 50%; background: var(--lime); color: var(--lime-ink); display: grid; place-items: center; font-weight: 700; font-size: 0.9rem; }
+  .next h2 { font-size: 1.02rem; font-weight: 600; letter-spacing: 0; margin: 0 0 2px; }
+  .next p { margin: 0; color: var(--muted); font-size: 0.93rem; }
+  .center-row { justify-content: center; }
+  .small { margin: 20px 0 0; color: var(--faint); font-size: 0.9rem; }
+  .small a { color: var(--lime); }
+</style>

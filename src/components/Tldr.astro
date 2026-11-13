@@ -1,0 +1,15 @@
+---
+// Resumen "En resumen / Key takeaways": responde la intención de búsqueda en segundos.
+import Icon from './Icon.astro';
+interface Props { items: string[]; title?: string; class?: string }
+const { items, title = 'En resumen', class: cls } = Astro.props;
+---
+<aside class:list={['tldr', cls]} aria-labelledby="tldr-title">
+  <h2 id="tldr-title"><Icon name="ListChecks" size={18} /> {title}</h2>
+  <ul>
+    {items.map((t) => {
+      const [k, ...rest] = t.split(': ');
+      return <li><Icon name="Check" size={18} /><span>{rest.length ? <><strong>{k}:</strong> {rest.join(': ')}</> : t}</span></li>;
+    })}
+  </ul>
+</aside>

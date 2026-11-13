@@ -1,0 +1,99 @@
+---
+// Hub de servicios: conecta las páginas pilar y los servicios sin página propia.
+// Intención: navegacional/comercial ("servicios ConneXis", "servicios de ciberseguridad y redes Monterrey").
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import Tldr from '../../components/Tldr.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services } from '../../data/services';
+// ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
+// import { postsByPillar } from '../../data/posts';
+
+const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Servicios', href: '/servicios' }];
+const faqs = [
+  { q: '¿Qué servicio necesito si no sé por dónde empezar?', a: 'Empiece por un diagnóstico de seguridad: revisamos su red completa y le decimos qué servicio atender primero según su riesgo y presupuesto.' },
+  { q: '¿Pueden encargarse de todo el proyecto?', a: 'Sí. Podemos diseñar la red, protegerla e integrar la videovigilancia y el control de acceso, con un solo responsable y un solo plan de trabajo.' },
+  { q: '¿Dan soporte después de la instalación?', a: 'Sí. Ofrecemos soporte, monitoreo y revisiones periódicas para mantener la red y la seguridad al día.' },
+];
+---
+<BaseLayout
+  title="Servicios de ciberseguridad, redes y seguridad | ConneXis"
+  description="Ciberseguridad, redes empresariales y seguridad electrónica para PyMEs en Monterrey. Conozca qué incluye cada servicio y cuál le conviene primero."
+  shareTitle="Servicios de ConneXis: ciberseguridad, redes y seguridad electrónica"
+  breadcrumbs={crumbs}
+  faqs={faqs}
+>
+  <section class="section--tight" aria-labelledby="h-serv">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <div class="intro">
+        <div>
+          <p class="eyebrow">Servicios</p>
+          <h1 id="h-serv">Todo lo que su red necesita para operar <span class="hl">sin sobresaltos</span></h1>
+          <p class="lead">ConneXis ofrece tres servicios para PyMEs en Monterrey: ciberseguridad, redes empresariales y seguridad electrónica. Elija uno o pida un diagnóstico para saber por dónde empezar.</p>
+        </div>
+        <Tldr items={[
+          'Ciberseguridad: protege red, equipos y datos contra ataques.',
+          'Redes empresariales: Wi‑Fi y red cableada estables y segmentadas.',
+          'Seguridad electrónica: videovigilancia, alarmas y control de acceso.',
+          '¿No sabe cuál? Pida un diagnóstico y se lo decimos.',
+        ]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight" aria-label="Servicios principales">
+    <div class="wrap pillars">
+      {services.map((s, i) => (
+        <article class="pillar" data-reveal style={`--i:${i}`}>
+          <Photo name={s.image} alt={s.imageAlt} ratio="16/10" sizes="(min-width: 900px) 50vw, 100vw" eager={i === 0} />
+          <div class="pillar__body">
+            <span class="num pillar__n">{String(i + 1).padStart(2, '0')}</span>
+            <h2><a href={`/servicios/${s.slug}`}>{s.name}</a></h2>
+            <p class="muted">{s.short}</p>
+            <ul class="pillar__list">
+              {s.includes.slice(0, 4).map((x) => <li><Icon name="Check" size={16} /> {x.title}</li>)}
+            </ul>
+            <div class="pillar__links">
+              <a class="btn btn--sm" href={`/servicios/${s.slug}`}>Ver {s.name.toLowerCase()} <Icon name="ArrowRight" class="i-arrow" /></a>
+              {/* ETAPA 3 · Guías del blog
+              {postsByPillar(s.slug).map((p) => <a class="link-arrow" href={`/blog/${p.slug}`}>{p.label}</a>)}
+              */}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <Faq faqs={faqs} title="Dudas sobre nuestros servicios" />
+  <CtaBand title="¿No sabe por dónde empezar?" highlight="Le ayudamos." text="Un diagnóstico de su red le dice qué atender primero y cuánto invertir." loc="servicios-hub" />
+</BaseLayout>
+
+<style>
+  .intro { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 5vw, 72px); align-items: end; }
+  .intro .lead { margin-top: 20px; }
+  @media (max-width: 899px) { .intro { grid-template-columns: 1fr; } }
+  .pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .pillars .pillar:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1.1fr 1fr; }
+  .pillars .pillar:first-child :global(.photo) { aspect-ratio: auto !important; height: 100%; }
+  .pillar { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+  .pillar :global(.photo) { border-radius: 0; }
+  .pillar__body { padding: clamp(20px, 3vw, 32px); position: relative; }
+  .pillar__n { position: absolute; top: 24px; right: 28px; color: var(--faint); }
+  .pillar h2 { font-size: clamp(1.6rem, 2.6vw, 2.2rem); }
+  .pillar h2 a { text-decoration: none; }
+  .pillar h2 a:hover { color: var(--lime); }
+  .pillar__list { list-style: none; display: grid; grid-template-columns: 1fr; gap: 8px 16px; margin: 20px 0 24px; font-size: 0.95rem; }
+  .pillar__list li { display: flex; gap: 8px; align-items: center; }
+  .pillar__list :global(svg) { color: var(--lime); }
+  .pillar__links { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
+  .grid { list-style: none; }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pillars .pillar:first-child .pillar__list { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 899px) { .pillars, .g3, .pillars .pillar:first-child { grid-template-columns: 1fr; } .pillars .pillar:first-child :global(.photo) { aspect-ratio: 16/10 !important; } }
+  @media (max-width: 480px) { .pillar__list { grid-template-columns: 1fr; } }
+</style>

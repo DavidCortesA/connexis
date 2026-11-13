@@ -1,0 +1,80 @@
+---
+// Loader animado de ConneXis (basado en brand/connexis-loader.html).
+// Solo aparece en la primera página vista de la sesión para no castigar la navegación interna;
+// sin JavaScript nunca bloquea el contenido.
+import { CONNE_D, XIS_D, DOT_D } from '../data/brand-paths';
+---
+<div class="cx-loader" role="status" aria-live="polite">
+  <span class="sr-only">Cargando ConneXis</span>
+  <svg viewBox="300 170 750 820" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="cx-lg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5BC8DC" /><stop offset="1" stop-color="#1E6CC4" /></linearGradient>
+      <clipPath id="cx-clip"><circle cx="651" cy="506" r="306" /></clipPath>
+    </defs>
+    <g class="cx-disc">
+      <circle cx="651" cy="506" r="305" fill="url(#cx-lg)" />
+      <path class="cx-cut" pathLength="1" d="M570.3 839.9A313.5 313.5 0 0 1 1049.1 552.1" clip-path="url(#cx-clip)" />
+    </g>
+    <g class="cx-word">
+      <path fill="#8CD336" d={CONNE_D} />
+      <path fill="#FFFFFF" d={XIS_D} />
+      <path fill="url(#cx-lg)" d={DOT_D} />
+    </g>
+  </svg>
+</div>
+
+<style is:global>
+  .cx-loader {
+    --loop: 1.6s;
+    position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center;
+    background: var(--bg); transition: opacity 0.45s ease, visibility 0.45s;
+  }
+  .cx-loader svg { width: min(38vw, 180px); height: auto; overflow: visible; transition: transform 0.45s ease; }
+  .cx-cut { fill: none; stroke: var(--bg); stroke-width: 77; stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: cx-flow var(--loop) cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+  @keyframes cx-flow { 0% { stroke-dashoffset: 1; } 50% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -1; } }
+  .cx-disc { transform-box: fill-box; transform-origin: center; animation: cx-breathe var(--loop) ease-in-out infinite; }
+  @keyframes cx-breathe { 0%, 100% { transform: scale(0.96); } 50% { transform: scale(1); } }
+  .cx-word { opacity: 0; animation: cx-fade 0.6s ease 0.3s forwards; }
+  @keyframes cx-fade { to { opacity: 1; } }
+  .cx-loader.is-done { opacity: 0; visibility: hidden; }
+  .cx-loader.is-done svg { transform: scale(1.06); }
+  .cx-skip-loader .cx-loader, html:not(.js) .cx-loader { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .cx-cut { animation: none; stroke-dashoffset: 0; }
+    .cx-disc { animation: cx-pulse 2s ease-in-out infinite; }
+    @keyframes cx-pulse { 50% { opacity: 0.55; } }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const loader = document.querySelector('.cx-loader');
+    if (!loader) return;
+    if (document.documentElement.classList.contains('cx-skip-loader')) { loader.remove(); return; }
+    try { sessionStorage.setItem('cx-loaded', '1'); } catch (e) {}
+    const cut = loader.querySelector('.cx-cut');
+    const MIN_MS = 900; // tiempo mínimo visible para que no parpadee en cargas rápidas
+    const MAX_MS = 4000; // nunca bloquear más de esto aunque falte algún recurso
+    const start = performance.now();
+    let done = false;
+    function finish() {
+      if (done) return; done = true;
+      const wait = Math.max(0, MIN_MS - (performance.now() - start));
+      setTimeout(() => {
+        const close = () => {
+          loader.classList.add('is-done');
+          loader.addEventListener('transitionend', () => loader.remove(), { once: true });
+          setTimeout(() => loader.remove(), 700);
+        };
+        const now = parseFloat(getComputedStyle(cut).strokeDashoffset);
+        if (!cut.animate || Number.isNaN(now)) return close();
+        cut.style.animation = 'none';
+        const from = now < 0 ? now + 2 : now;
+        cut.animate([{ strokeDashoffset: from }, { strokeDashoffset: 0 }], { duration: 450, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' }).finished.then(close, close);
+      }, wait);
+    }
+    if (document.readyState === 'complete') finish();
+    else window.addEventListener('load', finish, { once: true });
+    setTimeout(finish, MAX_MS);
+  })();
+</script>

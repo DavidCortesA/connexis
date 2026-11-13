@@ -1,0 +1,31 @@
+---
+// GA4 + Google Ads con Consent Mode v2.
+// - Por defecto todo el almacenamiento está "denied": GA4 solo manda pings sin cookies.
+// - Al aceptar en el banner de cookies se actualiza a "granted".
+// - Si no hay PUBLIC_GA4_ID ni PUBLIC_GADS_ID, no se carga nada (pero window.cxTrack existe igual).
+import { ENV } from '../data/site';
+const tagId = ENV.ga4 || ENV.adsId;
+const cfg = { ga4: ENV.ga4, ads: ENV.adsId, adsLabel: ENV.adsLabel };
+---
+<script is:inline define:vars={{ cfg }}>
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  window.CX_ANALYTICS = cfg;
+  let stored = null;
+  try { stored = localStorage.getItem('cx-consent'); } catch (e) {}
+  const granted = stored === 'granted' ? 'granted' : 'denied';
+  gtag('consent', 'default', {
+    ad_storage: granted, ad_user_data: granted, ad_personalization: granted, analytics_storage: granted,
+    functionality_storage: 'granted', security_storage: 'granted', wait_for_update: 500,
+  });
+  gtag('set', 'ads_data_redaction', granted === 'denied');
+  gtag('js', new Date());
+  if (cfg.ga4) gtag('config', cfg.ga4, { anonymize_ip: true });
+  if (cfg.ads) gtag('config', cfg.ads);
+  // Helper global para eventos: cxTrack('click_to_call', { ubicacion: 'header' })
+  window.cxTrack = function (name, params) {
+    try { gtag('event', name, params || {}); } catch (e) {}
+    if (location.hostname === 'localhost') console.debug('[cxTrack]', name, params || {});
+  };
+</script>
+{tagId && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${tagId}`}></script>}

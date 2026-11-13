@@ -1,0 +1,117 @@
+---
+// ETAPA 3 · Blog — DESACTIVADA en la Etapa 1.
+// El prefijo "_" de src/pages/_blog hace que Astro no genere estas rutas. Para activarlas,
+// renombra src/pages/_blog → src/pages/blog y descomenta lo marcado "ETAPA 3".
+// Layout de artículo (contenido de cluster).
+// Orden pensado para la intención de búsqueda: H1 → respuesta directa → TL;DR → desarrollo →
+// enlace al pilar → FAQ (schema) → CTA. Enlaza al pilar y a los artículos hermanos.
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import Photo from '../components/Photo.astro';
+import Tldr from '../components/Tldr.astro';
+import Faq from '../components/Faq.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ShareButton from '../components/ShareButton.astro';
+import { getPost, posts } from '../data/posts';
+import { getService, type Faq as FaqT } from '../data/services';
+import { img } from '../data/images';
+
+interface Props { slug: string; answer: string; tldr: string[]; faqs: FaqT[] }
+const { slug, answer, tldr, faqs } = Astro.props;
+const p = getPost(slug);
+const pillar = getService(p.pillar);
+const siblings = posts.filter((x) => x.slug !== slug);
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Blog', href: '/blog' },
+  { name: p.label, href: `/blog/${p.slug}` },
+];
+const fmt = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<BaseLayout
+  title={p.metaTitle}
+  description={p.metaDescription}
+  shareTitle={p.h1}
+  image={img(p.image)}
+  imageAlt={p.imageAlt}
+  type="article"
+  article={{ published: p.published, updated: p.updated, section: pillar.name }}
+  breadcrumbs={crumbs}
+  faqs={faqs}
+  showShare={false}
+>
+  <article>
+    <header class="post-head">
+      <div class="wrap post-narrow">
+        <Breadcrumbs items={crumbs} />
+        <a class="tag tag--lime" href={`/servicios/${pillar.slug}`}>{pillar.name}</a>
+        <h1>{p.h1}</h1>
+        <p class="lead post-answer">{answer}</p>
+        <div class="post-meta">
+          <span><Icon name="Clock" size={16} /> {p.readingMinutes} min de lectura</span>
+          <span>Actualizado el <time datetime={p.updated}>{fmt(p.updated)}</time></span>
+          <span>Por el equipo de ConneXis</span>
+          <ShareButton title={p.h1} class="share--left" />
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap post-narrow">
+      <Tldr items={tldr} title="Puntos clave" />
+      <Photo name={p.image} alt={p.imageAlt} eager ratio="16/9" class="post-photo" sizes="(min-width: 860px) 760px, 100vw" widths={[480, 760, 1140, 1520]} />
+      <div class="prose">
+        <slot />
+      </div>
+
+      <aside class="pillar-box" aria-labelledby="pillar-box-t">
+        <span class="icon-chip"><Icon name="ShieldCheck" /></span>
+        <div>
+          <h2 id="pillar-box-t">¿Necesita ayuda con {pillar.name.toLowerCase()}?</h2>
+          <p>{pillar.short}</p>
+          <div class="btn-row">
+            <a class="btn btn--sm" href={`/servicios/${pillar.slug}`}>Ver el servicio <Icon name="ArrowRight" class="i-arrow" /></a>
+            <a class="btn btn--sm btn--ghost" href={`/servicios/${pillar.slug}#solicitud`} data-track="cta_click" data-track-loc={`post-${slug}`}>{pillar.cta}</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <Faq faqs={faqs} title="Preguntas frecuentes" />
+
+  <section class="section--tight" aria-labelledby="mas-guias">
+    <div class="wrap">
+      <h2 id="mas-guias" class="more-t">Más guías</h2>
+      <ul class="more">
+        {siblings.map((x) => (
+          <li><a class="card more__card" href={`/blog/${x.slug}`}><span class="tag">{getService(x.pillar).name}</span><h3>{x.h1}</h3><span class="link-arrow">Leer guía <Icon name="ArrowRight" /></span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title="¿Prefiere que lo revisemos por usted?" highlight="Hablemos." text={`Un especialista en ${pillar.name.toLowerCase()} revisa su caso y le dice qué hacer primero.`} href={`/servicios/${pillar.slug}#solicitud`} label={pillar.cta} loc={`post-${slug}-final`} />
+</BaseLayout>
+
+<style>
+  .post-narrow { max-width: calc(800px + var(--gutter) * 2); }
+  .post-head { padding-block: clamp(28px, 4vw, 48px) 28px; }
+  .post-head h1 { font-size: clamp(2rem, 4.4vw, 3.3rem); margin-top: 18px; }
+  .post-head .tag { text-decoration: none; }
+  .post-answer { color: #d3d9df; margin-top: 16px; }
+  .post-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; color: var(--faint); font-size: 0.9rem; margin-top: 20px; }
+  .post-meta span { display: inline-flex; gap: 6px; align-items: center; }
+  .post-meta :global(.share) { margin-left: auto; }
+  :global(.post-photo) { margin: 32px 0 8px; }
+  .prose { max-width: none; }
+  .pillar-box { display: grid; grid-template-columns: 44px 1fr; gap: 18px; margin: 48px 0 0; padding: 24px; border-radius: var(--radius); border: 1px solid rgba(140, 211, 54, 0.4); background: var(--surface); }
+  .pillar-box .icon-chip { margin: 0; }
+  .pillar-box h2 { font-size: 1.3rem; font-weight: 600; letter-spacing: 0; margin-bottom: 6px; }
+  .pillar-box p { color: var(--muted); }
+  .more-t { font-size: clamp(1.5rem, 2.4vw, 2rem); margin-bottom: 24px; }
+  .more { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .more__card { height: 100%; display: flex !important; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .more__card .link-arrow { margin-top: auto; }
+  @media (max-width: 720px) { .more { grid-template-columns: 1fr; } .post-meta :global(.share) { margin-left: 0; } }
+</style>

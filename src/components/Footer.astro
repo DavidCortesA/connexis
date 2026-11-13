@@ -1,0 +1,94 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { SITE, fullAddress } from '../data/site';
+import { services } from '../data/services';
+// ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
+// import { posts } from '../data/posts';
+
+interface Props { variant?: 'default' | 'landing' }
+const { variant = 'default' } = Astro.props;
+const year = new Date().getFullYear();
+const socials = [
+  { name: 'LinkedIn', href: SITE.social.linkedin, icon: 'LinkedIn' },
+  { name: 'Facebook', href: SITE.social.facebook, icon: 'Facebook' },
+  { name: 'Instagram', href: SITE.social.instagram, icon: 'Instagram' },
+].filter((s) => s.href) as { name: string; href: string; icon: 'LinkedIn' | 'Facebook' | 'Instagram' }[];
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+---
+<footer class="footer">
+  {variant === 'default' && (
+    <div class="wrap footer__grid">
+      <div class="footer__brand">
+        <Logo height={28} idSuffix="footer" />
+        <p>Soluciones de ciberseguridad, redes y seguridad electrónica para pequeñas y medianas empresas en Monterrey.</p>
+        {socials.length > 0 && (
+          <ul class="socials">
+            {socials.map((s) => (
+              <li><a href={s.href} rel="noopener" target="_blank"><Icon name={s.icon} size={18} label={`${SITE.name} en ${s.name}`} /></a></li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <nav aria-labelledby="f-servicios">
+        <h2 id="f-servicios" class="footer__title">Servicios</h2>
+        <ul>
+          {services.map((s) => <li><a href={`/servicios/${s.slug}`}>{s.name}</a></li>)}
+          <li><a href="/servicios">Todos los servicios</a></li>
+          <li><a href="/evaluacion">Evaluación de ciberseguridad</a></li>
+        </ul>
+      </nav>
+      {/* ETAPA 2 · Casos de éxito y ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
+      <nav aria-labelledby="f-recursos">
+        <h2 id="f-recursos" class="footer__title">Recursos</h2>
+        <ul>
+          <li><a href="/casos-exito">Casos de éxito</a></li>
+          <li><a href="/blog">Blog</a></li>
+          {posts.map((p) => <li><a href={`/blog/${p.slug}`}>{p.label}</a></li>)}
+        </ul>
+      </nav>
+      */}
+      <div>
+        <h2 class="footer__title">Contacto</h2>
+        <address>
+          <ul>
+            <li><a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="footer"><Icon name="Phone" size={17} /> {SITE.phone}</a></li>
+            <li><a href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="footer"><Icon name="Mail" size={17} /> {SITE.email}</a></li>
+            <li><a href={mapsUrl} target="_blank" rel="noopener"><Icon name="MapPin" size={17} /> <span>{fullAddress}<span class="sr-only"> (abre Google Maps)</span></span></a></li>
+            <li><span><Icon name="Clock" size={17} /> {SITE.hoursLabel}</span></li>
+          </ul>
+        </address>
+      </div>
+    </div>
+  )}
+  <div class="wrap footer__bottom">
+    <p>© {year} {SITE.name}. Todos los derechos reservados.</p>
+    <ul>
+      <li><a href="/aviso-privacidad">Aviso de privacidad</a></li>
+      <li><a href="/terminos">Términos y condiciones</a></li>
+      <li><button type="button" class="linklike" data-cookie-open>Preferencias de cookies</button></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 1px solid var(--line); background: var(--bg-2); padding-top: clamp(48px, 6vw, 80px); font-size: 0.95rem; }
+  .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1.4fr; gap: 40px; padding-bottom: 48px; }
+  .footer__brand p { color: var(--muted); max-width: 34ch; margin: 18px 0; }
+  .footer__brand :global(svg) { height: 28px; width: auto; }
+  .footer__title { font-size: 0.95rem; font-weight: 600; margin-bottom: 16px; letter-spacing: 0; }
+  .footer ul { list-style: none; display: grid; gap: 10px; }
+  .footer a, .footer address span { color: var(--muted); text-decoration: none; display: inline-flex; gap: 10px; align-items: flex-start; font-style: normal; }
+  .footer a:hover { color: var(--text); text-decoration: underline; }
+  .footer address :global(svg) { color: var(--lime); flex: none; margin-top: 3px; }
+  .socials { display: flex !important; gap: 10px !important; }
+  .socials a { width: 40px; height: 40px; border: 1px solid var(--line-strong); border-radius: 10px; display: grid !important; place-items: center; }
+  .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding-block: 24px; color: var(--faint); font-size: 0.85rem; }
+  .footer__bottom p { margin: 0; }
+  .footer__bottom ul { display: flex; flex-wrap: wrap; gap: 20px; }
+  .footer__bottom a, .linklike { color: var(--muted); font-size: 0.85rem; }
+  .linklike { background: none; border: 0; padding: 0; cursor: pointer; text-decoration: none; }
+  .linklike:hover { color: var(--text); text-decoration: underline; }
+  @media (max-width: 899px) { .footer__grid { grid-template-columns: 1fr 1fr; } .footer__brand { grid-column: 1 / -1; } }
+  @media (max-width: 520px) { .footer__grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,133 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { SITE, NAV, cleanPath } from '../data/site';
+import { services } from '../data/services';
+
+interface Props { variant?: 'default' | 'landing' }
+const { variant = 'default' } = Astro.props;
+const path = cleanPath(Astro.url.pathname);
+const isActive = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(href + '/'));
+---
+{variant === 'default' && (
+  <div class="topbar" aria-label="Datos de contacto">
+    <div class="wrap topbar__in">
+      <span><Icon name="MapPin" size={15} /> {SITE.address.locality}, {SITE.address.regionCode}</span>
+      <a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="topbar"><Icon name="Phone" size={15} /> {SITE.phone}</a>
+      <a href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="topbar"><Icon name="Mail" size={15} /> {SITE.email}</a>
+    </div>
+  </div>
+)}
+<header class:list={['site-header', { 'site-header--landing': variant === 'landing' }]} data-header>
+  <div class="wrap site-header__in">
+    <a href="/" class="brand" aria-label="ConneXis, ir al inicio"><Logo height={28} idSuffix="header" /></a>
+
+    {variant === 'default' ? (
+      <>
+        <nav class="nav" aria-label="Principal">
+          <ul>
+            {NAV.map((item) => (
+              <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+            ))}
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <a class="header-phone" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="header"><Icon name="Phone" size={17} /> <span>{SITE.phone}</span></a>
+          <a class="btn btn--sm header-cta" href="/contacto" data-track="cta_click" data-track-loc="header">Solicitar diagnóstico</a>
+          <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-btn>
+            <span class="sr-only" data-menu-label>Abrir menú</span>
+            <Icon name="Menu" size={22} class="i-open" />
+            <Icon name="X" size={22} class="i-close" />
+          </button>
+        </div>
+      </>
+    ) : (
+      <a class="header-phone header-phone--landing" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="header-landing"><Icon name="Phone" size={17} /> <span>{SITE.phone}</span></a>
+    )}
+  </div>
+
+  {variant === 'default' && (
+    <div class="mobile-menu" id="menu-movil" hidden data-menu>
+      <nav aria-label="Menú móvil" class="wrap">
+        <ul>
+          <li><a href="/" aria-current={path === '/' ? 'page' : undefined}>Inicio</a></li>
+          {NAV.map((item) => (
+            <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+          ))}
+          {services.map((s) => <li><a class="sub" href={`/servicios/${s.slug}`} aria-current={path === `/servicios/${s.slug}` ? 'page' : undefined}>{s.name}</a></li>)}
+        </ul>
+        <a class="btn btn--block" href="/contacto">Solicitar diagnóstico <Icon name="ArrowRight" class="i-arrow" /></a>
+      </nav>
+    </div>
+  )}
+</header>
+
+<style>
+  .topbar { border-bottom: 1px solid var(--line); font-size: 0.82rem; color: var(--muted); background: var(--bg); }
+  .topbar__in { display: flex; gap: 28px; align-items: center; min-height: 38px; }
+  .topbar span, .topbar a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+  .topbar a:hover { color: var(--text); }
+  .topbar :global(svg) { color: var(--lime); }
+  @media (max-width: 899px) { .topbar { display: none; } }
+
+  .site-header { position: sticky; top: 0; z-index: 100; background: rgba(10, 13, 16, 0.82); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+  .site-header.is-scrolled { border-bottom-color: var(--line); }
+  .site-header__in { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: var(--header-h); }
+  .brand { display: inline-flex; flex: none; }
+  .brand :global(svg) { width: auto; height: 28px; }
+
+  .nav ul { list-style: none; display: flex; gap: 6px; }
+  .nav a { display: block; padding: 10px 14px; border-radius: 8px; text-decoration: none; font-size: 0.95rem; color: var(--muted); position: relative; transition: color 0.2s; }
+  .nav a:hover { color: var(--text); }
+  .nav a[aria-current='page'] { color: var(--text); }
+  .nav a[aria-current='page']::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 2px; background: var(--lime); border-radius: 2px; }
+
+  .header-actions { display: flex; align-items: center; gap: 16px; }
+  .header-phone { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; white-space: nowrap; font-size: 0.92rem; color: var(--text); font-variant-numeric: tabular-nums; }
+  .header-phone :global(svg) { color: var(--lime); }
+  .header-phone:hover span { text-decoration: underline; }
+
+  .menu-btn { display: none; width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line-strong); background: transparent; cursor: pointer; place-items: center; }
+  .menu-btn :global(.i-close) { display: none; }
+  .menu-btn[aria-expanded='true'] :global(.i-open) { display: none; }
+  .menu-btn[aria-expanded='true'] :global(.i-close) { display: block; }
+
+  .mobile-menu { border-top: 1px solid var(--line); background: var(--bg); padding: 12px 0 24px; max-height: calc(100dvh - var(--header-h)); overflow-y: auto; }
+  .mobile-menu ul { list-style: none; margin-bottom: 20px; }
+  .mobile-menu li a { display: block; padding: 14px 4px; font-size: 1.15rem; text-decoration: none; border-bottom: 1px solid var(--line); }
+  .mobile-menu a[aria-current='page'] { color: var(--lime); }
+  .mobile-menu a.sub { padding-left: 20px; font-size: 1rem; color: var(--muted); }
+
+  .nav a { white-space: nowrap; }
+  @media (max-width: 1199px) { .header-phone:not(.header-phone--landing) span { display: none; } .nav a { padding-inline: 10px; } }
+  @media (max-width: 899px) {
+    .nav, .header-cta, .header-phone:not(.header-phone--landing) { display: none; }
+    .menu-btn { display: grid; }
+    .header-phone--landing span { display: inline; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const label = document.querySelector<HTMLElement>('[data-menu-label]');
+
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  function setOpen(open: boolean) {
+    if (!btn || !menu) return;
+    btn.setAttribute('aria-expanded', String(open));
+    menu.hidden = !open;
+    if (label) label.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) menu.querySelector<HTMLElement>('a')?.focus();
+  }
+  btn?.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') { setOpen(false); btn.focus(); }
+  });
+  window.matchMedia('(min-width: 900px)').addEventListener('change', (e) => e.matches && setOpen(false));
+</script>

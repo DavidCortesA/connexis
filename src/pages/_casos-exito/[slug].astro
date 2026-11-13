@@ -1,0 +1,125 @@
+---
+// ETAPA 2 · Casos de éxito — DESACTIVADA en la Etapa 1.
+// El prefijo "_" de la carpeta hace que Astro no genere esta ruta. Para activarla,
+// renombra src/pages/_casos-exito → src/pages/casos-exito y descomenta lo marcado "ETAPA 2".
+// Detalle de caso de éxito. Los marcados como ejemplo son noindex y no entran al sitemap.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import Tldr from '../../components/Tldr.astro';
+import { cases } from '../../data/cases.mjs';
+import { getService } from '../../data/services';
+import { img } from '../../data/images';
+
+export function getStaticPaths() {
+  return cases.map((c) => ({ params: { slug: c.slug }, props: { c } }));
+}
+const { c } = Astro.props as { c: (typeof cases)[number] };
+const others = cases.filter((x) => x.slug !== c.slug).slice(0, 2);
+const pillar = getService(c.service);
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Casos de éxito', href: '/casos-exito' },
+  { name: c.sector, href: `/casos-exito/${c.slug}` },
+];
+---
+<BaseLayout
+  title={`${c.serviceLabel} en ${c.sector.toLowerCase()}: caso de éxito | ConneXis`}
+  description={`${c.challenge} Solución: ${c.solution} Resultado: ${c.result}`.slice(0, 158)}
+  shareTitle={c.title}
+  image={img(c.image)}
+  imageAlt={c.imageAlt}
+  breadcrumbs={crumbs}
+  noindex={c.ejemplo}
+>
+  <article>
+    <header class="section--tight">
+      <div class="wrap">
+        <Breadcrumbs items={crumbs} />
+        <h1>{c.title}</h1>
+        <div class="tags"><span class="tag">{c.sector}</span><span class="tag">{c.serviceLabel}</span><span class="tag">{c.location}</span>{c.ejemplo && <span class="tag tag--lime">Caso de ejemplo</span>}</div>
+      </div>
+    </header>
+
+    <div class="wrap case-grid">
+      <div class="case-main">
+        <Tldr title="Resumen del caso" items={[`Reto: ${c.challenge}`, `Solución: ${c.solution}`, `Resultado: ${c.result}`]} />
+
+        <h2>Contexto del cliente</h2>
+        <p>{c.context}</p>
+        <h2>El problema</h2>
+        <p>{c.challenge}</p>
+        <h2>La solución</h2>
+        <ol class="case-steps">{c.steps.map((s) => <li>{s}</li>)}</ol>
+
+        <h2>Galería</h2>
+        <div class="gallery">
+          <Photo name={c.image} alt={c.imageAlt} ratio="16/10" eager sizes="(min-width: 900px) 60vw, 100vw" />
+        </div>
+
+        <h2>Resultados</h2>
+        <ul class="metrics">
+          {c.metrics.map((m) => <li><span class="num">{m.value}</span><span>{m.label}</span></li>)}
+        </ul>
+        {c.ejemplo && <p class="muted small">Cifras ilustrativas de un caso de ejemplo.</p>}
+      </div>
+
+      <aside class="case-side">
+        <dl class="card facts">
+          <div><dt>Sector</dt><dd>{c.sector}</dd></div>
+          <div><dt>Servicio</dt><dd>{pillar ? <a href={`/servicios/${pillar.slug}`}>{c.serviceLabel}</a> : c.serviceLabel}</dd></div>
+          <div><dt>Ubicación</dt><dd>{c.location}</dd></div>
+          <div><dt>Duración</dt><dd>{c.duration}</dd></div>
+        </dl>
+        <div class="card side-cta">
+          <h2>¿Un reto parecido?</h2>
+          <p>Platiquemos sobre su empresa.</p>
+          <a class="btn btn--block" href="/contacto" data-track="cta_click" data-track-loc="caso-sidebar">Solicitar evaluación</a>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <section class="section" aria-labelledby="otros">
+    <div class="wrap">
+      <h2 id="otros">Otros casos</h2>
+      <ul class="others">
+        {others.map((o) => (
+          <li><a class="other" href={`/casos-exito/${o.slug}`}>
+            <Photo name={o.image} alt={o.imageAlt} ratio="16/9" sizes="(min-width: 900px) 50vw, 100vw" widths={[480, 800]} />
+            <span class="tag">{o.sector}</span><h3>{o.title}</h3>
+          </a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  h1 { font-size: clamp(2rem, 4.4vw, 3.4rem); max-width: 22ch; }
+  .case-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: clamp(28px, 5vw, 64px); align-items: start; padding-bottom: 32px; }
+  .case-main h2 { font-size: clamp(1.4rem, 2.2vw, 1.8rem); margin-top: 1.8em; }
+  .case-main p { color: #d3d9df; }
+  .case-steps { padding-left: 1.3em; display: grid; gap: 8px; color: #d3d9df; }
+  .case-steps li::marker { color: var(--lime); font-weight: 600; }
+  .metrics { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .metrics li { border: 1px solid var(--line); border-radius: 12px; padding: 18px; background: var(--surface); display: grid; gap: 4px; }
+  .metrics .num { font-size: 2rem; color: var(--lime); font-weight: 500; line-height: 1; }
+  .metrics li span:last-child { color: var(--muted); font-size: 0.9rem; }
+  .small { font-size: 0.85rem; margin-top: 10px; }
+  .case-side { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: 12px; }
+  .facts { display: grid; gap: 14px; margin: 0; }
+  .facts dt { color: var(--faint); font-size: 0.82rem; }
+  .facts dd { margin: 2px 0 0; font-weight: 500; }
+  .facts a { color: var(--lime); }
+  .side-cta h2 { font-size: 1.2rem; font-weight: 600; letter-spacing: 0; margin-bottom: 4px; }
+  .side-cta p { margin-bottom: 16px; }
+  .others { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .other { display: grid; gap: 10px; text-decoration: none; }
+  .other .tag { justify-self: start; }
+  .other h3 { margin: 0; }
+  .other:hover h3 { color: var(--lime); }
+  @media (max-width: 899px) { .case-grid { grid-template-columns: 1fr; } .case-side { position: static; } .others { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .metrics { grid-template-columns: 1fr; } }
+</style>

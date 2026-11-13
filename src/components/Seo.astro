@@ -1,0 +1,144 @@
+---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
+import { SITE, ENV, fullAddress, cleanPath } from '../data/site';
+import type { Faq } from '../data/services';
+
+export type Crumb = { name: string; href: string };
+export interface Props {
+  title: string;
+  description: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  breadcrumbs?: Crumb[];
+  faqs?: Faq[];
+  schema?: Record<string, unknown>[];
+  article?: { published: string; updated: string; section?: string };
+}
+
+const { title, description, image, imageAlt, noindex = false, type = 'website', breadcrumbs = [], faqs = [], schema = [], article } = Astro.props;
+
+if (import.meta.env.DEV) {
+  if (title.length > 65) console.warn(`[SEO] Meta title largo (${title.length}): ${title}`);
+  if (description.length > 160) console.warn(`[SEO] Meta description larga (${description.length}): ${title}`);
+}
+
+const path = cleanPath(Astro.url.pathname);
+const canonical = `${SITE.url}${path}`;
+
+// Imagen OG: la de la página recortada a 1200x630, o la imagen por defecto de la marca.
+let ogImage = `${SITE.url}/og-default.jpg`;
+if (image) {
+  const og = await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 });
+  ogImage = new URL(og.src, SITE.url).href;
+}
+
+const businessId = `${SITE.url}/#negocio`;
+const sameAs = Object.values(SITE.social).filter(Boolean);
+
+const business = {
+  '@type': ['LocalBusiness', 'ProfessionalService'],
+  '@id': businessId,
+  name: SITE.name,
+  legalName: SITE.legalName,
+  description: SITE.description,
+  url: `${SITE.url}/`,
+  logo: `${SITE.url}/icon-512.png`,
+  image: `${SITE.url}/og-default.jpg`,
+  telephone: SITE.phone,
+  email: SITE.email,
+  priceRange: '$$',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.locality,
+    addressRegion: SITE.address.region,
+    postalCode: SITE.address.postalCode,
+    addressCountry: SITE.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+  openingHoursSpecification: SITE.hours.map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes })),
+  areaServed: SITE.areaServed.map((c) => ({ '@type': 'City', name: c })),
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`,
+  contactPoint: { '@type': 'ContactPoint', telephone: SITE.phone, email: SITE.email, contactType: 'sales', areaServed: 'MX', availableLanguage: ['es'] },
+  knowsAbout: ['Ciberseguridad', 'Firewall perimetral', 'Prevención de intrusos', 'Análisis de vulnerabilidades', 'Cableado estructurado', 'Redes empresariales', 'Seguridad electrónica'],
+  ...(sameAs.length ? { sameAs } : {}),
+};
+
+const graph: Record<string, unknown>[] = [
+  business,
+  { '@type': 'WebSite', '@id': `${SITE.url}/#sitio`, url: `${SITE.url}/`, name: SITE.name, inLanguage: SITE.lang, publisher: { '@id': businessId } },
+  {
+    '@type': type === 'article' ? 'WebPage' : 'WebPage',
+    '@id': `${canonical}#pagina`,
+    url: canonical,
+    name: title,
+    description,
+    inLanguage: SITE.lang,
+    isPartOf: { '@id': `${SITE.url}/#sitio` },
+    about: { '@id': businessId },
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage },
+    ...(breadcrumbs.length ? { breadcrumb: { '@id': `${canonical}#migas` } } : {}),
+  },
+];
+
+if (breadcrumbs.length) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#migas`,
+    itemListElement: breadcrumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: `${SITE.url}${c.href === '/' ? '/' : c.href}` })),
+  });
+}
+if (faqs.length) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  });
+}
+if (type === 'article' && article) {
+  graph.push({
+    '@type': 'BlogPosting',
+    '@id': `${canonical}#articulo`,
+    headline: title,
+    description,
+    image: ogImage,
+    datePublished: article.published,
+    dateModified: article.updated,
+    articleSection: article.section,
+    inLanguage: SITE.lang,
+    mainEntityOfPage: { '@id': `${canonical}#pagina` },
+    author: { '@id': businessId },
+    publisher: { '@id': businessId },
+  });
+}
+graph.push(...schema);
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+{ENV.gscVerification && <meta name="google-site-verification" content={ENV.gscVerification} />}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt || `${SITE.name}: ${SITE.tagline}`} />
+{article && <meta property="article:published_time" content={article.published} />}
+{article && <meta property="article:modified_time" content={article.updated} />}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<script type="application/ld+json" set:html={jsonLd} />

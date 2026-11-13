@@ -1,0 +1,88 @@
+---
+// ETAPA 3 · Blog — DESACTIVADA en la Etapa 1.
+// El prefijo "_" de src/pages/_blog hace que Astro no genere estas rutas. Para activarlas,
+// renombra src/pages/_blog → src/pages/blog y descomenta lo marcado "ETAPA 3".
+// Cluster de: /servicios/ciberseguridad · Intención: informacional-comercial.
+import PostLayout from '../../layouts/PostLayout.astro';
+
+const faqs = [
+  { q: '¿Cada cuánto conviene hacer una evaluación de vulnerabilidades?', a: 'Como mínimo una vez al año y después de cualquier cambio importante: mudanza, nueva sucursal, nuevo sistema o un incidente de seguridad.' },
+  { q: '¿La evaluación puede tumbar mis sistemas?', a: 'Es poco probable. Los escaneos se configuran para no saturar equipos y se programan en horarios acordados. Las pruebas más intrusivas solo se hacen con autorización expresa.' },
+  { q: '¿Qué diferencia hay con una prueba de penetración?', a: 'La evaluación encuentra y clasifica fallas conocidas de forma amplia. La prueba de penetración intenta explotar algunas de ellas para demostrar hasta dónde llegaría un atacante.' },
+  { q: '¿Necesito tener un área de TI para hacerla?', a: 'No. Basta con una persona de contacto que conozca la red y pueda dar acceso a los equipos que se van a revisar.' },
+];
+const tldr = [
+  'Qué es: una revisión de su red, equipos y sistemas para encontrar fallas de seguridad conocidas.',
+  'Cuánto dura: entre 3 y 10 días hábiles para una PyME, según el número de equipos.',
+  'Qué recibe: un informe con hallazgos clasificados por riesgo y un plan de corrección.',
+  'No es lo mismo que: una prueba de penetración, que además intenta explotar las fallas.',
+  'Cuándo hacerla: al menos una vez al año y después de cambios importantes.',
+];
+---
+<PostLayout
+  slug="evaluacion-vulnerabilidades"
+  answer="Una evaluación de vulnerabilidades es una revisión técnica de su red, sus equipos y sus sistemas para encontrar fallas de seguridad antes que un atacante. Para una PyME suele tomar de 3 a 10 días hábiles y termina con un informe que ordena los hallazgos por riesgo y dice qué corregir primero."
+  tldr={tldr}
+  faqs={faqs}
+>
+  <h2>¿Qué revisa una evaluación de vulnerabilidades?</h2>
+  <p>El objetivo es ver su empresa como la vería alguien desde fuera y desde dentro de la red. Se revisan cuatro frentes:</p>
+  <ul>
+    <li><strong>Perímetro:</strong> el firewall o módem, los puertos abiertos a internet y los servicios publicados (correo, VPN, escritorio remoto).</li>
+    <li><strong>Red interna:</strong> switches, Wi‑Fi, segmentación y equipos con contraseñas de fábrica.</li>
+    <li><strong>Equipos y servidores:</strong> sistemas operativos sin actualizar, software vulnerable y protección de endpoints.</li>
+    <li><strong>Accesos:</strong> cuentas compartidas, usuarios inactivos y permisos excesivos.</li>
+  </ul>
+
+  <h2>¿Cómo se hace, paso a paso?</h2>
+  <ol>
+    <li><strong>Alcance y autorización.</strong> Se define qué equipos y redes se revisan, en qué horario y quién autoriza por escrito.</li>
+    <li><strong>Inventario.</strong> Se identifican los dispositivos conectados, incluidos los que nadie recordaba.</li>
+    <li><strong>Escaneo.</strong> Herramientas especializadas comparan cada equipo contra bases de vulnerabilidades conocidas.</li>
+    <li><strong>Validación manual.</strong> Un especialista confirma los hallazgos y descarta falsos positivos.</li>
+    <li><strong>Informe y presentación.</strong> Se explican los resultados al equipo directivo, sin tecnicismos.</li>
+  </ol>
+
+  <h2>¿Qué entregables recibe?</h2>
+  <div class="table-wrap">
+    <table>
+      <caption>Entregables típicos de una evaluación de vulnerabilidades</caption>
+      <thead><tr><th scope="col">Entregable</th><th scope="col">Para qué le sirve</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Resumen ejecutivo</th><td>Entender el nivel de riesgo en una página, para decidir.</td></tr>
+        <tr><th scope="row">Hallazgos priorizados</th><td>Saber qué es crítico, alto, medio o bajo.</td></tr>
+        <tr><th scope="row">Plan de corrección</th><td>Qué hacer, en qué orden y con qué esfuerzo.</td></tr>
+        <tr><th scope="row">Detalle técnico</th><td>Que su proveedor o equipo de TI pueda corregir cada falla.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Evaluación de vulnerabilidades vs. prueba de penetración</h2>
+  <p>Se complementan, pero no son lo mismo. La evaluación es amplia y encuentra muchas fallas; la prueba de penetración es profunda y demuestra el impacto real de algunas.</p>
+  <div class="table-wrap">
+    <table>
+      <caption>Diferencias entre evaluación de vulnerabilidades y prueba de penetración</caption>
+      <thead><tr><th scope="col">Aspecto</th><th scope="col">Evaluación de vulnerabilidades</th><th scope="col">Prueba de penetración</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Pregunta que responde</th><td>¿Qué fallas tengo?</td><td>¿Hasta dónde llegaría un atacante?</td></tr>
+        <tr><th scope="row">Alcance</th><td>Amplio: toda la red</td><td>Profundo: objetivos acordados</td></tr>
+        <tr><th scope="row">Riesgo para la operación</th><td>Bajo</td><td>Controlado, requiere más coordinación</td></tr>
+        <tr><th scope="row">Cuándo conviene</th><td>Como primer paso y cada año</td><td>Después de corregir lo crítico</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>¿Cómo prepararse?</h2>
+  <h3>Antes de la evaluación</h3>
+  <ul>
+    <li>Tenga a la mano la lista de sucursales, servidores y servicios en la nube.</li>
+    <li>Designe a una persona de contacto que pueda dar accesos.</li>
+    <li>Avise a su proveedor de internet o de sistemas si alguno de sus servicios entra en el alcance.</li>
+  </ul>
+  <h3>Después de la evaluación</h3>
+  <ul>
+    <li>Corrija primero los hallazgos críticos expuestos a internet.</li>
+    <li>Programe una revisión de seguimiento para confirmar las correcciones.</li>
+  </ul>
+  <blockquote>En ConneXis la evaluación es el primer paso de cualquier proyecto de <a href="/servicios/ciberseguridad">ciberseguridad</a>: así se invierte primero donde está el riesgo real. Si su red está mezclada (invitados, cámaras y oficinas juntos), vea también cómo funciona la <a href="/blog/segmentacion-red-empresarial">segmentación de red</a>.</blockquote>
+</PostLayout>

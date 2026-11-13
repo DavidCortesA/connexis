@@ -1,0 +1,69 @@
+---
+// Intención: navegacional/transaccional ("contacto ConneXis", "teléfono ConneXis").
+// Responde de inmediato con teléfono, WhatsApp, correo y dirección; formulario completo con servicio.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Faq from '../components/Faq.astro';
+import { SITE, whatsappUrl, fullAddress } from '../data/site';
+
+const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Contacto', href: '/contacto' }];
+const faqs = [
+  { q: '¿Cuál es el horario de atención?', a: `${SITE.hoursLabel}. Puede dejar su solicitud en cualquier momento y le respondemos en menos de ${SITE.responseTime}.` },
+  { q: '¿Dónde están ubicados?', a: `En ${fullAddress}. Atendemos en sitio en Monterrey y su área metropolitana.` },
+  { q: '¿Qué información necesitan para cotizar?', a: 'El tipo de instalación, número aproximado de usuarios o equipos y la ubicación. Con eso agendamos una visita o una llamada de diagnóstico.' },
+];
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`;
+const contactSchema = [{ '@type': 'ContactPage', name: 'Contacto ConneXis', url: `${SITE.url}/contacto`, about: { '@id': `${SITE.url}/#negocio` } }];
+---
+<BaseLayout
+  title="Contacto ConneXis: teléfono, WhatsApp y dirección"
+  description={`Llame al ${SITE.phone}, escriba por WhatsApp o deje sus datos. ConneXis atiende empresas en Monterrey y responde en menos de ${SITE.responseTime}.`}
+  shareTitle="Contacto ConneXis"
+  breadcrumbs={crumbs}
+  faqs={faqs}
+  schema={contactSchema}
+  mobileCta={{ href: '#form-contacto', label: 'Formulario' }}
+>
+  <section class="section--tight" aria-labelledby="h-contacto">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <div class="contact">
+        <div>
+          <p class="eyebrow">Contacto</p>
+          <h1 id="h-contacto">Hablemos de la seguridad de <span class="hl">su empresa</span></h1>
+          <p class="lead">La forma más rápida es llamar o escribir por WhatsApp. Si prefiere, deje sus datos y un especialista le contacta en menos de {SITE.responseTime}.</p>
+          <ul class="channels">
+            <li><a class="channel" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="contacto"><Icon name="Phone" size={22} /><span><strong>Teléfono</strong>{SITE.phone}</span></a></li>
+            <li><a class="channel" href={whatsappUrl()} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="contacto"><Icon name="WhatsApp" size={22} /><span><strong>WhatsApp</strong>Respuesta en horario laboral<span class="sr-only"> (abre en otra pestaña)</span></span></a></li>
+            <li><a class="channel" href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="contacto"><Icon name="Mail" size={22} /><span><strong>Correo</strong>{SITE.email}</span></a></li>
+            <li><a class="channel" href={mapsUrl} target="_blank" rel="noopener"><Icon name="MapPin" size={22} /><span><strong>Oficina</strong>{fullAddress}<span class="sr-only"> (abre Google Maps)</span></span></a></li>
+            <li><div class="channel"><Icon name="Clock" size={22} /><span><strong>Horario</strong>{SITE.hoursLabel}</span></div></li>
+          </ul>
+        </div>
+        <LeadForm id="form-contacto" variant="full" source="contacto" title="Envíenos sus datos" subtitle="Le contactamos para entender su necesidad." submitLabel="Enviar solicitud" />
+      </div>
+    </div>
+  </section>
+  <Faq faqs={faqs} title="Antes de escribirnos" />
+</BaseLayout>
+
+<script>
+  // Preselecciona el servicio si llega como /contacto?servicio=redes-empresariales
+  const map: Record<string, string> = { ciberseguridad: 'Ciberseguridad', 'redes-empresariales': 'Redes empresariales', 'seguridad-electronica': 'Seguridad electrónica' };
+  const v = map[new URLSearchParams(location.search).get('servicio') ?? ''];
+  const sel = document.querySelector<HTMLSelectElement>('#form-contacto-servicio');
+  if (v && sel) sel.value = v;
+</script>
+
+<style>
+  .contact { display: grid; grid-template-columns: 1fr minmax(0, 480px); gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .lead { margin: 18px 0 28px; }
+  .channels { list-style: none; display: grid; gap: 10px; }
+  .channel { display: grid; grid-template-columns: 24px 1fr; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-decoration: none; color: var(--muted); transition: border-color 0.2s; }
+  a.channel:hover { border-color: var(--lime); }
+  .channel :global(svg) { color: var(--lime); }
+  .channel strong { display: block; color: var(--text); font-weight: 600; }
+  @media (max-width: 899px) { .contact { grid-template-columns: 1fr; } }
+</style>

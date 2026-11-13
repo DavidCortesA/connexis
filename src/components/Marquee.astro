@@ -1,0 +1,22 @@
+---
+// "Cinta animada" con los frentes de protección. Se detiene al pasar el cursor y con reduced-motion.
+interface Props { items: string[]; label?: string }
+const { items, label = 'Servicios' } = Astro.props;
+---
+<div class="marquee" role="region" aria-label={label}>
+  <ul class="marquee__track">
+    {items.map((t) => <li>{t}</li>)}
+  </ul>
+  <ul class="marquee__track" aria-hidden="true">
+    {items.map((t) => <li>{t}</li>)}
+  </ul>
+</div>
+<style>
+  .marquee { display: flex; overflow: hidden; border-block: 1px solid var(--line); background: var(--bg-2); --gap: 48px; mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee__track { list-style: none; display: flex; flex: none; gap: var(--gap); padding: 18px calc(var(--gap) / 2); min-width: 100%; justify-content: space-around; animation: marquee 38s linear infinite; }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+  .marquee li { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; color: var(--muted); font-size: 0.95rem; }
+  .marquee li::before { content: ''; width: 7px; height: 7px; background: var(--lime); transform: rotate(45deg); }
+  @keyframes marquee { to { transform: translateX(-100%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; flex-wrap: wrap; } .marquee__track[aria-hidden] { display: none; } }
+</style>

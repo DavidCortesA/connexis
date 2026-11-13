@@ -1,0 +1,122 @@
+---
+// Formulario de prospectos.
+// - Validación accesible (mensajes por campo + resumen con aria-live) y estado de carga en el botón.
+// - Netlify Forms lo detecta en el HTML estático (data-netlify). En Vercel u otro host, define
+//   PUBLIC_FORM_ENDPOINT (Formspree, Web3Forms, Basin, etc.) y se enviará ahí.
+// - Al enviar correctamente redirige a /gracias, donde se registra la conversión.
+import Icon from './Icon.astro';
+import { ENV, SITE } from '../data/site';
+
+interface Props {
+  id: string;
+  variant?: 'short' | 'full';
+  service?: string;
+  title?: string;
+  subtitle?: string;
+  submitLabel?: string;
+  headingLevel?: 'h2' | 'h3';
+  source: string;
+}
+const {
+  id, variant = 'short', service = '', title = 'Solicite su diagnóstico', subtitle = 'Solo 4 datos. Le contactamos para agendar.',
+  submitLabel = 'Quiero mi diagnóstico', headingLevel = 'h2', source,
+} = Astro.props;
+const H = headingLevel;
+const f = (name: string) => `${id}-${name}`;
+const serviceOptions = ['Ciberseguridad', 'Cableado estructurado', 'Redes empresariales', 'Seguridad electrónica', 'Fibra óptica', 'Otro'];
+---
+<form class="lead" id={id} name="solicitud" method="POST" action="/gracias" novalidate
+  data-netlify="true" netlify-honeypot="bot-field" data-lead-form data-endpoint={ENV.formEndpoint} data-source={source}
+  aria-labelledby={f('title')}>
+  <input type="hidden" name="form-name" value="solicitud" />
+  <input type="hidden" name="origen" value={source} />
+  <p class="hp" aria-hidden="true"><label>No llenar este campo <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+  <div class="lead__head">
+    <H class="lead__title" id={f('title')}>{title}</H>
+    <p class="lead__sub">{subtitle}</p>
+  </div>
+
+  <div class="lead__summary" role="alert" aria-live="assertive" hidden data-summary></div>
+
+  <div class="field">
+    <label for={f('nombre')}>Nombre <span class="req" aria-hidden="true">*</span></label>
+    <input id={f('nombre')} name="nombre" type="text" autocomplete="name" required minlength="2" aria-describedby={f('nombre-err')} />
+    <p class="field__err" id={f('nombre-err')} data-err></p>
+  </div>
+  <div class="field">
+    <label for={f('empresa')}>Empresa <span class="req" aria-hidden="true">*</span></label>
+    <input id={f('empresa')} name="empresa" type="text" autocomplete="organization" required minlength="2" aria-describedby={f('empresa-err')} />
+    <p class="field__err" id={f('empresa-err')} data-err></p>
+  </div>
+  <div class="field">
+    <label for={f('correo')}>Correo empresarial <span class="req" aria-hidden="true">*</span></label>
+    <input id={f('correo')} name="correo" type="email" autocomplete="email" inputmode="email" required aria-describedby={f('correo-err')} />
+    <p class="field__err" id={f('correo-err')} data-err></p>
+  </div>
+  <div class="field">
+    <label for={f('telefono')}>Teléfono <span class="req" aria-hidden="true">*</span></label>
+    <input id={f('telefono')} name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+()\s-]{10,18}" aria-describedby={`${f('telefono-hint')} ${f('telefono-err')}`} />
+    <p class="field__hint" id={f('telefono-hint')}>10 dígitos, por ejemplo 81 1234 5678</p>
+    <p class="field__err" id={f('telefono-err')} data-err></p>
+  </div>
+
+  {variant === 'full' ? (
+    <>
+      <div class="field">
+        <label for={f('servicio')}>Servicio de interés</label>
+        <select id={f('servicio')} name="servicio">
+          {serviceOptions.map((o) => <option value={o} selected={o === service}>{o}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for={f('mensaje')}>¿Qué necesita? <span class="opt">(opcional)</span></label>
+        <textarea id={f('mensaje')} name="mensaje" rows="4" maxlength="1500"></textarea>
+      </div>
+    </>
+  ) : (
+    <>
+      <input type="hidden" name="servicio" value={service || 'Diagnóstico general'} />
+      <input type="hidden" name="mensaje" value="" />
+    </>
+  )}
+
+  <button class="btn btn--block" type="submit">
+    <span class="spinner" aria-hidden="true"></span>
+    <span data-btn-label>{submitLabel}</span>
+    <Icon name="ArrowRight" class="i-arrow btn-icon" />
+  </button>
+  <p class="lead__legal">Le contactamos en menos de {SITE.responseTime}. Al enviar acepta nuestro <a href="/aviso-privacidad">aviso de privacidad</a>.</p>
+</form>
+
+<style>
+  .lead { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(20px, 2.6vw, 30px); display: grid; gap: 16px; }
+  .lead__title { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 4px; }
+  .lead__sub { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .field { display: grid; gap: 6px; }
+  label { font-size: 0.92rem; font-weight: 500; }
+  .req { color: var(--lime); }
+  .opt { color: var(--faint); font-weight: 400; }
+  input, select, textarea {
+    width: 100%; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line-strong);
+    background: var(--bg); color: var(--text); font: inherit; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea { resize: vertical; min-height: 110px; }
+  select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) 21px, calc(100% - 15px) 21px; background-size: 5px 5px; background-repeat: no-repeat; }
+  input:hover, select:hover, textarea:hover { border-color: var(--muted); }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; border-color: var(--lime); box-shadow: 0 0 0 3px rgba(140, 211, 54, 0.25); }
+  [aria-invalid='true'] { border-color: var(--danger) !important; }
+  .field__hint { font-size: 0.82rem; color: var(--faint); margin: 0; }
+  .field__err { font-size: 0.86rem; color: var(--danger); margin: 0; min-height: 0; }
+  .field__err:empty { display: none; }
+  .lead__summary { border: 1px solid var(--danger); background: rgba(255, 122, 107, 0.08); color: #ffd6d1; border-radius: 10px; padding: 12px 14px; font-size: 0.92rem; }
+  .lead__summary a { color: #fff; }
+  .lead__legal { font-size: 0.82rem; color: var(--faint); margin: 0; }
+  .lead__legal a { color: var(--lime); }
+</style>
+
+<script>
+  import { initLeadForms } from '../scripts/forms';
+  initLeadForms();
+</script>

@@ -1,0 +1,72 @@
+---
+// ETAPA 3 · Blog — DESACTIVADA en la Etapa 1.
+// El prefijo "_" de src/pages/_blog hace que Astro no genere estas rutas. Para activarlas,
+// renombra src/pages/_blog → src/pages/blog y descomenta lo marcado "ETAPA 3".
+// Cluster de: /servicios/redes-empresariales · Intención: informacional.
+import PostLayout from '../../layouts/PostLayout.astro';
+
+const faqs = [
+  { q: '¿Necesito equipos nuevos para segmentar mi red?', a: 'Necesita switches y puntos de acceso administrables que soporten VLAN. Muchos equipos de oficina ya lo hacen; los de uso doméstico normalmente no.' },
+  { q: '¿La segmentación hace más lenta la red?', a: 'No. Bien configurada suele mejorar el rendimiento, porque el tráfico de cámaras o invitados deja de competir con el de la operación.' },
+  { q: '¿Cuántas redes debo tener?', a: 'Para la mayoría de PyMEs bastan entre tres y cinco: oficina, invitados, cámaras y, si aplica, punto de venta y equipos especiales.' },
+  { q: '¿Segmentar sustituye al firewall?', a: 'No, lo complementa. El firewall controla qué entra y sale de internet; la segmentación controla qué puede hablar con qué dentro de su red.' },
+];
+const tldr = [
+  'Qué es: dividir una red física en varias redes lógicas (VLAN) que no se ven entre sí.',
+  'Qué separar: oficina, invitados, cámaras, punto de venta y equipos especiales.',
+  'Beneficio en seguridad: una intrusión o un virus no se propaga a toda la empresa.',
+  'Beneficio en rendimiento: el tráfico de cámaras e invitados no frena la operación.',
+  'Requisito: switches y puntos de acceso administrables, más un firewall que controle el paso.',
+];
+---
+<PostLayout
+  slug="segmentacion-red-empresarial"
+  answer="Segmentar la red es dividirla en varias redes lógicas, llamadas VLAN, para que invitados, cámaras, punto de venta y equipos de oficina no compartan el mismo espacio. Así, si un equipo se infecta o alguien se conecta sin permiso, el problema queda contenido y el resto de la empresa sigue operando."
+  tldr={tldr}
+  faqs={faqs}
+>
+  <h2>¿Por qué no conviene tener una sola red para todo?</h2>
+  <p>En muchas PyMEs, la computadora de nómina, la cámara del estacionamiento y el celular de un visitante están en la misma red. Eso tiene tres consecuencias:</p>
+  <ul>
+    <li><strong>Riesgo de propagación:</strong> un equipo infectado puede llegar a cualquier otro.</li>
+    <li><strong>Visibilidad indebida:</strong> un invitado podría ver impresoras, carpetas compartidas o cámaras.</li>
+    <li><strong>Lentitud:</strong> la grabación de video o las descargas de invitados compiten con la operación.</li>
+  </ul>
+
+  <h2>¿Qué redes conviene separar en una empresa?</h2>
+  <div class="table-wrap">
+    <table>
+      <caption>Segmentación recomendada para una PyME</caption>
+      <thead><tr><th scope="col">Red (VLAN)</th><th scope="col">Quién se conecta</th><th scope="col">Qué puede hacer</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Oficina</th><td>Computadoras y servidores de la empresa</td><td>Acceso a sistemas internos e internet</td></tr>
+        <tr><th scope="row">Invitados</th><td>Visitantes y celulares personales</td><td>Solo internet, sin ver la red interna</td></tr>
+        <tr><th scope="row">Cámaras y accesos</th><td>Videovigilancia y control de acceso</td><td>Solo hablar con su grabador; sin internet abierto</td></tr>
+        <tr><th scope="row">Punto de venta</th><td>Terminales de cobro y cajas</td><td>Solo los servicios de pago que necesita</td></tr>
+        <tr><th scope="row">Administración</th><td>Switches, puntos de acceso y firewall</td><td>Acceso restringido al personal de TI</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>¿Cómo se implementa?</h2>
+  <ol>
+    <li><strong>Inventario:</strong> listar qué dispositivos hay y a qué grupo pertenece cada uno.</li>
+    <li><strong>Diseño:</strong> definir las VLAN, su direccionamiento y las reglas entre ellas.</li>
+    <li><strong>Configuración:</strong> crear las VLAN en switches y puntos de acceso, y las reglas en el firewall.</li>
+    <li><strong>Migración por etapas:</strong> mover grupos de equipos fuera de horario para no interrumpir.</li>
+    <li><strong>Prueba y documentación:</strong> verificar que cada red solo llega a donde debe y dejar un diagrama.</li>
+  </ol>
+
+  <h2>Señales de que su red necesita segmentarse</h2>
+  <h3>En seguridad</h3>
+  <ul>
+    <li>La contraseña del Wi‑Fi de invitados es la misma que la de la oficina.</li>
+    <li>Las cámaras se ven desde cualquier computadora de la empresa.</li>
+  </ul>
+  <h3>En operación</h3>
+  <ul>
+    <li>La red se pone lenta cuando hay muchas visitas o cuando se revisan grabaciones.</li>
+    <li>Nadie sabe con certeza qué está conectado a la red.</li>
+  </ul>
+  <blockquote>La segmentación es parte del diseño de <a href="/servicios/redes-empresariales">redes empresariales</a> de ConneXis y la base para integrar <a href="/servicios/seguridad-electronica">videovigilancia y control de acceso</a> sin exponer su red.</blockquote>
+</PostLayout>

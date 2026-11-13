@@ -1,0 +1,76 @@
+---
+// ETAPA 2 · Casos de éxito — DESACTIVADA en la Etapa 1.
+// El prefijo "_" de la carpeta hace que Astro no genere esta ruta. Para activarla,
+// renombra src/pages/_casos-exito → src/pages/casos-exito y descomenta lo marcado "ETAPA 2".
+// Índice de casos de éxito. Mientras todos sean ejemplos, la página es noindex (ver astro.config.mjs).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { cases } from '../../data/cases.mjs';
+
+const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Casos de éxito', href: '/casos-exito' }];
+const allExamples = cases.every((c) => c.ejemplo);
+---
+<BaseLayout
+  title="Casos de éxito en ciberseguridad y redes | ConneXis"
+  description="Proyectos de ciberseguridad, cableado estructurado y seguridad electrónica para empresas en Monterrey: reto, solución y resultado de cada uno."
+  shareTitle="Casos de éxito de ConneXis"
+  breadcrumbs={crumbs}
+  noindex={allExamples}
+>
+  <section class="section--tight" aria-labelledby="h-casos">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <p class="eyebrow">Casos de éxito</p>
+      <h1 id="h-casos">Resultados en empresas <span class="hl">como la suya</span></h1>
+      <p class="lead">Cada caso resume el reto del cliente, la solución que implementamos y el resultado medible. Así puede comparar con la situación de su empresa.</p>
+      {allExamples && <p class="note"><Icon name="AlertCircle" size={18} /> Casos de ejemplo para mostrar el formato. Se reemplazan por proyectos reales autorizados por los clientes.</p>}
+    </div>
+  </section>
+
+  <section class="section--tight" aria-label="Lista de casos">
+    <div class="wrap">
+      <ul class="cases">
+        {cases.map((c, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <a class="case" href={`/casos-exito/${c.slug}`}>
+              <Photo name={c.image} alt={c.imageAlt} ratio="4/3" sizes="(min-width: 900px) 33vw, 100vw" widths={[400, 640, 900]} eager={i === 0} />
+              <div class="case__body">
+                <div class="tags"><span class="tag">{c.sector}</span><span class="tag">{c.serviceLabel}</span>{c.ejemplo && <span class="tag tag--lime">ejemplo</span>}</div>
+                <h2>{c.title}</h2>
+                <dl>
+                  <div><dt>Reto</dt><dd>{c.challenge}</dd></div>
+                  <div><dt>Solución</dt><dd>{c.solution}</dd></div>
+                </dl>
+                <p class="case__res"><Icon name="Check" size={16} /> {c.result}</p>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title="¿Tiene un reto parecido?" highlight="Platiquemos." text="Cuéntenos su situación y le proponemos una solución por etapas." loc="casos" />
+</BaseLayout>
+
+<style>
+  .lead { margin-top: 16px; }
+  .note { display: inline-flex; gap: 10px; align-items: center; margin-top: 8px; padding: 10px 14px; border: 1px dashed var(--line-strong); border-radius: 10px; color: var(--muted); font-size: 0.92rem; }
+  .note :global(svg) { color: var(--lime); flex: none; }
+  .cases { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .case { display: block; height: 100%; text-decoration: none; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); overflow: hidden; transition: transform 0.4s var(--ease), border-color 0.3s; }
+  .case:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+  .case :global(.photo) { border-radius: 0; }
+  .case__body { padding: 20px; display: grid; gap: 12px; }
+  .case h2 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; margin: 0; line-height: 1.25; }
+  dl { margin: 0; display: grid; gap: 6px; font-size: 0.92rem; }
+  dt { display: inline; color: var(--faint); }
+  dt::after { content: ': '; }
+  dd { display: inline; margin: 0; color: var(--muted); }
+  .case__res { margin: 0; padding: 10px 12px; border-radius: 10px; background: rgba(140, 211, 54, 0.08); color: var(--lime); display: flex; gap: 8px; font-size: 0.92rem; }
+  .case__res :global(svg) { flex: none; margin-top: 4px; }
+  @media (max-width: 899px) { .cases { grid-template-columns: 1fr; } }
+</style>

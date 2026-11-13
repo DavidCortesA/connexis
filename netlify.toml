@@ -1,0 +1,46 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Pretty URLs: Netlify sirve /servicios/ciberseguridad desde servicios/ciberseguridad.html
+[build.processing.html]
+  pretty_urls = true
+
+[[redirects]]
+  from = "/index"
+  to = "/"
+  status = 301
+
+# ETAPA 2 · Casos de éxito (activar junto con src/pages/_casos-exito)
+# [[redirects]]
+#   from = "/casos-de-exito"
+#   to = "/casos-exito"
+#   status = 301
+
+[[redirects]]
+  from = "/servicios/cableado-estructurado"
+  to = "/#servicios"
+  status = 302
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://*.google-analytics.com https://*.g.doubleclick.net https://www.google.com https://www.google.com.mx; font-src 'self'; connect-src 'self' https:; frame-src https://www.googletagmanager.com https://td.doubleclick.net; form-action 'self' https:; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"

@@ -1,0 +1,20 @@
+# ConneXis · https://connexis.mx
+# /gracias y /evaluacion llevan <meta name="robots" content="noindex">; no se bloquean aquí
+# para que Google pueda leer esa etiqueta. Nunca bloquees /_astro (CSS/JS) para que Google renderice bien.
+User-agent: *
+Allow: /
+
+# Asistentes de IA: pueden leer el contenido público (resumen en /llms.txt)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://connexis.mx/sitemap-index.xml

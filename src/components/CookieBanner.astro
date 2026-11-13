@@ -1,0 +1,44 @@
+---
+// Banner de cookies con Consent Mode v2. La decisión se guarda en localStorage ('cx-consent').
+---
+<section class="cookies" aria-labelledby="cookies-title" hidden data-cookies>
+  <div class="cookies__in">
+    <h2 id="cookies-title" class="cookies__title">Usamos cookies de medición</h2>
+    <p>Nos ayudan a saber qué páginas son útiles y a medir nuestras campañas. Puede aceptarlas o rechazarlas; el sitio funciona igual. <a href="/aviso-privacidad#cookies">Más información</a>.</p>
+    <div class="btn-row">
+      <button type="button" class="btn btn--sm" data-consent="granted">Aceptar</button>
+      <button type="button" class="btn btn--sm btn--ghost" data-consent="denied">Rechazar</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cookies { position: fixed; z-index: 95; left: 16px; bottom: calc(var(--mobile-bar-h) + 16px); max-width: 420px; }
+  .cookies__in { background: var(--surface-2); border: 1px solid var(--line-strong); border-radius: var(--radius); padding: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); }
+  .cookies__title { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; letter-spacing: 0; }
+  .cookies p { font-size: 0.92rem; color: var(--muted); margin-bottom: 14px; }
+  .cookies a { color: var(--lime); }
+  @media (max-width: 520px) { .cookies { left: 12px; right: 12px; max-width: none; } }
+</style>
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-cookies]');
+  let stored: string | null = null;
+  try { stored = localStorage.getItem('cx-consent'); } catch {}
+  const hasTags = Boolean((window as any).CX_ANALYTICS?.ga4 || (window as any).CX_ANALYTICS?.ads);
+  if (box && !stored && hasTags) box.hidden = false;
+
+  function decide(value: 'granted' | 'denied') {
+    try { localStorage.setItem('cx-consent', value); } catch {}
+    (window as any).gtag?.('consent', 'update', {
+      ad_storage: value, ad_user_data: value, ad_personalization: value, analytics_storage: value,
+    });
+    if (box) box.hidden = true;
+  }
+  document.querySelectorAll<HTMLButtonElement>('[data-consent]').forEach((b) =>
+    b.addEventListener('click', () => decide(b.dataset.consent as 'granted' | 'denied')),
+  );
+  document.querySelectorAll('[data-cookie-open]').forEach((b) =>
+    b.addEventListener('click', () => { if (box) { box.hidden = false; box.querySelector<HTMLElement>('button')?.focus(); } }),
+  );
+</script>

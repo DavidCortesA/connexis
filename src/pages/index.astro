@@ -1,0 +1,389 @@
+---
+// Intención de búsqueda: comercial-local ("empresa de ciberseguridad en Monterrey").
+// Responde en el primer párrafo QUÉ hace ConneXis, PARA QUIÉN y DÓNDE, con CTA visible sin scroll.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import Radar from '../components/Radar.astro';
+import Marquee from '../components/Marquee.astro';
+import Tldr from '../components/Tldr.astro';
+import Photo from '../components/Photo.astro';
+import Faq from '../components/Faq.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { SITE, whatsappUrl, fullAddress } from '../data/site';
+import { getService, mentionOnly } from '../data/services';
+// ETAPA 2 · Casos de éxito / ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
+// import { cases } from '../data/cases.mjs';
+// import { posts } from '../data/posts';
+
+const cyber = getService('ciberseguridad');
+
+const faqs = [
+  { q: '¿Qué hace ConneXis?', a: 'ConneXis protege la red, los equipos y la información de pequeñas y medianas empresas en Monterrey con firewall, prevención de intrusos, control de accesos, análisis de vulnerabilidades y cableado estructurado.' },
+  { q: '¿Cómo empiezo a trabajar con ConneXis?', a: 'Solicite un diagnóstico por el formulario, teléfono o WhatsApp. Revisamos su red y le entregamos un informe con prioridades y una propuesta por etapas.' },
+  { q: '¿En qué zonas dan servicio?', a: `Atendemos en sitio Monterrey y su área metropolitana: ${SITE.areaServed.slice(1).join(', ')}.` },
+  { q: '¿Trabajan con empresas pequeñas?', a: 'Sí. Nos especializamos en PyMEs: oficinas, comercios, clínicas, bodegas y plantas que no tienen un área de TI dedicada a seguridad.' },
+  { q: '¿En cuánto tiempo responden?', a: `Respondemos solicitudes en menos de ${SITE.responseTime}. Si es urgente, llame al ${SITE.phone}.` },
+];
+
+const frentes = cyber.includes;
+const steps = [
+  { title: 'Diagnóstico', text: 'Revisamos red, equipos y accesos para saber dónde está el riesgo real.' },
+  { title: 'Plan priorizado', text: 'Le explicamos qué atender primero, con costos y tiempos claros.' },
+  { title: 'Implementación', text: 'Instalamos y configuramos por etapas, sin detener su operación.' },
+  { title: 'Acompañamiento', text: 'Soporte, ajustes y revisiones periódicas después de la entrega.' },
+];
+// ETAPA 2 · Filtros de proyectos
+// const filters = [
+//   { key: 'todos', label: 'Todos' },
+//   { key: 'ciberseguridad', label: 'Ciberseguridad' },
+//   { key: 'redes-empresariales', label: 'Redes' },
+//   { key: 'seguridad-electronica', label: 'Seguridad electrónica' },
+// ];
+---
+<BaseLayout
+  title="Ciberseguridad para PyMEs en Monterrey | ConneXis"
+  description="ConneXis protege la red, los equipos y la información de PyMEs en Monterrey: firewall, prevención de intrusos, hacking ético y cableado estructurado."
+  shareTitle="ConneXis · Ciberseguridad para empresas que no pueden detenerse"
+  faqs={faqs}
+  mobileCta={{ href: '#diagnostico', label: 'Diagnóstico' }}
+>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero__grid">
+      <div class="hero__copy" data-hero>
+        <p class="eyebrow">Ciberseguridad en Monterrey</p>
+        <h1 id="hero-title">Ciberseguridad para empresas que <span class="hl">no pueden detenerse</span></h1>
+        <p class="lead">Protegemos la información y la operación de pequeñas y medianas empresas en Monterrey con defensa perimetral, prevención de intrusos y hacking ético. Empezamos con un diagnóstico y un plan claro.</p>
+        <div class="btn-row">
+          <a class="btn" href="#diagnostico" data-track="cta_click" data-track-loc="hero">Solicitar diagnóstico <Icon name="ArrowRight" class="i-arrow" /></a>
+          <a class="btn btn--light" href="#servicios">Cómo le protegemos</a>
+        </div>
+        <ul class="hero__proof">
+          <li><Icon name="MapPin" size={16} /> Atención en sitio en Monterrey</li>
+          <li><Icon name="Building2" size={16} /> Especialistas en PyMEs</li>
+          <li><Icon name="Clock" size={16} /> Respuesta en {SITE.responseTime}</li>
+        </ul>
+      </div>
+      <div class="hero__radar" data-hero-art>
+        <Radar />
+      </div>
+    </div>
+  </section>
+
+  <Marquee label="Frentes de protección" items={['Firewall perimetral', 'Prevención de intrusos (IPS)', 'Pruebas autorizadas', 'Análisis de vulnerabilidades', 'Protección de endpoints', 'Redes y Wi‑Fi', 'Segmentación de red', 'Videovigilancia', 'Control de acceso', 'Alarmas', 'Cableado estructurado', 'Fibra óptica']} />
+
+  <!-- RESUMEN / KEY TAKEAWAYS -->
+  <section class="section--tight" aria-label="Resumen">
+    <div class="wrap summary">
+      <div data-reveal>
+        <h2 class="summary__q">¿Qué hace ConneXis por su empresa?</h2>
+        <p class="lead">ConneXis es un integrador de ciberseguridad y redes en {SITE.address.locality}, N.L. Diseñamos, instalamos y mantenemos la protección de su red para que un virus, un acceso indebido o una falla de cableado no detengan su operación.</p>
+      </div>
+      <Tldr items={[
+        'Servicios: ciberseguridad, redes empresariales y seguridad electrónica.',
+        'Clientes: PyMEs de Monterrey y su área metropolitana.',
+        'Primer paso: diagnóstico con informe priorizado en lenguaje claro.',
+        'Forma de trabajo: por etapas y sin detener su operación.',
+        `Contacto: ${SITE.phone} o WhatsApp, respuesta en ${SITE.responseTime}.`,
+      ]} />
+    </div>
+  </section>
+
+  <!-- FRENTES DE PROTECCIÓN (servicios numerados) -->
+  <section class="section" id="servicios" aria-labelledby="frentes-title">
+    <div class="wrap frentes">
+      <div class="frentes__intro" data-reveal>
+        <p class="eyebrow">Servicios</p>
+        <h2 id="frentes-title">Protección en <span class="hl">cada frente</span></h2>
+        <p class="muted">Implementamos las capas que una PyME necesita para cuidar su información, su red y la continuidad de su operación.</p>
+        <a class="btn btn--sm" href="/servicios/ciberseguridad">Ver ciberseguridad <Icon name="ArrowRight" class="i-arrow" /></a>
+      </div>
+      <ol class="frentes__grid">
+        {frentes.map((f, i) => (
+          <li class="card card--hover frente" data-reveal style={`--i:${i}`}>
+            <span class="frente__n num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="icon-chip"><Icon name={f.icon} /></span>
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </li>
+        ))}
+        <li class="card frente frente--infra" data-reveal style="--i:6">
+          <h3>Y la infraestructura que protegemos</h3>
+          <p>Redes cableadas e inalámbricas, videovigilancia y control de acceso. También instalamos {mentionOnly.map((m) => m.name.toLowerCase()).join(' y ')}.</p>
+          <a class="link-arrow" href="/servicios/redes-empresariales">Redes empresariales <Icon name="ArrowRight" /></a>
+          <a class="link-arrow" href="/servicios/seguridad-electronica">Seguridad electrónica <Icon name="ArrowRight" /></a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ¿LISTA PARA UN ATAQUE? -->
+  <section class="section ready" aria-labelledby="ready-title">
+    <div class="wrap ready__grid">
+      <div class="ready__photos" data-reveal>
+        <Photo name="analista-seguridad-computadora" alt="Persona trabajando de noche frente a una computadora en una habitación oscura" class="rp rp--a" sizes="(min-width: 900px) 25vw, 50vw" widths={[360, 540, 720]} ratio="3/4" />
+        <Photo name="pasillo-racks-centro-datos" alt="Pasillo largo de un centro de datos con racks de servidores a ambos lados" class="rp rp--b" sizes="(min-width: 900px) 22vw, 50vw" widths={[360, 540, 720]} ratio="1/1" />
+        <Photo name="tecnico-instalando-hardware" alt="Técnico instalando un componente dentro de un servidor" class="rp rp--c" sizes="(min-width: 900px) 22vw, 50vw" widths={[360, 540, 720]} ratio="4/3" tint />
+        <div class="ready__badge">
+          <span class="num">4 de 4</span>
+          <span>frentes revisados en cada diagnóstico: red, equipos, accesos y respaldo</span>
+        </div>
+      </div>
+      <div class="ready__copy" data-reveal>
+        <p class="eyebrow">Diagnóstico</p>
+        <h2 id="ready-title">¿Su empresa está lista para <span class="hl">un ataque?</span></h2>
+        <p class="muted">Muchas empresas descubren sus puntos débiles el día que alguien los aprovecha. El diagnóstico de ConneXis los encuentra antes, con pruebas controladas y un informe que su equipo directivo puede entender.</p>
+        <div class="ready__chips">
+          <span class="card"><Icon name="Bug" /> Pruebas de penetración</span>
+          <span class="card"><Icon name="FileSearch" /> Informe con recomendaciones</span>
+        </div>
+        <ul class="checks">
+          <li><Icon name="CircleCheck" /> Descubre dónde están los puntos débiles de su red antes que los atacantes.</li>
+          <li><Icon name="CircleCheck" /> Evaluamos sistemas, aplicaciones y dispositivos.</li>
+          <li><Icon name="CircleCheck" /> Le explicamos qué corregir primero, en lenguaje claro.</li>
+        </ul>
+        <a class="btn" href="/evaluacion" data-track="cta_click" data-track-loc="home-ready">Evaluar mi empresa <Icon name="ArrowRight" class="i-arrow" /></a>
+        {/* ETAPA 3 · Enlace al artículo del blog
+        <p class="ready__more"><a class="link-arrow" href="/blog/evaluacion-vulnerabilidades">Qué incluye una evaluación de vulnerabilidades <Icon name="ArrowRight" /></a></p>
+        */}
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLA: QUÉ RESUELVE CADA SERVICIO -->
+  <section class="section--tight" aria-labelledby="tabla-title">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Comparativa</p>
+        <h2 id="tabla-title">Qué resuelve cada servicio</h2>
+      </div>
+      <div class="table-wrap" data-reveal>
+        <table>
+          <caption>Servicios de ConneXis, problema que resuelven y entregable</caption>
+          <thead><tr><th scope="col">Servicio</th><th scope="col">Problema que resuelve</th><th scope="col">Qué recibe</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><a href="/servicios/ciberseguridad">Ciberseguridad</a></th><td>Virus, accesos indebidos, robo o secuestro de información</td><td>Firewall, IPS, protección de equipos e informe</td></tr>
+            <tr><th scope="row"><a href="/evaluacion">Evaluación de vulnerabilidades</a></th><td>No saber qué tan expuesta está la empresa</td><td>Informe priorizado y plan de acción</td></tr>
+            <tr><th scope="row"><a href="/servicios/redes-empresariales">Redes empresariales</a></th><td>Zonas sin Wi‑Fi, caídas y una sola red para todo</td><td>Red diseñada, segmentada y monitoreada</td></tr>
+            <tr><th scope="row"><a href="/servicios/seguridad-electronica">Seguridad electrónica</a></th><td>Áreas sin vigilancia o accesos con llave compartida</td><td>Videovigilancia, alarmas y control de acceso</td></tr>
+            {mentionOnly.map((m) => <tr><th scope="row">{m.name}</th><td>Infraestructura física de la red</td><td>{m.text}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="section" aria-labelledby="proceso-title">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Cómo trabajamos</p>
+        <h2 id="proceso-title">Cuatro pasos, sin complicaciones</h2>
+      </div>
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li class="step" data-reveal style={`--i:${i}`}>
+            <span class="step__n num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ─────────────────────────────────────────────────────────────────────
+     ETAPA 2 · Casos de éxito (proyectos con filtro) y ETAPA 3 · Blog.
+     Fuera de alcance en la Etapa 1. Para activarlos, quita este comentario y
+     descomenta los imports, `filters`, el <script> y los estilos marcados abajo.
+     ─────────────────────────────────────────────────────────────────────
+  <!-- PROYECTOS CON FILTRO -->
+  <section class="section projects" aria-labelledby="proyectos-title">
+    <div class="wrap">
+      <div class="projects__head" data-reveal>
+        <div>
+          <p class="eyebrow">Casos de éxito</p>
+          <h2 id="proyectos-title">Proyectos <span class="hl">recientes</span></h2>
+        </div>
+        <div class="filters" role="group" aria-label="Filtrar proyectos por servicio">
+          {filters.map((f, i) => <button type="button" class="filter" aria-pressed={i === 0 ? 'true' : 'false'} data-filter={f.key}>{f.label}</button>)}
+        </div>
+      </div>
+      <ul class="projects__grid" data-projects>
+        {cases.map((c, i) => (
+          <li data-service={c.service} data-reveal style={`--i:${i}`}>
+            <a class="project" href={`/casos-exito/${c.slug}`}>
+              <Photo name={c.image} alt={c.imageAlt} sizes="(min-width: 900px) 33vw, 100vw" widths={[400, 640, 900]} ratio="4/3" />
+              <div class="project__body">
+                <div class="tags"><span class="tag">{c.sector}</span><span class="tag">{c.serviceLabel}</span>{c.ejemplo && <span class="tag tag--lime">Caso de ejemplo</span>}</div>
+                <h3>{c.title}</h3>
+                <p class="project__res"><Icon name="Check" size={16} /> {c.result}</p>
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="sr-only" aria-live="polite" data-filter-status></p>
+      <p class="projects__more"><a class="link-arrow" href="/casos-exito">Ver todos los casos <Icon name="ArrowRight" /></a></p>
+    </div>
+  </section>
+
+  <!-- BLOG / CLUSTER -->
+  <section class="section--tight" aria-labelledby="guias-title">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Guías</p>
+        <h2 id="guias-title">Para decidir con información</h2>
+      </div>
+      <ul class="guides">
+        {posts.map((p, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            <a class="card guide" href={`/blog/${p.slug}`}>
+              <span class="tag">{getService(p.pillar).name}</span>
+              <h3>{p.h1}</h3>
+              <p>{p.excerpt}</p>
+              <span class="link-arrow">Leer guía <Icon name="ArrowRight" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  */}
+
+  <Faq faqs={faqs} title="Lo que nos preguntan antes de empezar" />
+
+  <!-- FORMULARIO FINAL -->
+  <section class="section" id="diagnostico" aria-labelledby="diag-title">
+    <div class="wrap">
+      <div class="diag" data-reveal>
+        <div class="diag__copy">
+          <p class="eyebrow">Contacto</p>
+          <h2 id="diag-title">Proteja su información <span class="hl">antes de que sea tarde</span></h2>
+          <p class="muted">Solicite un diagnóstico. Revisamos su red y le decimos, sin compromiso, qué atender primero.</p>
+          <ul class="diag__contact">
+            <li><Icon name="Phone" /> <a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="home-form">{SITE.phone}</a></li>
+            <li><Icon name="Mail" /> <a href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="home-form">{SITE.email}</a></li>
+            <li><Icon name="WhatsApp" /> <a href={whatsappUrl()} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="home-form">Escribir por WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a></li>
+            <li><Icon name="MapPin" /> <span>{fullAddress}</span></li>
+          </ul>
+        </div>
+        <LeadForm id="form-home" source="home" title="Solicite su diagnóstico" submitLabel="Identificar vulnerabilidades" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { position: relative; overflow: hidden; padding-block: clamp(40px, 7vw, 96px) clamp(48px, 7vw, 88px); }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 60% at 80% 40%, rgba(91, 200, 220, 0.08), transparent 70%), linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 48px 48px, linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px) 0 0 / 48px 48px; mask: radial-gradient(80% 80% at 60% 40%, #000 30%, transparent 80%); -webkit-mask: radial-gradient(80% 80% at 60% 40%, #000 30%, transparent 80%); pointer-events: none; }
+  .hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 32px; align-items: center; }
+  .hero h1 { max-width: 14ch; }
+  .hero h1 .hl { display: inline; }
+  .hero .lead { margin: 24px 0 32px; }
+  .hero__proof { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 32px; color: var(--muted); font-size: 0.92rem; }
+  .hero__proof li { display: inline-flex; gap: 8px; align-items: center; }
+  .hero__proof :global(svg) { color: var(--lime); }
+  .hero__radar { display: grid; place-items: center; margin-right: calc(var(--gutter) * -1); }
+  /* La entrada del hero la anima Motion (src/scripts/motion.ts). */
+  @media (max-width: 899px) {
+    .hero__grid { grid-template-columns: 1fr; }
+    .hero { padding-top: 24px; }
+    .hero__radar { order: -1; margin: 0 auto -8px; }
+    .hero__radar :global(.radar) { --size: 150px; }
+    .hero .lead { margin: 16px 0 24px; }
+  }
+
+  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 72px); align-items: start; }
+  .summary__q { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+  @media (max-width: 899px) { .summary { grid-template-columns: 1fr; } }
+
+  .frentes { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+  .frentes__intro { position: sticky; top: calc(var(--header-h) + 32px); }
+  .frentes__intro p { margin: 16px 0 24px; }
+  .frentes__grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .frente { min-height: 230px; }
+  .frente__n { position: absolute; top: 20px; right: 22px; color: var(--faint); font-size: 0.85rem; }
+  .frente--infra { background: transparent; border-style: dashed; display: flex; flex-direction: column; gap: 10px; grid-column: span 2; justify-content: center; }
+  .frente--infra p { margin-bottom: 6px; }
+  @media (max-width: 1023px) { .frentes { grid-template-columns: 1fr; } .frentes__intro { position: static; } }
+  @media (max-width: 680px) { .frentes__grid { grid-template-columns: 1fr; } .frente { min-height: 0; } .frente--infra { grid-column: auto; } }
+
+  .ready__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .ready__photos { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; grid-template-rows: auto auto; gap: 12px; }
+  .ready__photos :global(.rp--a) { grid-row: span 2; }
+  .ready__photos :global(.rp--b) { margin-top: 40px; }
+  .ready__badge { position: absolute; left: 22%; bottom: -24px; max-width: 250px; background: var(--lime); color: var(--lime-ink); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45); font-size: 0.85rem; font-weight: 500; line-height: 1.35; }
+  .ready__badge .num { font-size: 1.6rem; font-weight: 600; line-height: 1; }
+  .ready__copy p.muted { margin: 16px 0 24px; }
+  .ready__chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .ready__chips .card { padding: 14px 16px; display: flex; gap: 10px; align-items: center; font-size: 0.92rem; font-weight: 500; }
+  .ready__chips :global(svg) { color: var(--lime); flex: none; }
+  .checks { list-style: none; display: grid; gap: 12px; margin-bottom: 28px; }
+  .checks li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--muted); }
+  .checks :global(svg) { color: var(--lime); margin-top: 3px; }
+  .ready__more { margin: 20px 0 0; }
+  @media (max-width: 899px) { .ready__grid { grid-template-columns: 1fr; } .ready__photos { margin-bottom: 24px; } }
+  @media (max-width: 480px) { .ready__chips { grid-template-columns: 1fr; } }
+
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line); }
+  .step { padding: 28px 24px 0 0; position: relative; }
+  .step::before { content: ''; position: absolute; top: -1px; left: 0; width: 48px; height: 2px; background: var(--lime); }
+  .step__n { display: block; font-size: clamp(2.6rem, 4vw, 3.6rem); font-weight: 300; color: var(--lime); line-height: 1; margin-bottom: 16px; letter-spacing: -0.04em; }
+  .step p { color: var(--muted); margin: 0; }
+  @media (max-width: 899px) { .steps { grid-template-columns: 1fr 1fr; row-gap: 32px; } }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+
+  /* ETAPA 2 · Proyectos con filtro y ETAPA 3 · Guías del blog (fuera de alcance en la Etapa 1)
+  .projects__head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 32px; }
+  .projects__head h2 { margin: 0; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filter { min-height: 40px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line-strong); background: transparent; cursor: pointer; font-size: 0.9rem; color: var(--muted); transition: all 0.2s; }
+  .filter:hover { color: var(--text); border-color: var(--muted); }
+  .filter[aria-pressed='true'] { background: var(--lime); border-color: var(--lime); color: var(--lime-ink); font-weight: 600; }
+  .projects__grid { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .projects__grid li[hidden] { display: none; }
+  .project { display: block; text-decoration: none; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); height: 100%; transition: border-color 0.3s, transform 0.4s var(--ease); }
+  .project:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .project :global(.photo) { border-radius: 0; }
+  .project__body { padding: 20px; display: grid; gap: 12px; }
+  .project h3 { margin: 0; }
+  .project__res { margin: 0; display: flex; gap: 8px; align-items: flex-start; color: var(--lime); font-size: 0.92rem; }
+  .project__res :global(svg) { flex: none; margin-top: 4px; }
+  .projects__more { margin-top: 24px; }
+  @media (max-width: 899px) { .projects__grid { grid-template-columns: 1fr; } }
+
+  .guides { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .guide { height: 100%; display: flex !important; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .guide h3 { margin: 4px 0 0; }
+  .guide .link-arrow { margin-top: auto; }
+  @media (max-width: 899px) { .guides { grid-template-columns: 1fr; } }
+
+  */
+
+  .diag { display: grid; grid-template-columns: 1fr minmax(0, 460px); gap: clamp(32px, 5vw, 80px); align-items: start; padding: clamp(24px, 5vw, 56px); border-radius: 20px; border: 1px solid var(--line); background: radial-gradient(70% 90% at 100% 0%, rgba(140, 211, 54, 0.12), transparent 60%), var(--bg-2); }
+  .diag__copy p { margin: 16px 0 28px; }
+  .diag__contact { list-style: none; display: grid; gap: 14px; }
+  .diag__contact li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--muted); }
+  .diag__contact a { color: var(--text); text-decoration: none; }
+  .diag__contact a:hover { text-decoration: underline; }
+  .diag__contact :global(svg) { color: var(--lime); margin-top: 3px; }
+  @media (max-width: 899px) { .diag { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  // ETAPA 2 · Filtro de proyectos (descomentar junto con la sección de casos de éxito)
+  /*
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const items = document.querySelectorAll<HTMLElement>('[data-projects] > li');
+  const status = document.querySelector<HTMLElement>('[data-filter-status]');
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    const key = b.dataset.filter;
+    buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    let shown = 0;
+    items.forEach((li) => { const show = key === 'todos' || li.dataset.service === key; li.hidden = !show; if (show) { shown++; li.classList.add('is-in'); } });
+    if (status) status.textContent = `${shown} ${shown === 1 ? 'proyecto' : 'proyectos'} mostrados`;
+  }));
+  */
+  export {};
+</script>

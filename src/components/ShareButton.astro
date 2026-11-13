@@ -1,0 +1,74 @@
+---
+// Botón de compartir: usa la hoja nativa del sistema (Web Share API) en móvil y,
+// si no existe, despliega un menú con WhatsApp, LinkedIn, Facebook, X y copiar enlace.
+import Icon from './Icon.astro';
+import { SITE, cleanPath } from '../data/site';
+interface Props { title: string; class?: string; compact?: boolean }
+const { title, class: cls, compact = false } = Astro.props;
+const path = cleanPath(Astro.url.pathname);
+const url = `${SITE.url}${path === '/' ? '' : path}`;
+const enc = encodeURIComponent;
+const id = `share-${Math.random().toString(36).slice(2, 8)}`;
+const links = [
+  { name: 'WhatsApp', icon: 'WhatsApp', href: `https://wa.me/?text=${enc(`${title} ${url}`)}` },
+  { name: 'LinkedIn', icon: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}` },
+  { name: 'Facebook', icon: 'Facebook', href: `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}` },
+  { name: 'X', icon: 'XBrand', href: `https://x.com/intent/post?url=${enc(url)}&text=${enc(title)}` },
+] as const;
+---
+<div class:list={['share', cls]} data-share data-title={title} data-url={url}>
+  <button type="button" class="btn btn--ghost btn--sm" aria-expanded="false" aria-controls={id} data-share-btn>
+    <Icon name="Share2" size={17} /> {compact ? <span class="sr-only">Compartir esta página</span> : 'Compartir'}
+  </button>
+  <div class="share__menu" id={id} hidden>
+    <ul>
+      {links.map((l) => (
+        <li><a href={l.href} target="_blank" rel="noopener" data-track="share" data-track-loc={l.name}><Icon name={l.icon} size={17} /> {l.name}<span class="sr-only"> (abre en otra pestaña)</span></a></li>
+      ))}
+      <li><button type="button" data-copy><Icon name="Copy" size={17} /> <span data-copy-label>Copiar enlace</span></button></li>
+    </ul>
+  </div>
+  <span class="sr-only" aria-live="polite" data-share-status></span>
+</div>
+
+<style>
+  .share { position: relative; display: inline-block; }
+  .share__menu { position: absolute; z-index: 30; top: calc(100% + 8px); right: 0; min-width: 210px; background: var(--surface-2); border: 1px solid var(--line-strong); border-radius: 12px; padding: 6px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5); }
+  .share__menu ul { list-style: none; }
+  .share__menu a, .share__menu button { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; text-decoration: none; background: none; border: 0; cursor: pointer; font-size: 0.95rem; color: var(--text); }
+  .share__menu a:hover, .share__menu button:hover { background: var(--surface); }
+  .share--left .share__menu { right: auto; left: 0; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-share]').forEach((root) => {
+    const btn = root.querySelector<HTMLButtonElement>('[data-share-btn]')!;
+    const menu = root.querySelector<HTMLElement>('.share__menu')!;
+    const status = root.querySelector<HTMLElement>('[data-share-status]')!;
+    const { title = document.title, url = location.href } = root.dataset;
+    const close = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+
+    btn.addEventListener('click', async () => {
+      const coarse = matchMedia('(pointer: coarse)').matches;
+      if (navigator.share && coarse) {
+        try { await navigator.share({ title, url }); (window as any).cxTrack?.('share', { method: 'nativo' }); } catch {}
+        return;
+      }
+      const open = menu.hidden;
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      if (open) menu.querySelector<HTMLElement>('a,button')?.focus();
+    });
+    root.querySelector('[data-copy]')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(url);
+        root.querySelector('[data-copy-label]')!.textContent = 'Enlace copiado';
+        status.textContent = 'Enlace copiado al portapapeles';
+        (window as any).cxTrack?.('share', { method: 'copiar' });
+        setTimeout(() => { root.querySelector('[data-copy-label]')!.textContent = 'Copiar enlace'; close(); }, 1500);
+      } catch { status.textContent = 'No se pudo copiar el enlace'; }
+    });
+    document.addEventListener('click', (e) => { if (!root.contains(e.target as Node)) close(); });
+    root.addEventListener('keydown', (e) => { if (e.key === 'Escape') { close(); btn.focus(); } });
+  });
+</script>

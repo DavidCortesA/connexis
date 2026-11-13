@@ -1,0 +1,255 @@
+---
+// Plantilla reutilizable de servicio = página PILAR del topic cluster.
+// Estructura: H1 + respuesta directa → TL;DR → riesgos → qué incluye → tabla comparativa →
+// beneficios → proceso → casos → guías del cluster → FAQ (schema) → formulario con servicio preseleccionado.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import Photo from '../../components/Photo.astro';
+import Tldr from '../../components/Tldr.astro';
+import Faq from '../../components/Faq.astro';
+import LeadForm from '../../components/LeadForm.astro';
+import { services, type Service } from '../../data/services';
+// ETAPA 2 · Casos de éxito / ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
+// import { postsByPillar } from '../../data/posts';
+// import { cases } from '../../data/cases.mjs';
+import { SITE, whatsappUrl } from '../../data/site';
+import { img } from '../../data/images';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Service };
+// const related = postsByPillar(s.slug);
+// const relatedCases = cases.filter((c) => c.service === s.slug);
+const others = services.filter((x) => x.slug !== s.slug);
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Servicios', href: '/servicios' },
+  { name: s.name, href: `/servicios/${s.slug}` },
+];
+const serviceSchema = {
+  '@type': 'Service',
+  '@id': `${SITE.url}/servicios/${s.slug}#servicio`,
+  name: s.name,
+  serviceType: s.name,
+  description: s.metaDescription,
+  provider: { '@id': `${SITE.url}/#negocio` },
+  areaServed: SITE.areaServed.map((c) => ({ '@type': 'City', name: c })),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: `${s.name}: qué incluye`,
+    itemListElement: s.includes.map((i) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: i.title, description: i.text } })),
+  },
+};
+---
+<BaseLayout
+  title={s.metaTitle}
+  description={s.metaDescription}
+  shareTitle={s.h1}
+  image={img(s.image)}
+  imageAlt={s.imageAlt}
+  breadcrumbs={crumbs}
+  faqs={s.faqs}
+  schema={[serviceSchema]}
+  mobileCta={{ href: '#solicitud', label: 'Cotizar' }}
+>
+  <section class="s-hero" aria-labelledby="s-title">
+    <div class="wrap">
+      <Breadcrumbs items={crumbs} />
+      <div class="s-hero__grid">
+        <div data-hero>
+          <p class="eyebrow">{s.eyebrow}</p>
+          <h1 id="s-title">{s.h1}</h1>
+          <p class="lead">{s.lead}</p>
+          <div class="btn-row">
+            <a class="btn" href="#solicitud" data-track="cta_click" data-track-loc={`servicio-${s.slug}-hero`}>{s.cta} <Icon name="ArrowRight" class="i-arrow" /></a>
+            <a class="btn btn--ghost" href={whatsappUrl(`Hola ConneXis, me interesa ${s.name.toLowerCase()} para mi empresa.`)} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc={`servicio-${s.slug}-hero`}><Icon name="WhatsApp" /> WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
+          </div>
+        </div>
+        <Photo name={s.image} alt={s.imageAlt} eager tint ratio="4/3" sizes="(min-width: 900px) 45vw, 100vw" class="s-hero__photo" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight" aria-label="Resumen">
+    <div class="wrap"><Tldr items={s.tldr} title="Lo esencial en 30 segundos" /></div>
+  </section>
+
+  <section class="section" aria-labelledby="riesgos">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">El problema</p>
+        <h2 id="riesgos">Riesgos comunes en una PyME</h2>
+        <p class="muted">Situaciones frecuentes que se pueden prevenir con la infraestructura adecuada.</p>
+      </div>
+      <ul class="grid g3">
+        {s.risks.map((r, i) => (
+          <li class="card" data-reveal style={`--i:${i}`}>
+            <span class="icon-chip icon-chip--warn"><Icon name={r.icon} /></span>
+            <h3>{r.title}</h3>
+            <p>{r.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="incluye">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Qué incluye</p>
+        <h2 id="incluye">Lo que hacemos por usted</h2>
+      </div>
+      <ol class="grid g3 numbered">
+        {s.includes.map((x, i) => (
+          <li class="card card--hover" data-reveal style={`--i:${i}`}>
+            <span class="numbered__n num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="icon-chip"><Icon name={x.icon} /></span>
+            <h3>{x.title}</h3>
+            <p>{x.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section--tight" aria-labelledby="comparativa">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Antes y después</p>
+        <h2 id="comparativa">La diferencia en la práctica</h2>
+      </div>
+      <div class="table-wrap" data-reveal>
+        <table>
+          <caption>{s.comparison.caption}</caption>
+          <thead><tr>{s.comparison.head.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+          <tbody>
+            {s.comparison.rows.map((r) => (
+              <tr><th scope="row">{r[0]}</th><td>{r[1]}</td><td class="yes">{r[2]}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight" aria-labelledby="escenarios">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Escenarios de uso</p>
+        <h2 id="escenarios">Dónde lo implementamos</h2>
+      </div>
+      <ul class="grid g3">
+        {s.scenarios.map((x, i) => (
+          <li class="card scenario" data-reveal style={`--i:${i}`}>
+            <span class="icon-chip"><Icon name={x.icon} /></span>
+            <div><h3>{x.title}</h3><p>{x.text}</p></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="beneficios">
+    <div class="wrap benefits">
+      <Photo name={s.image2} alt={s.image2Alt} ratio="4/5" sizes="(min-width: 900px) 40vw, 100vw" />
+      <div data-reveal>
+        <p class="eyebrow">Beneficios</p>
+        <h2 id="beneficios">Lo que gana su negocio</h2>
+        <ul class="benefits__list">
+          {s.benefits.map((b) => (
+            <li><Icon name="CircleCheck" /><div><h3>{b.title}</h3><p>{b.text}</p></div></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight" aria-labelledby="proceso">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Proceso</p>
+        <h2 id="proceso">Cómo lo implementamos</h2>
+      </div>
+      <ol class="grid g4">
+        {s.process.map((p, i) => (
+          <li class="card" data-reveal style={`--i:${i}`}>
+            <span class="proc__n num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  {/* ETAPA 2 · Casos relacionados y ETAPA 3 · Guías del blog (fuera de alcance en la Etapa 1)
+  {(related.length > 0 || relatedCases.length > 0) && (
+    <section class="section" aria-labelledby="aprenda">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Guías y casos</p>
+          <h2 id="aprenda">Aprenda más sobre {s.name.toLowerCase()}</h2>
+        </div>
+        <ul class="grid g3">
+          {related.map((p) => (
+            <li data-reveal><a class="card related" href={`/blog/${p.slug}`}><span class="tag">Guía · {p.readingMinutes} min</span><h3>{p.h1}</h3><p>{p.excerpt}</p><span class="link-arrow">Leer guía <Icon name="ArrowRight" /></span></a></li>
+          ))}
+          {relatedCases.map((c) => (
+            <li data-reveal><a class="card related" href={`/casos-exito/${c.slug}`}><span class="tag">{c.ejemplo ? 'Caso de ejemplo' : 'Caso de éxito'}</span><h3>{c.title}</h3><p>{c.result}</p><span class="link-arrow">Ver caso <Icon name="ArrowRight" /></span></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+  */}
+
+  <Faq faqs={s.faqs} title="Resolvemos sus dudas" />
+
+  <section class="section" id="solicitud" aria-labelledby="sol-title">
+    <div class="wrap sol">
+      <div data-reveal>
+        <p class="eyebrow">Solicitud</p>
+        <h2 id="sol-title">{s.cta}</h2>
+        <p class="muted">Déjenos sus datos y un especialista en {s.name.toLowerCase()} le contacta en menos de {SITE.responseTime}.</p>
+        <a class="btn btn--wa" href={whatsappUrl(`Hola ConneXis, me interesa ${s.name.toLowerCase()}.`)} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc={`servicio-${s.slug}-form`}><Icon name="WhatsApp" /> Prefiero WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
+        <p class="sol__others">También le puede interesar: {others.map((o) => <a href={`/servicios/${o.slug}`}>{o.name}</a>)}</p>
+      </div>
+      <LeadForm id={`form-${s.slug}`} variant="full" service={s.formValue} source={`servicio-${s.slug}`} title="Sus datos" subtitle="Le contactamos para agendar la visita." submitLabel="Enviar solicitud" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .s-hero { padding-block: clamp(28px, 4vw, 48px) clamp(40px, 6vw, 72px); }
+  .s-hero__grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+  .s-hero h1 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); }
+  .s-hero .lead { margin: 20px 0 30px; }
+  @media (max-width: 899px) { .s-hero__grid { grid-template-columns: 1fr; } }
+  .grid { list-style: none; }
+  .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (max-width: 1023px) { .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 899px) { .g3 { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .g4 { grid-template-columns: 1fr; } }
+  .scenario { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+  .scenario .icon-chip { margin: 0; }
+  .icon-chip--warn { background: rgba(91, 200, 220, 0.1); color: var(--cyan); }
+  .numbered__n { position: absolute; top: 20px; right: 22px; color: var(--faint); font-size: 0.85rem; }
+  .proc__n { display: block; color: var(--lime); font-size: 2.4rem; font-weight: 300; line-height: 1; margin-bottom: 14px; }
+  .benefits { display: grid; grid-template-columns: 0.8fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+  .benefits__list { list-style: none; display: grid; gap: 10px; margin-top: 28px; }
+  .benefits__list li { display: grid; grid-template-columns: 24px 1fr; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  .benefits__list :global(svg) { color: var(--lime); margin-top: 2px; }
+  .benefits__list h3 { font-size: 1.05rem; margin: 0 0 4px; }
+  .benefits__list p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  @media (max-width: 899px) { .benefits { grid-template-columns: 1fr; } }
+  .related { height: 100%; display: flex !important; flex-direction: column; gap: 10px; align-items: flex-start; }
+  .related .link-arrow { margin-top: auto; }
+  .sol { display: grid; grid-template-columns: 1fr minmax(0, 480px); gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .sol p.muted { margin: 16px 0 24px; }
+  .sol__others { margin-top: 32px; color: var(--muted); display: flex; gap: 6px 14px; flex-wrap: wrap; }
+  .sol__others a { color: var(--lime); }
+  @media (max-width: 899px) { .sol { grid-template-columns: 1fr; } }
+</style>

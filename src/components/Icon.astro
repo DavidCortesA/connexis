@@ -1,0 +1,84 @@
+---
+// Íconos Lucide importados uno por uno (solo los que usa el sitio) + íconos de marca propios.
+import ArrowRight from 'lucide-astro/ArrowRight';
+import BrickWall from 'lucide-astro/BrickWall';
+import Bug from 'lucide-astro/Bug';
+import Cable from 'lucide-astro/Cable';
+import Cctv from 'lucide-astro/Cctv';
+import Check from 'lucide-astro/Check';
+import ChevronDown from 'lucide-astro/ChevronDown';
+import CircleCheck from 'lucide-astro/CircleCheck';
+import ClipboardCheck from 'lucide-astro/ClipboardCheck';
+import Clock from 'lucide-astro/Clock';
+import Copy from 'lucide-astro/Copy';
+import FileSearch from 'lucide-astro/FileSearch';
+import Flame from 'lucide-astro/Flame';
+import Gauge from 'lucide-astro/Gauge';
+import Headset from 'lucide-astro/Headset';
+import KeyRound from 'lucide-astro/KeyRound';
+import ListChecks from 'lucide-astro/ListChecks';
+import LockKeyhole from 'lucide-astro/LockKeyhole';
+import Mail from 'lucide-astro/Mail';
+import MapPin from 'lucide-astro/MapPin';
+import Menu from 'lucide-astro/Menu';
+import Network from 'lucide-astro/Network';
+import Phone from 'lucide-astro/Phone';
+import Radar from 'lucide-astro/Radar';
+import Router from 'lucide-astro/Router';
+import ScanSearch from 'lucide-astro/ScanSearch';
+import Server from 'lucide-astro/Server';
+import Share2 from 'lucide-astro/Share2';
+import ShieldCheck from 'lucide-astro/ShieldCheck';
+import TriangleAlert from 'lucide-astro/TriangleAlert';
+import Users from 'lucide-astro/Users';
+import Wifi from 'lucide-astro/Wifi';
+import Wrench from 'lucide-astro/Wrench';
+import X from 'lucide-astro/X';
+import Zap from 'lucide-astro/Zap';
+import Building2 from 'lucide-astro/Building2';
+import AlertCircle from 'lucide-astro/AlertCircle';
+import Fence from 'lucide-astro/Fence';
+import BellRing from 'lucide-astro/BellRing';
+import Siren from 'lucide-astro/Siren';
+import Eye from 'lucide-astro/Eye';
+import Split from 'lucide-astro/Split';
+import Signal from 'lucide-astro/Signal';
+import Activity from 'lucide-astro/Activity';
+import IdCard from 'lucide-astro/IdCard';
+import Store from 'lucide-astro/Store';
+import Hospital from 'lucide-astro/Hospital';
+import Warehouse from 'lucide-astro/Warehouse';
+import Layers from 'lucide-astro/Layers';
+
+const icons = {
+  ArrowRight, BrickWall, Bug, Cable, Cctv, Check, ChevronDown, CircleCheck, ClipboardCheck, Clock, Copy,
+  FileSearch, Flame, Gauge, Headset, KeyRound, ListChecks, LockKeyhole, Mail, MapPin, Menu, Network, Phone,
+  Radar, Router, ScanSearch, Server, Share2, ShieldCheck, TriangleAlert, Users, Wifi, Wrench, X, Zap, Building2,
+  AlertCircle, Fence, BellRing, Siren, Eye, Split, Signal, Activity, IdCard, Store, Hospital, Warehouse, Layers,
+} as const;
+
+export type IconName = keyof typeof icons | 'WhatsApp' | 'LinkedIn' | 'Facebook' | 'Instagram' | 'XBrand';
+
+interface Props { name: IconName; size?: number; class?: string; label?: string; strokeWidth?: number }
+const { name, size = 20, class: cls, label, strokeWidth = 1.75 } = Astro.props;
+const a11y = label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': 'true', focusable: 'false' };
+const Cmp = (icons as Record<string, any>)[name];
+---
+{Cmp && <Cmp size={size} class={cls} stroke-width={strokeWidth} {...a11y} />}
+{name === 'WhatsApp' && (
+  <svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...a11y}>
+    <path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01Zm-7.01 15.24h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.22-8.23 8.22Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/>
+  </svg>
+)}
+{name === 'LinkedIn' && (
+  <svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...a11y}><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+)}
+{name === 'Facebook' && (
+  <svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...a11y}><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.62 23.1 24 18.1 24 12.07Z"/></svg>
+)}
+{name === 'Instagram' && (
+  <svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" {...a11y}><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+)}
+{name === 'XBrand' && (
+  <svg class={cls} width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...a11y}><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.39L6.48 22H3.37l7.24-8.28L2.96 2h6.4l4.42 5.84L18.9 2Zm-1.09 18.13h1.72L8.26 3.77H6.42l11.39 16.36Z"/></svg>
+)}

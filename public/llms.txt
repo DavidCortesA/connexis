@@ -1,0 +1,39 @@
+# ConneXis
+
+> ConneXis es un integrador de ciberseguridad, redes empresariales y seguridad electrónica para pequeñas y medianas empresas (PyMEs) en Monterrey, Nuevo León, México. Oficina en San Nicolás de los Garza, N.L. Atención en sitio en Monterrey y su área metropolitana.
+
+- Teléfono y WhatsApp: +52 81 2912 9134
+- Correo: contacto@connexis.mx
+- Dirección: De la Carreta 606, Residencial Talaverna, C.P. 66473, San Nicolás de los Garza, N.L., México
+- Horario: lunes a viernes, 9:00 a 18:00
+- Zona de servicio: Monterrey, San Nicolás de los Garza, San Pedro Garza García, Apodaca, Guadalupe, Escobedo y Santa Catarina
+- Primer paso para cualquier cliente: diagnóstico o evaluación con informe priorizado en lenguaje claro
+
+## Servicios
+
+- [Ciberseguridad](https://connexis.mx/servicios/ciberseguridad): firewall perimetral, prevención de intrusos (IPS), protección de endpoints, análisis de vulnerabilidades, pruebas autorizadas (hacking ético) y acompañamiento.
+- [Redes empresariales](https://connexis.mx/servicios/redes-empresariales): diseño de redes cableadas e inalámbricas, estudio de cobertura Wi‑Fi, estabilidad, segmentación por VLAN, monitoreo y mantenimiento.
+- [Seguridad electrónica](https://connexis.mx/servicios/seguridad-electronica): videovigilancia IP, alarmas, control de acceso, cercos eléctricos y monitoreo para oficinas, comercios, clínicas, bodegas y plantas.
+- También instalan cableado estructurado y fibra óptica como parte de proyectos de infraestructura.
+- [Evaluación de ciberseguridad](https://connexis.mx/evaluacion): revisión de red, firewall, accesos y equipos con informe de hallazgos y recomendaciones.
+
+<!-- ETAPA 3 · Blog (activar al publicar los artículos)
+## Guías
+
+- [Evaluación de vulnerabilidades: qué incluye, cuánto dura y qué recibe](https://connexis.mx/blog/evaluacion-vulnerabilidades)
+- [¿Qué es segmentar la red de una empresa y qué conviene separar?](https://connexis.mx/blog/segmentacion-red-empresarial)
+- [Cómo elegir un sistema de videovigilancia para su empresa](https://connexis.mx/blog/videovigilancia-empresas)
+-->
+
+## Páginas útiles
+
+- [Inicio](https://connexis.mx/)
+- [Servicios](https://connexis.mx/servicios)
+- [Evaluación de ciberseguridad](https://connexis.mx/evaluacion)
+- [Contacto](https://connexis.mx/contacto)
+- [Aviso de privacidad](https://connexis.mx/aviso-privacidad)
+
+## Optional
+
+- [Sitemap](https://connexis.mx/sitemap-index.xml)
+<!-- ETAPA 3 · - [Blog](https://connexis.mx/blog) -->

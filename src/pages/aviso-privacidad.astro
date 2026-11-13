@@ -1,0 +1,77 @@
+---
+// ⚠️ Plantilla basada en la LFPDPPP. Debe revisarla un asesor legal antes de publicar.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Tldr from '../components/Tldr.astro';
+import { SITE, fullAddress } from '../data/site';
+const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Aviso de privacidad', href: '/aviso-privacidad' }];
+const updated = '13 de noviembre de 2026';
+---
+<BaseLayout
+  title="Aviso de privacidad | ConneXis"
+  description="Cómo ConneXis recaba, usa y protege sus datos personales, y cómo ejercer sus derechos ARCO conforme a la LFPDPPP."
+  shareTitle="Aviso de privacidad de ConneXis"
+  breadcrumbs={crumbs}
+>
+  <section class="section--tight">
+    <div class="wrap prose-wrap">
+      <Breadcrumbs items={crumbs} />
+      <h1>Aviso de privacidad integral</h1>
+      <p class="muted">Última actualización: {updated}</p>
+      <Tldr title="En resumen" items={[
+        'Qué datos: nombre, empresa, correo, teléfono y lo que nos escriba.',
+        'Para qué: responder su solicitud y cotizar nuestros servicios.',
+        'Con quién: no vendemos sus datos; solo proveedores que nos ayudan a operar.',
+        `Sus derechos: acceso, rectificación, cancelación y oposición escribiendo a ${SITE.email}.`,
+      ]} />
+      <div class="prose">
+        <h2>Responsable</h2>
+        <p>{SITE.legalName} (“ConneXis”), con domicilio en {fullAddress}, es responsable del tratamiento de sus datos personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).</p>
+        <h2>Datos que recabamos</h2>
+        <ul>
+          <li>Identificación y contacto: nombre, empresa, correo electrónico y teléfono.</li>
+          <li>Información que usted comparta sobre su necesidad o proyecto.</li>
+          <li>Datos de navegación: páginas visitadas, dispositivo y origen de la visita (ver “Cookies”).</li>
+        </ul>
+        <p>No recabamos datos personales sensibles a través de este sitio.</p>
+        <h2>Finalidades</h2>
+        <h3>Finalidades primarias</h3>
+        <ul>
+          <li>Atender y dar seguimiento a su solicitud de diagnóstico, evaluación o cotización.</li>
+          <li>Agendar visitas, llamadas o reuniones.</li>
+          <li>Elaborar y enviar propuestas de servicio.</li>
+        </ul>
+        <h3>Finalidades secundarias</h3>
+        <ul>
+          <li>Enviarle información sobre servicios, guías o novedades de ConneXis.</li>
+          <li>Medir y mejorar el sitio y nuestras campañas.</li>
+        </ul>
+        <p>Si no desea que usemos sus datos para finalidades secundarias, escriba a <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+        <h2>Transferencias</h2>
+        <p>No vendemos ni rentamos sus datos. Podemos compartirlos con proveedores que nos prestan servicios (alojamiento web, formularios, correo y analítica) únicamente para las finalidades descritas, y con autoridades cuando la ley lo requiera.</p>
+        <h2>Derechos ARCO y revocación del consentimiento</h2>
+        <p>Usted puede acceder, rectificar, cancelar u oponerse al tratamiento de sus datos, así como revocar su consentimiento, enviando una solicitud a <a href={`mailto:${SITE.email}`}>{SITE.email}</a> con su nombre, el derecho que desea ejercer y una copia de su identificación. Responderemos en un plazo máximo de 20 días hábiles.</p>
+        <h2 id="cookies">Cookies y tecnologías de medición</h2>
+        <p>Usamos Google Analytics 4 y, en su caso, Google Ads para medir visitas y conversiones. Estas herramientas solo guardan cookies si usted las acepta en el aviso de cookies; si las rechaza, el sitio funciona igual. Puede cambiar su decisión en “Preferencias de cookies” al pie de cada página o desde la configuración de su navegador.</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Cookies que puede usar este sitio</caption>
+            <thead><tr><th scope="col">Herramienta</th><th scope="col">Finalidad</th><th scope="col">Se activa</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Google Analytics 4</th><td>Medir visitas y uso del sitio</td><td>Solo si acepta</td></tr>
+              <tr><th scope="row">Google Ads</th><td>Medir conversiones de campañas</td><td>Solo si acepta</td></tr>
+              <tr><th scope="row">Preferencia de cookies</th><td>Recordar su decisión</td><td>Siempre (almacenamiento local)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h2>Cambios a este aviso</h2>
+        <p>Cualquier cambio se publicará en esta página con su fecha de actualización.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+<style>
+  .prose-wrap { max-width: calc(820px + var(--gutter) * 2); }
+  h1 { font-size: clamp(2rem, 4vw, 3rem); }
+  .prose { margin-top: 32px; }
+</style>
