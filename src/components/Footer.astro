@@ -17,6 +17,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
     <div class="wrap footer__grid">
       <div class="footer__brand">
         <Logo height={28} idSuffix="footer" />
+        <p class="footer__slogan">{SITE.slogan}</p>
         <p>Soluciones de ciberseguridad, redes y seguridad electrónica para pequeñas y medianas empresas en Monterrey.</p>
         {socials.length > 0 && (
           <ul class="socials">
@@ -31,7 +32,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <ul>
           {services.map((s) => <li><a href={`/servicios/${s.slug}`}>{s.name}</a></li>)}
           <li><a href="/servicios">Todos los servicios</a></li>
-          <li><a href="/evaluacion">Evaluación de ciberseguridad</a></li>
+          <li><a href="/evaluacion">Diagnóstico integral de ciberseguridad</a></li>
         </ul>
       </nav>
       {/* ETAPA 2 · Casos de éxito y ETAPA 3 · Blog (fuera de alcance en la Etapa 1)
@@ -71,6 +72,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
   .footer { border-top: 1px solid var(--line); background: var(--bg-2); padding-top: clamp(48px, 6vw, 80px); font-size: 0.95rem; }
   .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1.4fr; gap: 40px; padding-bottom: 48px; }
   .footer__brand p { color: var(--muted); max-width: 34ch; margin: 18px 0; }
+  .footer__brand .footer__slogan { color: var(--lime); margin-bottom: -8px; font-weight: 500; }
   .footer__brand :global(svg) { height: 28px; width: auto; }
   .footer__title { font-size: 0.95rem; font-weight: 600; margin-bottom: 16px; letter-spacing: 0; }
   .footer ul { list-style: none; display: grid; gap: 10px; }

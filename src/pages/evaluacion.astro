@@ -1,7 +1,8 @@
 ---
-// Landing para Google Ads: un solo objetivo (pedir la evaluación).
-// Sin menú de navegación, formulario de 4 campos visible sin scroll y, en móvil, justo después del titular.
-// noindex para no competir con /servicios/ciberseguridad en orgánico.
+// Landing para Google Ads: un solo objetivo (solicitar el Diagnóstico Integral de Ciberseguridad).
+// Sin menú de navegación; los 4 datos obligatorios del formulario quedan visibles sin scroll y,
+// en móvil, justo después del titular. noindex para no competir con /servicios/ciberseguridad.
+// Textos tomados del sitio original de ConneXis (evaluacion.html), adaptados al diseño nuevo.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import LeadForm from '../components/LeadForm.astro';
@@ -9,23 +10,59 @@ import Faq from '../components/Faq.astro';
 import { SITE, whatsappUrl } from '../data/site';
 import { mentionOnly } from '../data/services';
 
-const faqs = [
-  { q: '¿Cuánto dura la evaluación?', a: 'Para una PyME suele tomar de 3 a 10 días hábiles, según el número de equipos y sucursales.' },
-  { q: '¿Afecta la operación de mi empresa?', a: 'No. Las revisiones se programan en horarios acordados y las pruebas más intrusivas solo se hacen con su autorización.' },
-  { q: '¿Qué pasa con la información que revisan?', a: 'Se trata de forma confidencial y solo se usa para elaborar su informe, conforme a nuestro aviso de privacidad.' },
-  { q: '¿Qué pasa después del informe?', a: 'Le explicamos los hallazgos y, si lo desea, le proponemos un plan por etapas para corregirlos.' },
+const waText = 'Hola. Vi su página web y me interesa conocer más sobre el Diagnóstico Integral de Ciberseguridad ConneXis para mi empresa. ¿Podría brindarme más información?';
+
+const riesgos = [
+  'Pérdida o robo de información confidencial.',
+  'Interrupción de las operaciones.',
+  'Ransomware: secuestro de información con exigencia de un pago. Pagar no garantiza recuperar los archivos.',
+  'Accesos no autorizados a la red.',
+  'Pérdidas económicas y daño a la reputación de la empresa.',
 ];
-const deliverables = [
-  { icon: 'FileSearch', title: 'Informe de hallazgos', text: 'Vulnerabilidades encontradas en sistemas, aplicaciones y dispositivos.' },
-  { icon: 'ListChecks', title: 'Prioridades', text: 'Cada hallazgo clasificado por riesgo: crítico, alto, medio o bajo.' },
-  { icon: 'BrickWall', title: 'Revisión perimetral', text: 'Estado de su firewall, accesos remotos y puertos expuestos.' },
-  { icon: 'ClipboardCheck', title: 'Recomendaciones claras', text: 'Qué corregir primero, explicado en lenguaje de negocio.' },
+const incluye = [
+  'Identificación de activos tecnológicos relevantes.',
+  'Análisis de vulnerabilidades.',
+  'Revisión básica de configuraciones críticas de seguridad.',
+  'Identificación y priorización de riesgos.',
+  'Resumen ejecutivo para dirección.',
+  'Reporte técnico para el área de TI.',
+  'Plan de remediación priorizado.',
+  'Presentación de resultados.',
+];
+const recibe = [
+  { icon: 'Radar', title: 'Panorama claro', text: 'Un panorama claro del estado de seguridad de su empresa.' },
+  { icon: 'ListChecks', title: 'Riesgos por prioridad', text: 'Los riesgos identificados, clasificados por prioridad.' },
+  { icon: 'ShieldCheck', title: 'Recomendaciones prácticas', text: 'Acciones concretas para reducir la exposición a ciberataques.' },
+  { icon: 'Users', title: 'Resumen ejecutivo', text: 'Un resumen ejecutivo para la dirección.' },
+  { icon: 'FileSearch', title: 'Reporte técnico', text: 'Un reporte técnico para el área de TI.' },
+  { icon: 'ClipboardCheck', title: 'Plan de remediación', text: 'Un plan de remediación priorizado.' },
 ] as const;
+const porque = [
+  { icon: 'Building2', title: 'Diagnóstico enfocado en su empresa', text: 'Analizamos la infraestructura y las necesidades particulares de su empresa para enfocar el diagnóstico en los activos y riesgos más relevantes.' },
+  { icon: 'ShieldCheck', title: 'Enfoque preventivo', text: 'Buscamos identificar vulnerabilidades y configuraciones inseguras antes de que sean aprovechadas y provoquen un incidente.' },
+  { icon: 'FileSearch', title: 'Información clara para decidir', text: 'Entregamos un resumen ejecutivo para dirección y un reporte técnico para el área de TI, con explicaciones adaptadas a cada audiencia.' },
+  { icon: 'ListChecks', title: 'Recomendaciones priorizadas', text: 'Clasificamos los riesgos para que su empresa sepa qué debe atender primero y aproveche mejor sus recursos.' },
+  { icon: 'Network', title: 'Visión integral', text: 'Consideramos la relación entre infraestructura de redes, dispositivos, servicios y ciberseguridad para ofrecer una visión más completa del riesgo.' },
+  { icon: 'Headset', title: 'Presentación de resultados', text: 'Explicamos los principales hallazgos, sus posibles consecuencias y las acciones recomendadas, y resolvemos sus dudas.' },
+] as const;
+const pasos = [
+  { title: 'Conocemos sus necesidades', text: 'Una breve llamada para conocer su empresa y lo que necesita proteger.' },
+  { title: 'Definimos el alcance', text: 'Determinamos qué se analizará y le presentamos una propuesta clara.' },
+  { title: 'Usted autoriza el servicio', text: 'Conoce el alcance, costo y proceso antes de contratar. Sin compromiso.' },
+  { title: 'Iniciamos el diagnóstico', text: 'Una vez autorizada la propuesta, coordinamos el inicio del servicio.' },
+];
+const faqs = [
+  { q: '¿Solicitar el diagnóstico me compromete a contratarlo?', a: 'No. La solicitud no implica la contratación del Diagnóstico Integral. Revisamos sus datos, le llamamos para conocer sus necesidades y le presentamos una propuesta con alcance, costo y proceso antes de que decida.' },
+  { q: '¿El diagnóstico sustituye una auditoría o una prueba de penetración?', a: 'No. Está orientado a identificar vulnerabilidades y riesgos prioritarios. No sustituye una auditoría exhaustiva, una prueba de penetración ni una auditoría de cumplimiento; si la necesita, se la proponemos como siguiente paso.' },
+  { q: '¿Qué recibo al terminar?', a: 'Un resumen ejecutivo para dirección, un reporte técnico para el área de TI y un plan de remediación priorizado, además de una presentación de resultados para resolver sus dudas.' },
+  { q: '¿Qué pasa con la información que comparto?', a: 'Su información se utiliza únicamente para atender su solicitud y elaborar el diagnóstico, conforme a nuestro aviso de privacidad.' },
+  { q: '¿Necesito tener un área de TI?', a: 'No. Trabajamos con su personal interno, con su proveedor externo o directamente con usted si no cuenta con apoyo de TI.' },
+];
 ---
 <BaseLayout
-  title="Evaluación de ciberseguridad para empresas en Monterrey"
-  description="Descubra los puntos débiles de su red antes que los atacantes. Evaluación de ciberseguridad con informe claro y recomendaciones priorizadas."
-  shareTitle="Evaluación de ciberseguridad para su empresa · ConneXis"
+  title="Diagnóstico integral de ciberseguridad para empresas | ConneXis"
+  description="Identificamos las vulnerabilidades de su infraestructura antes de que las aprovechen los atacantes. Resumen ejecutivo, reporte técnico y plan priorizado."
+  shareTitle="Diagnóstico Integral de Ciberseguridad ConneXis"
   noindex
   variant="landing"
   faqs={faqs}
@@ -34,72 +71,123 @@ const deliverables = [
   <section class="lp-hero" aria-labelledby="lp-title">
     <div class="wrap lp-grid">
       <div class="lp-copy" data-hero>
-        <p class="eyebrow">Evaluación de ciberseguridad</p>
-        <h1 id="lp-title">Evaluación de ciberseguridad para su empresa</h1>
-        <p class="lead">Descubra antes que los atacantes dónde están los puntos débiles de su red, con un informe claro y recomendaciones prácticas.</p>
+        <p class="eyebrow">Diagnóstico Integral de Ciberseguridad</p>
+        <h1 id="lp-title">Proteja su empresa antes de sufrir un ciberataque</h1>
+        <p class="lead">Identificamos vulnerabilidades en su infraestructura tecnológica antes de que sean aprovechadas por ciberdelincuentes. Solicite su <strong>diagnóstico integral de ciberseguridad</strong> y conozca los riesgos que pueden poner en peligro la información y la continuidad de su empresa.</p>
       </div>
       <div class="lp-form">
-        <LeadForm id="form-evaluacion" source="landing-evaluacion" service="Evaluación de ciberseguridad" title="Solicite su evaluación" subtitle="Solo 4 datos." submitLabel="Quiero mi evaluación" />
+        <LeadForm id="form-evaluacion" variant="diagnostico" source="landing-evaluacion" title="Solicite su diagnóstico" subtitle="4 datos obligatorios. Le llamamos para conocer sus necesidades." submitLabel="Solicitar diagnóstico"
+          legal="La solicitud no implica la contratación del Diagnóstico Integral. Su información será utilizada únicamente para atender esta solicitud." />
       </div>
       <div class="lp-more">
-        <ul class="checks">
-          <li><Icon name="CircleCheck" /> Análisis de vulnerabilidades en sistemas, aplicaciones y dispositivos.</li>
-          <li><Icon name="CircleCheck" /> Revisión de su firewall, accesos y protección de equipos.</li>
-          <li><Icon name="CircleCheck" /> Informe con recomendaciones priorizadas, en lenguaje claro.</li>
-        </ul>
+        <div class="btn-row lp-alt">
+          <a class="btn btn--wa" href={whatsappUrl(waText)} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="landing-hero"><Icon name="WhatsApp" /> Hablar por WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
+          <a class="btn btn--ghost" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="landing-hero"><Icon name="Phone" /> Llamar ahora</a>
+        </div>
         <ul class="badges">
           <li><Icon name="MapPin" size={16} /> <strong>Monterrey</strong> · atención en sitio</li>
           <li><Icon name="Users" size={16} /> <strong>PyMEs</strong> · oficinas e industrias</li>
-          <li><Icon name="Clock" size={16} /> Respuesta en <strong>{SITE.responseTime}</strong></li>
+          <li><Icon name="FileSearch" size={16} /> Reporte para <strong>dirección y TI</strong></li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="lp-entregables">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">Qué recibe</p>
-        <h2 id="lp-entregables">Entregables de la evaluación</h2>
+  <section class="section" aria-labelledby="lp-vulnerable">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">El riesgo</p>
+        <h2 id="lp-vulnerable">¿Qué tan vulnerable es su empresa a un ciberataque?</h2>
+        <p class="muted">Muchas empresas cuentan con antivirus, firewall o sistemas de respaldo y creen que eso es suficiente. Sin embargo, una configuración incorrecta, una vulnerabilidad sin corregir o un acceso no autorizado pueden comprometer la seguridad de toda la organización.</p>
+        <p class="lp-punch">Descúbralo antes de que lo haga un atacante.</p>
       </div>
-      <ul class="grid g4">
-        {deliverables.map((d, i) => (
-          <li class="card" data-reveal style={`--i:${i}`}><span class="icon-chip"><Icon name={d.icon} /></span><h3>{d.title}</h3><p>{d.text}</p></li>
-        ))}
-      </ul>
+      <div class="card">
+        <h3>Un incidente de ciberseguridad puede ocasionar:</h3>
+        <ul class="xlist">
+          {riesgos.map((r) => <li><Icon name="TriangleAlert" size={18} /> {r}</li>)}
+        </ul>
+        <p class="note">Un diagnóstico de ciberseguridad permite identificar vulnerabilidades y riesgos antes de que un incidente afecte la operación de su empresa.</p>
+      </div>
     </div>
   </section>
 
-  <section class="section--tight" aria-labelledby="lp-pasos">
+  <section class="section--tight" aria-labelledby="lp-incluye">
+    <div class="wrap split split--rev">
+      <div>
+        <p class="eyebrow">Qué incluye</p>
+        <h2 id="lp-incluye">Descubra las vulnerabilidades antes de que se conviertan en un incidente</h2>
+        <p class="muted">El <strong>Diagnóstico Integral de Ciberseguridad ConneXis</strong> le proporciona una visión general del estado de seguridad de su infraestructura tecnológica, identifica los riesgos prioritarios y le entrega recomendaciones claras para reducirlos.</p>
+      </div>
+      <div>
+        <ol class="incl">
+          {incluye.map((x, i) => <li><span class="num">{String(i + 1).padStart(2, '0')}</span>{x}</li>)}
+        </ol>
+        <p class="disclaimer"><Icon name="AlertCircle" size={16} /> El diagnóstico está orientado a identificar vulnerabilidades y riesgos prioritarios. No sustituye una auditoría exhaustiva, una prueba de penetración ni una auditoría de cumplimiento.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="lp-recibe">
     <div class="wrap">
-      <div class="steps-head" data-reveal>
+      <div class="section-head">
+        <p class="eyebrow">Entregables</p>
+        <h2 id="lp-recibe">¿Qué recibirá al finalizar el diagnóstico?</h2>
+        <p class="muted">Más que un reporte técnico, recibirá información clara para tomar decisiones y fortalecer la seguridad de su empresa.</p>
+      </div>
+      <ul class="grid g3">
+        {recibe.map((d) => (
+          <li class="card"><span class="icon-chip"><Icon name={d.icon} /></span><h3>{d.title}</h3><p>{d.text}</p></li>
+        ))}
+      </ul>
+      <p class="goal">Nuestro objetivo es ayudarle a conocer dónde se encuentran los principales riesgos y qué acciones pueden implementarse primero para fortalecer la seguridad de su infraestructura tecnológica.</p>
+    </div>
+  </section>
+
+  <section class="section--tight" aria-labelledby="lp-porque">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Por qué ConneXis</p>
+        <h2 id="lp-porque">¿Por qué elegir ConneXis?</h2>
+        <p class="muted">Porque la ciberseguridad no consiste únicamente en detectar vulnerabilidades, sino en convertir los hallazgos técnicos en decisiones claras para reducir los riesgos de su empresa.</p>
+      </div>
+      <ol class="grid g3 numbered">
+        {porque.map((p, i) => (
+          <li class="card"><span class="numbered__n num">{String(i + 1).padStart(2, '0')}</span><span class="icon-chip"><Icon name={p.icon} /></span><h3>{p.title}</h3><p>{p.text}</p></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="lp-pasos">
+    <div class="wrap">
+      <div class="steps-head">
         <div>
           <p class="eyebrow">Cómo funciona</p>
-          <h2 id="lp-pasos">Tres pasos, sin complicaciones</h2>
+          <h2 id="lp-pasos">¿Qué sucede después de enviar su solicitud?</h2>
         </div>
-        <a class="link-arrow" href="#form-evaluacion">Solicitar evaluación <Icon name="ArrowRight" /></a>
+        <a class="link-arrow" href="#form-evaluacion">Solicitar diagnóstico <Icon name="ArrowRight" /></a>
       </div>
-      <ol class="grid g3">
-        <li class="card" data-reveal><span class="tag tag--lime">Paso 1</span><h3>Le contactamos</h3><p>Confirmamos el alcance: equipos, sucursales y horarios.</p></li>
-        <li class="card" data-reveal style="--i:1"><span class="tag tag--lime">Paso 2</span><h3>Evaluamos</h3><p>Revisamos su red de forma remota y en sitio, sin detener la operación.</p></li>
-        <li class="card" data-reveal style="--i:2"><span class="tag tag--lime">Paso 3</span><h3>Recibe su informe</h3><p>Le explicamos los hallazgos y qué corregir primero.</p></li>
+      <ol class="grid g4">
+        {pasos.map((p, i) => (
+          <li class="card"><span class="tag tag--lime">Paso {i + 1}</span><h3>{p.title}</h3><p>{p.text}</p></li>
+        ))}
       </ol>
       <p class="also">Además de ciberseguridad, ConneXis instala redes empresariales, seguridad electrónica, {mentionOnly.map((m) => m.name.toLowerCase()).join(' y ')}.</p>
     </div>
   </section>
 
-  <Faq faqs={faqs} title="Antes de solicitarla" intro="¿Otra duda?" />
+  <Faq faqs={faqs} title="Antes de solicitarlo" intro="¿Otra duda?" />
 
   <section class="section--tight" aria-labelledby="lp-final">
     <div class="wrap">
-      <div class="lp-final" data-reveal>
+      <div class="lp-final">
         <div>
           <h2 id="lp-final">Proteja su información antes de que sea demasiado tarde</h2>
-          <p class="muted">La evaluación es el primer paso para invertir donde está el riesgo real.</p>
+          <p class="muted">Porque la ciberseguridad no es un lujo, es una necesidad.</p>
         </div>
         <div class="btn-row">
-          <a class="btn btn--light" href="#form-evaluacion">Solicitar evaluación</a>
-          <a class="btn btn--wa" href={whatsappUrl('Hola ConneXis, quiero una evaluación de ciberseguridad.')} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="landing-final"><Icon name="WhatsApp" /> WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
+          <a class="btn btn--light" href="#form-evaluacion">Solicitar diagnóstico</a>
+          <a class="btn btn--wa" href={whatsappUrl(waText)} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="landing-final"><Icon name="WhatsApp" /> WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
         </div>
       </div>
     </div>
@@ -108,28 +196,43 @@ const deliverables = [
 
 <style>
   .lp-hero { padding-block: clamp(28px, 5vw, 64px); background: radial-gradient(50% 70% at 0% 0%, rgba(91, 200, 220, 0.08), transparent 70%); }
-  .lp-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 440px); grid-template-areas: 'copy form' 'more form'; gap: 8px clamp(32px, 6vw, 80px); align-items: start; }
+  .lp-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 460px); grid-template-areas: 'copy form' 'more form'; gap: 8px clamp(32px, 6vw, 80px); align-items: start; }
   .lp-copy { grid-area: copy; }
   .lp-form { grid-area: form; }
   .lp-more { grid-area: more; }
   .lp-copy h1 { font-size: clamp(2.1rem, 4.6vw, 3.6rem); }
   .lp-copy .lead { margin: 18px 0 8px; }
-  .checks { list-style: none; display: grid; gap: 12px; margin: 16px 0 24px; }
-  .checks li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--muted); }
-  .checks :global(svg) { color: var(--lime); margin-top: 3px; }
+  .lp-copy .lead strong { color: var(--text); font-weight: 600; }
+  .lp-alt { margin: 16px 0 24px; }
   .badges { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
   .badges li { display: inline-flex; gap: 8px; align-items: center; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 0.88rem; color: var(--muted); background: var(--surface); }
   .badges strong { color: var(--text); font-weight: 600; }
   .badges :global(svg) { color: var(--lime); }
-  @media (max-width: 899px) {
-    .lp-grid { grid-template-columns: 1fr; grid-template-areas: 'copy' 'form' 'more'; gap: 20px; }
-  }
+  @media (max-width: 899px) { .lp-grid { grid-template-columns: 1fr; grid-template-areas: 'copy' 'form' 'more'; gap: 20px; } }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 88px); align-items: start; }
+  .split .muted { margin-top: 16px; }
+  .lp-punch { font-size: 1.25rem; color: var(--lime); font-weight: 500; margin-top: 20px; }
+  .xlist { list-style: none; display: grid; gap: 12px; margin: 16px 0 18px; }
+  .xlist li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; color: var(--muted); }
+  .xlist :global(svg) { color: var(--cyan); margin-top: 3px; }
+  .note { color: var(--text) !important; border-top: 1px solid var(--line); padding-top: 14px; }
+  .incl { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .incl li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-size: 0.95rem; }
+  .incl .num { color: var(--lime); font-weight: 600; }
+  .disclaimer { display: flex; gap: 10px; margin-top: 16px; color: var(--faint); font-size: 0.9rem; }
+  .disclaimer :global(svg) { flex: none; margin-top: 3px; color: var(--muted); }
+  @media (max-width: 899px) { .split { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .incl { grid-template-columns: 1fr; } }
+
   .grid { list-style: none; }
-  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .g3 .tag { margin-bottom: 14px; }
-  @media (max-width: 1023px) { .g4 { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 720px) { .g4, .g3 { grid-template-columns: 1fr; } }
+  .g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .g4 .tag { margin-bottom: 14px; }
+  .numbered__n { position: absolute; top: 20px; right: 22px; color: var(--faint); font-size: 0.85rem; }
+  .goal { margin-top: 28px; max-width: 70ch; color: var(--muted); }
+  @media (max-width: 1023px) { .g4, .g3 { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 680px) { .g4, .g3 { grid-template-columns: 1fr; } }
   .steps-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
   .steps-head h2 { margin: 0; }
   .also { margin-top: 28px; color: var(--faint); font-size: 0.92rem; }

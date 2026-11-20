@@ -16,16 +16,17 @@ import { SITE, whatsappUrl } from '../data/site';
     <div class="wrap">
       <div class="thanks">
         <span class="thanks__ok" data-pop><Icon name="Check" size={28} /></span>
-        <h1 id="h-gracias">Recibimos su solicitud</h1>
-        <p class="muted">Gracias por contactar a ConneXis. Un especialista revisará su información y se comunicará con usted.</p>
+        <h1 id="h-gracias">¡Gracias por su solicitud!</h1>
+        <p class="muted">Hemos recibido correctamente la información de su empresa. Uno de nuestros especialistas de ConneXis se pondrá en contacto con usted a la brevedad para conocer sus necesidades y orientarle. Si desea una atención más rápida, también puede comunicarse directamente por WhatsApp o teléfono.</p>
         <ol class="next">
           <li><span class="num">1</span><div><h2>Revisamos su solicitud</h2><p>Identificamos el servicio y el especialista adecuado.</p></div></li>
           <li><span class="num">2</span><div><h2>Le contactamos</h2><p>Por teléfono o correo en menos de <strong>{SITE.responseTime}</strong>.</p></div></li>
           <li><span class="num">3</span><div><h2>Agendamos la evaluación</h2><p>En el día y horario que le acomode.</p></div></li>
         </ol>
         <div class="btn-row center-row">
-          <a class="btn btn--wa" href={whatsappUrl('Hola ConneXis, acabo de enviar una solicitud desde su sitio web.')} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="gracias"><Icon name="WhatsApp" /> Adelantar por WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
-          <a class="btn btn--ghost" href="/servicios">Ver servicios</a>
+          <a class="btn btn--wa" href={whatsappUrl('Hola. Acabo de enviar el formulario de su sitio web y me gustaría dar seguimiento a mi solicitud.')} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="gracias"><Icon name="WhatsApp" /> Hablar por WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
+          <a class="btn btn--ghost" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="gracias-boton"><Icon name="Phone" /> Llamar ahora</a>
+          <a class="btn btn--ghost" href="/">Regresar al sitio principal</a>
         </div>
         <p class="small">¿Es urgente? Llame al <a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="gracias">{SITE.phone}</a>.</p>
       </div>

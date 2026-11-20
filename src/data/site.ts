@@ -9,6 +9,7 @@ export const SITE = {
   locale: 'es_MX',
   lang: 'es-MX',
   tagline: 'Ciberseguridad, redes y seguridad electrónica para PyMEs en Monterrey',
+  slogan: 'Conectamos tu mundo con soluciones inteligentes',
   description:
     'Soluciones de ciberseguridad, redes y seguridad electrónica para pequeñas y medianas empresas en Monterrey y su área metropolitana.',
   phone: '+52 8129129134',
@@ -35,7 +36,7 @@ export const SITE = {
   social: {
     linkedin: 'https://www.linkedin.com/company/connexis-mx/',
     facebook: 'https://www.facebook.com/share/14GhoWJVgx4/',
-    instagram: '', // pendiente
+    instagram: 'https://www.instagram.com/connexis_mty/',
   },
 } as const;
 
@@ -45,6 +46,7 @@ export const whatsappUrl = (text: string = SITE.whatsappText) =>
 export const fullAddress = `${SITE.address.street}, C.P. ${SITE.address.postalCode}, ${SITE.address.locality}, ${SITE.address.regionCode}`;
 
 export const NAV = [
+  { label: 'Nosotros', href: '/#nosotros' },
   { label: 'Servicios', href: '/servicios' },
   // ETAPA 2 · { label: 'Casos de éxito', href: '/casos-exito' },
   // ETAPA 3 · { label: 'Blog', href: '/blog' },

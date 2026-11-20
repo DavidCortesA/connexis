@@ -45,7 +45,7 @@ export const services: Service[] = [
   {
     slug: 'ciberseguridad',
     name: 'Ciberseguridad',
-    short: 'Firewall, prevención de intrusos, protección de endpoints, análisis de vulnerabilidades y pruebas autorizadas.',
+    short: 'Defensa perimetral, prevención de intrusos, listas de control de acceso, protección contra malware, hacking ético y análisis de vulnerabilidades.',
     metaTitle: 'Ciberseguridad para empresas en Monterrey | ConneXis',
     metaDescription:
       'Firewall perimetral, IPS, protección de endpoints y análisis de vulnerabilidades para PyMEs en Monterrey. Evaluación inicial y plan en lenguaje claro.',
@@ -53,7 +53,7 @@ export const services: Service[] = [
     eyebrow: 'Ciberseguridad',
     h1: 'Proteja la información de su empresa antes de que alguien más la encuentre',
     lead:
-      'ConneXis implementa firewalls, prevención de intrusos, protección de equipos y análisis de vulnerabilidades para pequeñas y medianas empresas de Monterrey. Empezamos con una evaluación, le entregamos un plan priorizado y lo implementamos sin detener su operación.',
+      'Implementamos dispositivos de defensa perimetral como firewalls, prevención de intrusos (IPS), listas de control de acceso (ACL) y protección contra malware para garantizar la disponibilidad, integridad y confidencialidad de sus datos. Empezamos con un diagnóstico y lo implementamos sin detener su operación.',
     tldr: [
       'Qué es: un servicio integral para proteger red, equipos y datos de su empresa.',
       'Para quién: PyMEs de 5 a 250 usuarios en Monterrey y su área metropolitana.',
@@ -75,10 +75,10 @@ export const services: Service[] = [
     includes: [
       { icon: 'BrickWall', title: 'Firewall perimetral', text: 'Controla qué entra y qué sale de su red, con VPN para trabajo remoto y sucursales.' },
       { icon: 'Radar', title: 'Prevención de intrusos (IPS)', text: 'Detecta y bloquea ataques conocidos en tiempo real, antes de que lleguen a sus equipos.' },
-      { icon: 'ShieldCheck', title: 'Protección de endpoints', text: 'Antimalware de nueva generación en cada equipo, administrado desde una consola central.' },
-      { icon: 'ScanSearch', title: 'Análisis de vulnerabilidades', text: 'Revisión de sistemas, aplicaciones y dispositivos con informe priorizado.' },
-      { icon: 'Bug', title: 'Pruebas autorizadas', text: 'Hacking ético con autorización por escrito para encontrar fallas antes que un atacante.' },
-      { icon: 'Headset', title: 'Acompañamiento', text: 'Monitoreo, ajustes de reglas y revisiones periódicas después de la implementación.' },
+      { icon: 'ShieldCheck', title: 'Protección contra malware', text: 'Antivirus y antimalware en cada equipo, administrados desde una consola central.' },
+      { icon: 'ScanSearch', title: 'Análisis de vulnerabilidades', text: 'Evaluamos sistemas, aplicaciones y dispositivos y le entregamos un informe claro con recomendaciones prácticas.' },
+      { icon: 'Bug', title: 'Pruebas de penetración (hacking ético)', text: 'Con autorización por escrito, buscamos los errores que podrían permitir el acceso a su información para corregirlos.' },
+      { icon: 'LockKeyhole', title: 'Listas de control de acceso (ACL)', text: 'Definimos quién puede llegar a cada sistema y servicio de su red, y bloqueamos el resto.' },
     ],
     comparison: {
       caption: 'Diferencia entre una red sin protección y una red protegida por ConneXis',
@@ -119,7 +119,7 @@ export const services: Service[] = [
   {
     slug: 'redes-empresariales',
     name: 'Redes empresariales',
-    short: 'Diseño de redes cableadas e inalámbricas: cobertura, estabilidad, segmentación y mantenimiento.',
+    short: 'Diseñamos, instalamos y optimizamos redes cableadas e inalámbricas con conectividad estable, rápida y segura.',
     metaTitle: 'Redes empresariales y Wi‑Fi en Monterrey | ConneXis',
     metaDescription:
       'Diseño e instalación de redes cableadas e inalámbricas para empresas en Monterrey: cobertura Wi‑Fi, estabilidad, segmentación y mantenimiento.',
@@ -127,7 +127,7 @@ export const services: Service[] = [
     eyebrow: 'Redes empresariales',
     h1: 'Una red que no se cae, cubre todo el espacio y separa lo que debe ir separado',
     lead:
-      'ConneXis diseña, instala y mantiene redes cableadas e inalámbricas para oficinas, bodegas, clínicas y plantas en Monterrey. Resolvemos zonas sin señal, caídas y lentitud, y segmentamos la red para que invitados, cámaras y operación no compartan el mismo camino.',
+      'Diseñamos, instalamos y optimizamos redes cableadas e inalámbricas que garantizan una conectividad estable, rápida y segura en oficinas e industrias de Monterrey. Cada dispositivo queda conectado de manera eficiente para maximizar la productividad, porque una empresa bien conectada es más competitiva y tiene mayor potencial de crecimiento.',
     tldr: [
       'Qué es: diseño e instalación de la red cableada y Wi‑Fi de su empresa.',
       'Para quién: empresas con zonas sin señal, caídas frecuentes o que se mudan o crecen.',
@@ -174,7 +174,7 @@ export const services: Service[] = [
       { title: 'Menos interrupciones', text: 'Una red diseñada y monitoreada elimina la mayoría de las caídas.' },
       { title: 'Cobertura total', text: 'Señal estable en oficinas, bodegas y áreas abiertas.' },
       { title: 'Más seguridad', text: 'La segmentación limita el alcance de cualquier falla o intrusión.' },
-      { title: 'Lista para crecer', text: 'Agregar usuarios, sucursales o cámaras sin rehacer la red.' },
+      { title: 'Más competitiva', text: 'Una empresa conectada de forma eficiente es más productiva y tiene mayor potencial de crecimiento.' },
     ],
     process: [
       { title: 'Diagnóstico', text: 'Visitamos el sitio, medimos cobertura y revisamos sus equipos actuales.' },
@@ -193,7 +193,7 @@ export const services: Service[] = [
   {
     slug: 'seguridad-electronica',
     name: 'Seguridad electrónica',
-    short: 'Videovigilancia, alarmas, control de acceso, cercos y monitoreo para empresas.',
+    short: 'Videovigilancia, alarmas, control de acceso, cercos eléctricos y monitoreo inteligente para proteger lo que más le importa.',
     metaTitle: 'Seguridad electrónica para empresas en Monterrey | ConneXis',
     metaDescription:
       'Videovigilancia, alarmas, control de acceso, cercos eléctricos y monitoreo para empresas en Monterrey. Solicite una visita de asesoría.',
@@ -201,7 +201,7 @@ export const services: Service[] = [
     eyebrow: 'Seguridad electrónica',
     h1: 'Vea, controle y registre quién entra a su empresa, a cualquier hora',
     lead:
-      'ConneXis instala videovigilancia, alarmas, control de acceso, cercos y monitoreo para oficinas, comercios, clínicas, bodegas y plantas en Monterrey. Diseñamos cada instalación según el sector y la integramos a su red de forma segura.',
+      'Instalamos sistemas de videovigilancia, alarmas, control de acceso, cercos eléctricos y monitoreo inteligente para proteger lo que más le importa. Adaptamos cada solución a sus necesidades, ya sea para oficinas, negocios, grandes instalaciones u hogares, porque cuidar su negocio va más allá de cerrar la puerta.',
     tldr: [
       'Qué es: sistemas para vigilar, controlar accesos y recibir alertas en su empresa.',
       'Incluye: videovigilancia IP, alarmas, control de acceso, cercos y monitoreo.',
@@ -225,7 +225,7 @@ export const services: Service[] = [
       { icon: 'BellRing', title: 'Alarmas', text: 'Sensores de intrusión, botones de pánico y avisos a su celular.' },
       { icon: 'IdCard', title: 'Control de acceso', text: 'Acceso con tarjeta, huella o código por persona, área y horario.' },
       { icon: 'Fence', title: 'Cercos eléctricos', text: 'Protección perimetral disuasiva con energizador y señalización.' },
-      { icon: 'Activity', title: 'Monitoreo', text: 'Alertas, revisión de eventos y reportes de accesos.' },
+      { icon: 'Activity', title: 'Monitoreo inteligente', text: 'Alertas, revisión de eventos y reportes de accesos.' },
       { icon: 'ShieldCheck', title: 'Integración segura', text: 'Cámaras y controles en una red separada, con acceso remoto cifrado.' },
     ],
     comparison: {
@@ -274,6 +274,6 @@ export const getService = (slug: string) => {
 
 // Servicios que en esta fase solo se mencionan en el home (sin página propia).
 export const mentionOnly = [
-  { name: 'Cableado estructurado', text: 'Diseño, instalación, organización de racks y certificación de nodos.' },
-  { name: 'Fibra óptica', text: 'Enlaces, instalación, terminación y pruebas entre edificios o naves.' },
+  { name: 'Cableado estructurado', text: 'Instalaciones profesionales con materiales de alta calidad para máxima velocidad, estabilidad y escalabilidad, y para prevenir incendios por cortocircuito o sobrecalentamiento.' },
+  { name: 'Fibra óptica', text: 'Instalación profesional de fibra óptica para enlaces de alta velocidad y desempeño óptimo a largo plazo.' },
 ];

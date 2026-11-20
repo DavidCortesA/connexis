@@ -1,10 +1,13 @@
 # ConneXis
 
-> ConneXis es un integrador de ciberseguridad, redes empresariales y seguridad electrónica para pequeñas y medianas empresas (PyMEs) en Monterrey, Nuevo León, México. Oficina en San Nicolás de los Garza, N.L. Atención en sitio en Monterrey y su área metropolitana.
+> "Conectamos tu mundo con soluciones inteligentes". ConneXis es un integrador de ciberseguridad, redes empresariales y seguridad electrónica para pequeñas y medianas empresas (PyMEs) en Monterrey, Nuevo León, México. Oficina en San Nicolás de los Garza, N.L. Atención en sitio en Monterrey y su área metropolitana.
 
 - Teléfono y WhatsApp: +52 8129129134
 - LinkedIn: https://www.linkedin.com/company/connexis-mx/
 - Facebook: https://www.facebook.com/share/14GhoWJVgx4/
+- Instagram: https://www.instagram.com/connexis_mty/
+- Misión: impulsar la productividad de sus clientes con soluciones tecnológicas adaptadas a cada negocio, implementadas de manera eficiente y segura.
+- Valores: confianza, transparencia, calidad, empatía y compromiso.
 - Correo: contacto@connexis.mx
 - Dirección: De la Carreta 606, Residencial Talaverna, C.P. 66473, San Nicolás de los Garza, N.L., México
 - Horario: lunes a viernes, 9:00 a 18:00
@@ -17,7 +20,7 @@
 - [Redes empresariales](https://connexis.mx/servicios/redes-empresariales): diseño de redes cableadas e inalámbricas, estudio de cobertura Wi‑Fi, estabilidad, segmentación por VLAN, monitoreo y mantenimiento.
 - [Seguridad electrónica](https://connexis.mx/servicios/seguridad-electronica): videovigilancia IP, alarmas, control de acceso, cercos eléctricos y monitoreo para oficinas, comercios, clínicas, bodegas y plantas.
 - También instalan cableado estructurado y fibra óptica como parte de proyectos de infraestructura.
-- [Evaluación de ciberseguridad](https://connexis.mx/evaluacion): revisión de red, firewall, accesos y equipos con informe de hallazgos y recomendaciones.
+- [Diagnóstico Integral de Ciberseguridad](https://connexis.mx/evaluacion): identificación de activos, análisis de vulnerabilidades, revisión de configuraciones críticas y priorización de riesgos; entrega resumen ejecutivo, reporte técnico, plan de remediación priorizado y presentación de resultados. No sustituye una auditoría exhaustiva ni una prueba de penetración.
 
 <!-- ETAPA 3 · Blog (activar al publicar los artículos)
 ## Guías

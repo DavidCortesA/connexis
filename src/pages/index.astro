@@ -26,6 +26,14 @@ const faqs = [
 ];
 
 const frentes = cyber.includes;
+// Valores (sitio original de ConneXis)
+const valores = [
+  { t: 'Confianza', d: 'Cumplimos lo que prometemos, siempre.' },
+  { t: 'Transparencia', d: 'Hablar claro es parte de nuestro ADN.' },
+  { t: 'Calidad', d: 'Trabajamos con tecnología de punta y aplicamos buenas prácticas en cada proyecto.' },
+  { t: 'Empatía', d: 'Nos ponemos en sus zapatos para entender sus necesidades y brindarle la mejor solución.' },
+  { t: 'Compromiso', d: 'Su éxito también es el nuestro. Nos involucramos como si su empresa fuera parte de la nuestra.' },
+];
 const steps = [
   { title: 'Diagnóstico', text: 'Revisamos red, equipos y accesos para saber dónde está el riesgo real.' },
   { title: 'Plan priorizado', text: 'Le explicamos qué atender primero, con costos y tiempos claros.' },
@@ -77,7 +85,7 @@ const steps = [
     <div class="wrap summary">
       <div data-reveal>
         <h2 class="summary__q">¿Qué hace ConneXis por su empresa?</h2>
-        <p class="lead">ConneXis es un integrador de ciberseguridad y redes en {SITE.address.locality}, N.L. Diseñamos, instalamos y mantenemos la protección de su red para que un virus, un acceso indebido o una falla de cableado no detengan su operación.</p>
+        <p class="lead">ConneXis crea soluciones tecnológicas a la medida para pequeñas y medianas empresas de Monterrey que necesitan seguridad, conectividad y eficiencia sin complicaciones. Desde redes rápidas y confiables hasta ciberseguridad, control de acceso y videovigilancia, somos su socio para construir un entorno digital seguro, funcional y escalable.</p>
       </div>
       <Tldr items={[
         'Servicios: ciberseguridad, redes empresariales y seguridad electrónica.',
@@ -125,24 +133,27 @@ const steps = [
         <Photo name="pasillo-racks-centro-datos" alt="Pasillo largo de un centro de datos con racks de servidores a ambos lados" class="rp rp--b" sizes="(min-width: 900px) 22vw, 50vw" widths={[360, 540, 720]} ratio="1/1" />
         <Photo name="tecnico-instalando-hardware" alt="Técnico instalando un componente dentro de un servidor" class="rp rp--c" sizes="(min-width: 900px) 22vw, 50vw" widths={[360, 540, 720]} ratio="4/3" tint />
         <div class="ready__badge">
-          <span class="num">4 de 4</span>
-          <span>frentes revisados en cada diagnóstico: red, equipos, accesos y respaldo</span>
+          <span class="num">3,124</span>
+          <span>ataques semanales por organización en México, +78 % anual (3.er trimestre de 2024)</span>
         </div>
       </div>
       <div class="ready__copy" data-reveal>
         <p class="eyebrow">Diagnóstico</p>
         <h2 id="ready-title">¿Su empresa está lista para <span class="hl">un ataque?</span></h2>
-        <p class="muted">Muchas empresas descubren sus puntos débiles el día que alguien los aprovecha. El diagnóstico de ConneXis los encuentra antes, con pruebas controladas y un informe que su equipo directivo puede entender.</p>
+        <p class="muted">Durante el tercer trimestre de 2024, las organizaciones en México enfrentaron en promedio 3,124 ataques semanales, un 78 % más que el año anterior.<sup><a href="#fuente-ataques" class="fn">1</a></sup> Aun así, la mayoría no invierte en ciberseguridad hasta que ya fue víctima de un ataque.</p>
+        <p class="muted">Después de un ciberataque, las empresas invierten mucho más en recuperación, forense digital, reparación de imagen, multas y clientes perdidos, y descubren que un sistema preventivo habría costado menos que los daños.</p>
         <div class="ready__chips">
           <span class="card"><Icon name="Bug" /> Pruebas de penetración</span>
           <span class="card"><Icon name="FileSearch" /> Informe con recomendaciones</span>
         </div>
         <ul class="checks">
-          <li><Icon name="CircleCheck" /> Descubre dónde están los puntos débiles de su red antes que los atacantes.</li>
-          <li><Icon name="CircleCheck" /> Evaluamos sistemas, aplicaciones y dispositivos.</li>
-          <li><Icon name="CircleCheck" /> Le explicamos qué corregir primero, en lenguaje claro.</li>
+          <li><Icon name="CircleCheck" /> Descubra antes que los atacantes dónde están los puntos débiles de su red.</li>
+          <li><Icon name="CircleCheck" /> Evaluamos sus sistemas, aplicaciones y dispositivos.</li>
+          <li><Icon name="CircleCheck" /> Le entregamos un informe claro con recomendaciones prácticas.</li>
         </ul>
-        <a class="btn" href="/evaluacion" data-track="cta_click" data-track-loc="home-ready">Evaluar mi empresa <Icon name="ArrowRight" class="i-arrow" /></a>
+        <p class="ready__punch">Proteja su información antes de que sea demasiado tarde. La ciberseguridad no es un lujo, es una necesidad.</p>
+        <a class="btn" href="/evaluacion" data-track="cta_click" data-track-loc="home-ready">Solicitar diagnóstico integral <Icon name="ArrowRight" class="i-arrow" /></a>
+        <p class="fuente" id="fuente-ataques"><sup>1</sup> Check Point Research, reporte trimestral de ataques, 3.er trimestre de 2024 (citado por <a href="https://www.publimetro.com.mx/noticias/2024/11/29/ciberseguridad-en-mexico-aumentan-los-ataques-ciberneticos-y-las-perdidas-millonarias/" target="_blank" rel="noopener">Publimetro<span class="sr-only"> (abre en otra pestaña)</span></a>).</p>
         {/* ETAPA 3 · Enlace al artículo del blog
         <p class="ready__more"><a class="link-arrow" href="/blog/evaluacion-vulnerabilidades">Qué incluye una evaluación de vulnerabilidades <Icon name="ArrowRight" /></a></p>
         */}
@@ -163,7 +174,7 @@ const steps = [
           <thead><tr><th scope="col">Servicio</th><th scope="col">Problema que resuelve</th><th scope="col">Qué recibe</th></tr></thead>
           <tbody>
             <tr><th scope="row"><a href="/servicios/ciberseguridad">Ciberseguridad</a></th><td>Virus, accesos indebidos, robo o secuestro de información</td><td>Firewall, IPS, protección de equipos e informe</td></tr>
-            <tr><th scope="row"><a href="/evaluacion">Evaluación de vulnerabilidades</a></th><td>No saber qué tan expuesta está la empresa</td><td>Informe priorizado y plan de acción</td></tr>
+            <tr><th scope="row"><a href="/evaluacion">Diagnóstico integral de ciberseguridad</a></th><td>No saber qué tan expuesta está la empresa</td><td>Informe priorizado y plan de acción</td></tr>
             <tr><th scope="row"><a href="/servicios/redes-empresariales">Redes empresariales</a></th><td>Zonas sin Wi‑Fi, caídas y una sola red para todo</td><td>Red diseñada, segmentada y monitoreada</td></tr>
             <tr><th scope="row"><a href="/servicios/seguridad-electronica">Seguridad electrónica</a></th><td>Áreas sin vigilancia o accesos con llave compartida</td><td>Videovigilancia, alarmas y control de acceso</td></tr>
             {mentionOnly.map((m) => <tr><th scope="row">{m.name}</th><td>Infraestructura física de la red</td><td>{m.text}</td></tr>)}
@@ -253,6 +264,41 @@ const steps = [
 
   <Faq faqs={faqs} title="Lo que nos preguntan antes de empezar" />
 
+  <!-- NOSOTROS (textos del sitio original de ConneXis) -->
+  <section class="section nosotros" id="nosotros" aria-labelledby="nosotros-title">
+    <div class="wrap">
+      <div class="nos__intro">
+        <div data-reveal>
+          <p class="eyebrow">Nosotros</p>
+          <h2 id="nosotros-title">¿Quiénes <span class="hl">somos?</span></h2>
+        </div>
+        <div data-reveal style="--i:1">
+          <p class="lead">Somos un equipo de expertos en Tecnologías de la Información con presencia en Monterrey y amplia experiencia en el diseño e implementación de soluciones tecnológicas para pequeñas y medianas empresas.</p>
+          <p class="muted">Nos especializamos en redes de comunicaciones, seguridad electrónica y ciberseguridad, con servicios integrales que garantizan conectividad, protección y continuidad operativa. En un mundo cada vez más conectado, la tecnología debe ser su mejor aliada: en ConneXis unimos experiencia, innovación y pasión para ayudar al desarrollo y crecimiento de su negocio.</p>
+        </div>
+      </div>
+      <div class="nos__mv">
+        <article class="card" data-reveal>
+          <span class="icon-chip"><Icon name="Zap" /></span>
+          <h3>Nuestra misión</h3>
+          <p>Impulsar la productividad de nuestros clientes ayudando a su crecimiento, con soluciones tecnológicas adaptadas a cada negocio, implementadas de manera eficiente y segura.</p>
+        </article>
+        <article class="card" data-reveal style="--i:1">
+          <span class="icon-chip"><Icon name="Radar" /></span>
+          <h3>Nuestra visión</h3>
+          <p>Ser la empresa de tecnología con enfoque en redes de comunicaciones, seguridad electrónica y ciberseguridad para pequeñas y medianas empresas más reconocida en todo México.</p>
+        </article>
+      </div>
+      <h3 class="nos__vt" data-reveal>Nuestros valores</h3>
+      <ul class="valores">
+        {valores.map((v, i) => (
+          <li data-reveal style={`--i:${i}`}><span class="num">{String(i + 1).padStart(2, '0')}</span><strong>{v.t}</strong><p>{v.d}</p></li>
+        ))}
+      </ul>
+      <p class="nos__close" data-reveal>Con ConneXis, la tecnología deja de ser un problema y se convierte en <span class="hl">su mejor inversión</span>.</p>
+    </div>
+  </section>
+
   <!-- FORMULARIO FINAL -->
   <section class="section" id="diagnostico" aria-labelledby="diag-title">
     <div class="wrap">
@@ -260,7 +306,7 @@ const steps = [
         <div class="diag__copy">
           <p class="eyebrow">Contacto</p>
           <h2 id="diag-title">Proteja su información <span class="hl">antes de que sea tarde</span></h2>
-          <p class="muted">Solicite un diagnóstico. Revisamos su red y le decimos, sin compromiso, qué atender primero.</p>
+          <p class="muted">¿Listo para mejorar su seguridad y conectividad? En ConneXis estamos listos para escucharle y ayudarle a construir una solución que sí funcione para su negocio.</p>
           <ul class="diag__contact">
             <li><Icon name="Phone" /> <a href={SITE.phoneHref} data-track="click_to_call" data-track-loc="home-form">{SITE.phone}</a></li>
             <li><Icon name="Mail" /> <a href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="home-form">{SITE.email}</a></li>
@@ -314,7 +360,7 @@ const steps = [
   .ready__photos { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; grid-template-rows: auto auto; gap: 12px; }
   .ready__photos :global(.rp--a) { grid-row: span 2; }
   .ready__photos :global(.rp--b) { margin-top: 40px; }
-  .ready__badge { position: absolute; left: 22%; bottom: -24px; max-width: 250px; background: var(--lime); color: var(--lime-ink); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45); font-size: 0.85rem; font-weight: 500; line-height: 1.35; }
+  .ready__badge { position: absolute; left: 22%; bottom: -24px; max-width: 270px; background: var(--lime); color: var(--lime-ink); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45); font-size: 0.85rem; font-weight: 500; line-height: 1.35; }
   .ready__badge .num { font-size: 1.6rem; font-weight: 600; line-height: 1; }
   .ready__copy p.muted { margin: 16px 0 24px; }
   .ready__chips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
@@ -324,6 +370,27 @@ const steps = [
   .checks li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; color: var(--muted); }
   .checks :global(svg) { color: var(--lime); margin-top: 3px; }
   .ready__more { margin: 20px 0 0; }
+  .ready__punch { color: var(--text); font-weight: 500; margin: 0 0 24px; }
+  .fn { color: var(--lime); text-decoration: none; font-size: 0.75em; margin-left: 2px; }
+  .fuente { margin: 20px 0 0; font-size: 0.8rem; color: var(--faint); }
+  .fuente a { color: var(--muted); }
+
+  .nos__intro { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr); gap: clamp(24px, 5vw, 80px); align-items: end; margin-bottom: clamp(32px, 4vw, 56px); }
+  .nos__intro h2 { margin: 0; }
+  .nos__intro .lead { color: var(--text); margin-bottom: 16px; }
+  .nos__mv { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .nos__mv p { font-size: 1.02rem; }
+  .nos__vt { margin: clamp(40px, 5vw, 64px) 0 20px; font-size: clamp(1.3rem, 2vw, 1.6rem); }
+  .valores { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); }
+  .valores li { padding: 22px 18px 0 0; position: relative; }
+  .valores li::before { content: ''; position: absolute; top: -1px; left: 0; width: 36px; height: 2px; background: var(--lime); }
+  .valores .num { display: block; color: var(--faint); font-size: 0.85rem; margin-bottom: 10px; }
+  .valores strong { display: block; font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; }
+  .valores p { color: var(--muted); font-size: 0.95rem; margin: 0; }
+  .nos__close { margin: clamp(40px, 5vw, 64px) 0 0; font-size: clamp(1.3rem, 2.4vw, 1.9rem); font-weight: 400; letter-spacing: -0.01em; max-width: 30ch; }
+  @media (max-width: 1023px) { .valores { grid-template-columns: repeat(3, 1fr); row-gap: 28px; } }
+  @media (max-width: 899px) { .nos__intro, .nos__mv { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .valores { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 899px) { .ready__grid { grid-template-columns: 1fr; } .ready__photos { margin-bottom: 24px; } }
   @media (max-width: 480px) { .ready__chips { grid-template-columns: 1fr; } }
 
