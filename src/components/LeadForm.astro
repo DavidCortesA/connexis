@@ -64,8 +64,8 @@ const serviceOptions = ['Ciberseguridad', 'Cableado estructurado', 'Redes empres
   </div>
   <div class="field">
     <label for={f('telefono')}>Teléfono <span class="req" aria-hidden="true">*</span></label>
-    <input id={f('telefono')} name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9+()\s-]{10,18}" aria-describedby={`${f('telefono-hint')} ${f('telefono-err')}`} />
-    <p class="field__hint" id={f('telefono-hint')}>10 dígitos, por ejemplo 81 1234 5678</p>
+    <input id={f('telefono')} name="telefono" type="tel" autocomplete="tel-national" inputmode="numeric" required pattern="[2-9][0-9] [0-9]{4} [0-9]{4}" data-phone aria-describedby={`${f('telefono-hint')} ${f('telefono-err')}`} />
+    <p class="field__hint" id={f('telefono-hint')}>10 dígitos sin lada internacional, por ejemplo 81 1234 5678</p>
     <p class="field__err" id={f('telefono-err')} data-err></p>
   </div>
 

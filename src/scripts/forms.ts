@@ -13,7 +13,10 @@ const messages: Record<string, Check> = {
   telefono: (el) => {
     const digits = el.value.replace(/\D/g, '');
     if (!digits) return 'Escriba un teléfono de contacto.';
-    return digits.length >= 10 && digits.length <= 13 ? '' : 'El teléfono debe tener 10 dígitos.';
+    if (digits.length !== 10) return `El teléfono debe tener 10 dígitos (lleva ${digits.length}).`;
+    if (/^[01]/.test(digits)) return 'Revise el número: en México los teléfonos no empiezan con 0 ni con 1.';
+    if (/^(\d)\1{9}$/.test(digits)) return 'Revise el número, parece incompleto o de prueba.';
+    return '';
   },
 };
 
@@ -51,6 +54,15 @@ async function send(form: HTMLFormElement) {
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
 }
 
+/** Deja solo dígitos (máx. 10), quita la lada +52 si la pegan y formatea como 81 1234 5678. */
+export function formatPhone(value: string) {
+  let d = value.replace(/\D/g, '');
+  if (d.length > 10 && d.startsWith('521')) d = d.slice(3);
+  else if (d.length > 10 && d.startsWith('52')) d = d.slice(2);
+  d = d.slice(0, 10);
+  return [d.slice(0, 2), d.slice(2, 6), d.slice(6, 10)].filter(Boolean).join(' ');
+}
+
 export function initLeadForms() {
   document.querySelectorAll<HTMLFormElement>('form[data-lead-form]:not([data-ready])').forEach((form) => {
     form.dataset.ready = '1';
@@ -59,6 +71,19 @@ export function initLeadForms() {
     const label = btn.querySelector<HTMLElement>('[data-btn-label]')!;
     const original = label.textContent;
     let started = false;
+
+    // Teléfono: solo números, máximo 10 dígitos, con formato automático
+    form.querySelectorAll<HTMLInputElement>('input[data-phone]').forEach((el) => {
+      el.addEventListener('input', () => {
+        const formatted = formatPhone(el.value);
+        if (formatted !== el.value) el.value = formatted;
+      });
+      el.addEventListener('keydown', (e) => {
+        // Bloquea letras y símbolos (deja pasar atajos, borrar y navegación)
+        if (e.ctrlKey || e.metaKey || e.altKey || e.key.length > 1) return;
+        if (!/\d/.test(e.key)) e.preventDefault();
+      });
+    });
 
     // Validación al salir del campo, sin gritarle al usuario mientras escribe.
     form.querySelectorAll<HTMLInputElement>('input[required]').forEach((el) => {
