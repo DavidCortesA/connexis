@@ -212,7 +212,7 @@ const serviceSchema = {
       <div data-reveal>
         <p class="eyebrow">Solicitud</p>
         <h2 id="sol-title">{s.cta}</h2>
-        <p class="muted">Déjenos sus datos y un especialista en {s.name.toLowerCase()} le contacta en menos de {SITE.responseTime}.</p>
+        <p class="muted">Déjenos sus datos y un especialista en {s.name.toLowerCase()} le contactará a la brevedad.</p>
         <a class="btn btn--wa" href={whatsappUrl(`Hola ConneXis, me interesa ${s.name.toLowerCase()}.`)} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc={`servicio-${s.slug}-form`}><Icon name="WhatsApp" /> Prefiero WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></a>
         <p class="sol__others">También le puede interesar: {others.map((o) => <a href={`/servicios/${o.slug}`}>{o.name}</a>)}</p>
       </div>

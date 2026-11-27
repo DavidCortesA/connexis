@@ -8,10 +8,10 @@ export const SITE = {
   url: (import.meta.env.PUBLIC_SITE_URL || 'https://connexis.mx').replace(/\/$/, ''),
   locale: 'es_MX',
   lang: 'es-MX',
-  tagline: 'Ciberseguridad, redes y seguridad electrónica para PyMEs en Monterrey',
+  tagline: 'Redes, ciberseguridad y seguridad electrónica para PyMEs en Monterrey',
   slogan: 'Conectamos tu mundo con soluciones inteligentes',
   description:
-    'Soluciones de ciberseguridad, redes y seguridad electrónica para pequeñas y medianas empresas en Monterrey y su área metropolitana.',
+    'Soluciones tecnológicas empresariales en redes de comunicaciones, ciberseguridad y seguridad electrónica para pequeñas y medianas empresas en Monterrey y su área metropolitana.',
   phone: '+52 8129129134',
   phoneHref: 'tel:+528129129134',
   whatsapp: '528129129134', // CONFIRMAR que el número tiene WhatsApp Business
@@ -31,7 +31,6 @@ export const SITE = {
   hours: [{ days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '18:00' }],
   hoursLabel: 'Lunes a viernes, 9:00 a 18:00',
   areaServed: ['Monterrey', 'San Nicolás de los Garza', 'San Pedro Garza García', 'Apodaca', 'Guadalupe', 'Escobedo', 'Santa Catarina'],
-  responseTime: '1 día hábil', // CONFIRMAR tiempo de respuesta que se promete en formularios
   // Deja vacío lo que no exista; el footer y el schema solo muestran lo que tenga URL.
   social: {
     linkedin: 'https://www.linkedin.com/company/connexis-mx/',

@@ -1,6 +1,6 @@
 # ConneXis
 
-> "Conectamos tu mundo con soluciones inteligentes". ConneXis es un integrador de ciberseguridad, redes empresariales y seguridad electrónica para pequeñas y medianas empresas (PyMEs) en Monterrey, Nuevo León, México. Oficina en San Nicolás de los Garza, N.L. Atención en sitio en Monterrey y su área metropolitana.
+> "Conectamos tu mundo con soluciones inteligentes". ConneXis es un proveedor de soluciones tecnológicas empresariales: redes de comunicaciones, ciberseguridad y seguridad electrónica para pequeñas y medianas empresas (PyMEs) en Monterrey, Nuevo León, México. Oficina en San Nicolás de los Garza, N.L. Atención en sitio en Monterrey y su área metropolitana.
 
 - Teléfono y WhatsApp: +52 8129129134
 - LinkedIn: https://www.linkedin.com/company/connexis-mx/
@@ -16,9 +16,9 @@
 
 ## Servicios
 
-- [Ciberseguridad](https://connexis.mx/servicios/ciberseguridad): firewall perimetral, prevención de intrusos (IPS), protección de endpoints, análisis de vulnerabilidades, pruebas autorizadas (hacking ético) y acompañamiento.
-- [Redes empresariales](https://connexis.mx/servicios/redes-empresariales): diseño de redes cableadas e inalámbricas, estudio de cobertura Wi‑Fi, estabilidad, segmentación por VLAN, monitoreo y mantenimiento.
-- [Seguridad electrónica](https://connexis.mx/servicios/seguridad-electronica): videovigilancia IP, alarmas, control de acceso, cercos eléctricos y monitoreo para oficinas, comercios, clínicas, bodegas y plantas.
+- [Redes de comunicaciones](https://connexis.mx/servicios/redes-empresariales): diseño de redes cableadas e inalámbricas, estudio de cobertura Wi‑Fi, estabilidad, segmentación por VLAN, monitoreo y mantenimiento.
+- [Ciberseguridad](https://connexis.mx/servicios/ciberseguridad): firewall perimetral, prevención de intrusos (IPS), listas de control de acceso, protección contra malware, pruebas de penetración (hacking ético) y análisis de vulnerabilidades.
+- [Seguridad electrónica](https://connexis.mx/servicios/seguridad-electronica): cámaras de seguridad, alarmas, control de acceso, cercos eléctricos y monitoreo para oficinas, comercios, clínicas, bodegas y plantas.
 - También instalan cableado estructurado y fibra óptica como parte de proyectos de infraestructura.
 - [Diagnóstico Integral de Ciberseguridad](https://connexis.mx/evaluacion): identificación de activos, análisis de vulnerabilidades, revisión de configuraciones críticas y priorización de riesgos; entrega resumen ejecutivo, reporte técnico, plan de remediación priorizado y presentación de resultados. No sustituye una auditoría exhaustiva ni una prueba de penetración.
 

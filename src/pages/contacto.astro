@@ -10,7 +10,7 @@ import { SITE, whatsappUrl, fullAddress, socialLinks } from '../data/site';
 
 const crumbs = [{ name: 'Inicio', href: '/' }, { name: 'Contacto', href: '/contacto' }];
 const faqs = [
-  { q: '¿Cuál es el horario de atención?', a: `${SITE.hoursLabel}. Puede dejar su solicitud en cualquier momento y le respondemos en menos de ${SITE.responseTime}.` },
+  { q: '¿Cuál es el horario de atención?', a: `${SITE.hoursLabel}. Puede dejar su solicitud en cualquier momento y le responderemos a la brevedad.` },
   { q: '¿Dónde están ubicados?', a: `En ${fullAddress}. Atendemos en sitio en Monterrey y su área metropolitana.` },
   { q: '¿Qué información necesitan para cotizar?', a: 'El tipo de instalación, número aproximado de usuarios o equipos y la ubicación. Con eso agendamos una visita o una llamada de diagnóstico.' },
 ];
@@ -21,7 +21,7 @@ const contactSchema = [{ '@type': 'ContactPage', name: 'Contacto ConneXis', url:
 ---
 <BaseLayout
   title="Contacto ConneXis: teléfono, WhatsApp y dirección"
-  description={`Llame al ${SITE.phone}, escriba por WhatsApp o deje sus datos. ConneXis atiende empresas en Monterrey y responde en menos de ${SITE.responseTime}.`}
+  description={`Llame al ${SITE.phone}, escriba por WhatsApp o deje sus datos. ConneXis atiende empresas en Monterrey y su área metropolitana.`}
   shareTitle="Contacto ConneXis"
   breadcrumbs={crumbs}
   faqs={faqs}
@@ -38,7 +38,7 @@ const contactSchema = [{ '@type': 'ContactPage', name: 'Contacto ConneXis', url:
           <p class="lead">¿Listo para mejorar su seguridad y conectividad? En ConneXis estamos listos para escucharle y ayudarle a construir una solución que sí funcione para su negocio. Llámenos, escríbanos por WhatsApp o deje sus datos.</p>
           <ul class="channels">
             <li><a class="channel" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="contacto"><Icon name="Phone" size={22} /><span><strong>Teléfono</strong>{SITE.phone}</span></a></li>
-            <li><a class="channel" href={whatsappUrl()} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="contacto"><Icon name="WhatsApp" size={22} /><span><strong>WhatsApp</strong>Respuesta en horario laboral<span class="sr-only"> (abre en otra pestaña)</span></span></a></li>
+            <li><a class="channel" href={whatsappUrl()} target="_blank" rel="noopener" data-track="click_whatsapp" data-track-loc="contacto"><Icon name="WhatsApp" size={22} /><span><strong>WhatsApp</strong>Escríbanos por WhatsApp<span class="sr-only"> (abre en otra pestaña)</span></span></a></li>
             <li><a class="channel" href={`mailto:${SITE.email}`} data-track="click_email" data-track-loc="contacto"><Icon name="Mail" size={22} /><span><strong>Correo</strong>{SITE.email}</span></a></li>
             <li><a class="channel" href={mapsUrl} target="_blank" rel="noopener"><Icon name="MapPin" size={22} /><span><strong>Oficina</strong>{fullAddress}<span class="sr-only"> (abre Google Maps)</span></span></a></li>
             <li><div class="channel"><Icon name="Clock" size={22} /><span><strong>Horario</strong>{SITE.hoursLabel}</span></div></li>
@@ -69,7 +69,7 @@ const contactSchema = [{ '@type': 'ContactPage', name: 'Contacto ConneXis', url:
 
 <script>
   // Preselecciona el servicio si llega como /contacto?servicio=redes-empresariales
-  const map: Record<string, string> = { ciberseguridad: 'Ciberseguridad', 'redes-empresariales': 'Redes empresariales', 'seguridad-electronica': 'Seguridad electrónica' };
+  const map: Record<string, string> = { ciberseguridad: 'Ciberseguridad', 'redes-empresariales': 'Redes de comunicaciones', 'seguridad-electronica': 'Seguridad electrónica' };
   const v = map[new URLSearchParams(location.search).get('servicio') ?? ''];
   const sel = document.querySelector<HTMLSelectElement>('#form-contacto-servicio');
   if (v && sel) sel.value = v;

@@ -40,7 +40,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
         </nav>
         <div class="header-actions">
           <a class="header-phone" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="header"><Icon name="Phone" size={17} /> <span>{SITE.phone}</span></a>
-          <a class="btn btn--sm header-cta" href="/contacto" data-track="cta_click" data-track-loc="header">Solicitar diagnóstico</a>
+          <a class="btn btn--sm header-cta" href="/contacto" data-track="cta_click" data-track-loc="header">Contactar a ConneXis</a>
           <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-btn>
             <span class="sr-only" data-menu-label>Abrir menú</span>
             <Icon name="Menu" size={22} class="i-open" />
@@ -63,7 +63,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path === href 
           ))}
           {services.map((s) => <li><a class="sub" href={`/servicios/${s.slug}`} aria-current={path === `/servicios/${s.slug}` ? 'page' : undefined}>{s.name}</a></li>)}
         </ul>
-        <a class="btn btn--block" href="/contacto">Solicitar diagnóstico <Icon name="ArrowRight" class="i-arrow" /></a>
+        <a class="btn btn--block" href="/contacto">Contactar a ConneXis <Icon name="ArrowRight" class="i-arrow" /></a>
       </nav>
     </div>
   )}

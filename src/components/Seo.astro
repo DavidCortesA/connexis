@@ -63,7 +63,7 @@ const business = {
   areaServed: SITE.areaServed.map((c) => ({ '@type': 'City', name: c })),
   hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddress)}`,
   contactPoint: { '@type': 'ContactPoint', telephone: SITE.phone, email: SITE.email, contactType: 'sales', areaServed: 'MX', availableLanguage: ['es'] },
-  knowsAbout: ['Ciberseguridad', 'Firewall perimetral', 'Prevención de intrusos', 'Análisis de vulnerabilidades', 'Cableado estructurado', 'Redes empresariales', 'Seguridad electrónica'],
+  knowsAbout: ['Redes de comunicaciones', 'Redes empresariales', 'Wi‑Fi empresarial', 'Cableado estructurado', 'Ciberseguridad', 'Firewall perimetral', 'Prevención de intrusos', 'Análisis de vulnerabilidades', 'Seguridad electrónica'],
   ...(sameAs.length ? { sameAs } : {}),
 };
 

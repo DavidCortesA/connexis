@@ -5,23 +5,25 @@
 //   PUBLIC_FORM_ENDPOINT (Formspree, Web3Forms, Basin, etc.) y se enviará ahí.
 // - Al enviar correctamente redirige a /gracias, donde se registra la conversión.
 import Icon from './Icon.astro';
-import { ENV, SITE } from '../data/site';
+import { ENV } from '../data/site';
 
 interface Props {
   id: string;
-  variant?: 'short' | 'full' | 'diagnostico';
+  variant?: 'short' | 'full' | 'diagnostico' | 'mensaje';
   service?: string;
   title?: string;
   subtitle?: string;
   submitLabel?: string;
   headingLevel?: 'h2' | 'h3';
   source: string;
-  /** Texto legal bajo el botón (por defecto, tiempo de respuesta + aviso de privacidad). */
+  /** Texto legal adicional antes del aviso de privacidad. */
   legal?: string;
+  /** Oculta visualmente el título (sigue disponible para lectores de pantalla). */
+  hideTitle?: boolean;
 }
 const {
   id, variant = 'short', service = '', title = 'Solicite su diagnóstico', subtitle = 'Solo 4 datos. Le contactamos para agendar.',
-  submitLabel = 'Quiero mi diagnóstico', headingLevel = 'h2', source, legal,
+  submitLabel = 'Quiero mi diagnóstico', headingLevel = 'h2', source, legal, hideTitle = false,
 } = Astro.props;
 // Cada tipo de formulario se registra en Netlify Forms con su propio nombre (campos distintos).
 const formName = variant === 'diagnostico' ? 'diagnostico' : 'solicitud';
@@ -31,7 +33,7 @@ const areaTi = ['Sí, personal interno', 'Sí, proveedor externo', 'Personal int
 const preocupaciones = ['Desconocer si existen vulnerabilidades', 'Ransomware o pérdida de información', 'Accesos no autorizados', 'Configuraciones inseguras', 'Ya ocurrió un incidente', 'Prevención general', 'Otra preocupación'];
 const H = headingLevel;
 const f = (name: string) => `${id}-${name}`;
-const serviceOptions = ['Ciberseguridad', 'Cableado estructurado', 'Redes empresariales', 'Seguridad electrónica', 'Fibra óptica', 'Otro'];
+const serviceOptions = ['Redes de comunicaciones', 'Ciberseguridad', 'Seguridad electrónica', 'Cableado estructurado', 'Fibra óptica', 'Otro'];
 ---
 <form class="lead" id={id} name={formName} method="POST" action="/gracias" novalidate
   data-netlify="true" netlify-honeypot="bot-field" data-lead-form data-endpoint={ENV.formEndpoint} data-source={source}
@@ -41,7 +43,7 @@ const serviceOptions = ['Ciberseguridad', 'Cableado estructurado', 'Redes empres
   <p class="hp" aria-hidden="true"><label>No llenar este campo <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
   <div class="lead__head">
-    <H class="lead__title" id={f('title')}>{title}</H>
+    <H class:list={['lead__title', { 'sr-only': hideTitle }]} id={f('title')}>{title}</H>
     <p class="lead__sub">{subtitle}</p>
   </div>
 
@@ -96,7 +98,17 @@ const serviceOptions = ['Ciberseguridad', 'Cableado estructurado', 'Redes empres
     </fieldset>
   )}
 
-  {variant === 'diagnostico' ? null : variant === 'full' ? (
+  {variant === 'mensaje' && (
+    <>
+      <input type="hidden" name="servicio" value={service || 'Contacto general'} />
+      <div class="field">
+        <label for={f('mensaje')}>Mensaje</label>
+        <textarea id={f('mensaje')} name="mensaje" rows="4" maxlength="1500" placeholder="Cuéntenos qué necesita"></textarea>
+      </div>
+    </>
+  )}
+
+  {variant === 'diagnostico' || variant === 'mensaje' ? null : variant === 'full' ? (
     <>
       <div class="field">
         <label for={f('servicio')}>Servicio de interés</label>
@@ -121,7 +133,7 @@ const serviceOptions = ['Ciberseguridad', 'Cableado estructurado', 'Redes empres
     <span data-btn-label>{submitLabel}</span>
     <Icon name="ArrowRight" class="i-arrow btn-icon" />
   </button>
-  <p class="lead__legal">{legal ?? `Le contactamos en menos de ${SITE.responseTime}.`} Al enviar acepta nuestro <a href="/aviso-privacidad">aviso de privacidad</a>.</p>
+  <p class="lead__legal">{legal && `${legal} `}Al enviar acepta nuestro <a href="/aviso-privacidad">aviso de privacidad</a>.</p>
 </form>
 
 <style>

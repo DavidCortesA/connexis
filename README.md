@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <img alt="Versión" src="https://img.shields.io/badge/versión-1.2.1-8CD336?style=flat-square" />
+  <img alt="Versión" src="https://img.shields.io/badge/versión-1.3.0-8CD336?style=flat-square" />
   <img alt="Etapa" src="https://img.shields.io/badge/etapa-1%20de%203-5BC8DC?style=flat-square" />
   <img alt="Astro" src="https://img.shields.io/badge/Astro-7-0B1B2E?style=flat-square&logo=astro" />
   <img alt="Motion" src="https://img.shields.io/badge/Motion-14-0B1B2E?style=flat-square" />
@@ -25,7 +25,7 @@
 
 El sitio de ConneXis, construido con **Astro** sobre la *Propuesta 3 · Operación*: fondo carbón con verde lima, fotografía en blanco y negro, radar animado con el isotipo, servicios numerados y animaciones con **Motion**.
 
-Esta versión **1.2.1** cubre la **Etapa 1: Sitio y captación de prospectos**: un sitio renovado, una página por servicio y una landing para Google Ads que convierte visitas en solicitudes. Las etapas 2 y 3 ya están diseñadas en la propuesta y parte de su código está listo pero comentado (ver [Siguientes etapas](#siguientes-etapas)).
+Esta versión **1.3.0** cubre la **Etapa 1: Sitio y captación de prospectos**: un sitio renovado, una página por servicio y una landing para Google Ads que convierte visitas en solicitudes. Las etapas 2 y 3 ya están diseñadas en la propuesta y parte de su código está listo pero comentado (ver [Siguientes etapas](#siguientes-etapas)).
 
 📄 Propuesta completa: [`doc/connexis-propuesta-operacion-etapas.pdf`](doc/connexis-propuesta-operacion-etapas.pdf) · páginas en imagen en [`doc/propuesta/`](doc/propuesta).
 
@@ -53,7 +53,7 @@ Requiere Node 22.23 o superior (ver `.nvmrc`).
 | Página principal | `/` | Presentar a ConneXis y llevar a solicitar un diagnóstico |
 | Servicios (hub) | `/servicios` | Elegir servicio |
 | Ciberseguridad | `/servicios/ciberseguridad` | Solicitar evaluación de seguridad |
-| Redes empresariales | `/servicios/redes-empresariales` | Solicitar diagnóstico o cotización de red |
+| Redes de comunicaciones | `/servicios/redes-empresariales` | Solicitar diagnóstico o cotización de red |
 | Seguridad electrónica | `/servicios/seguridad-electronica` | Solicitar visita o asesoría |
 | Landing Google Ads | `/evaluacion` | Un solo objetivo: pedir la evaluación (sin menú, `noindex`) |
 | Agradecimiento | `/gracias` | Confirmar el envío y registrar la conversión (`noindex`) |

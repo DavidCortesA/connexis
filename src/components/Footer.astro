@@ -18,7 +18,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
       <div class="footer__brand">
         <Logo height={28} idSuffix="footer" />
         <p class="footer__slogan">{SITE.slogan}</p>
-        <p>Soluciones de ciberseguridad, redes y seguridad electrónica para pequeñas y medianas empresas en Monterrey.</p>
+        <p>Soluciones tecnológicas empresariales en redes de comunicaciones, ciberseguridad y seguridad electrónica para pequeñas y medianas empresas en Monterrey.</p>
         {socials.length > 0 && (
           <ul class="socials">
             {socials.map((s) => (
@@ -31,8 +31,6 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
         <h2 id="f-servicios" class="footer__title">Servicios</h2>
         <ul>
           {services.map((s) => <li><a href={`/servicios/${s.slug}`}>{s.name}</a></li>)}
-          <li><a href="/servicios">Todos los servicios</a></li>
-          <li><a href="/evaluacion">Diagnóstico integral de ciberseguridad</a></li>
         </ul>
       </nav>
       {/* ETAPA 2 · Casos de éxito y ETAPA 3 · Blog (fuera de alcance en la Etapa 1)

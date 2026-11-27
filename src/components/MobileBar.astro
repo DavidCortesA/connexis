@@ -4,7 +4,7 @@
 import Icon from './Icon.astro';
 import { SITE, whatsappUrl } from '../data/site';
 interface Props { ctaHref?: string; ctaLabel?: string }
-const { ctaHref = '/contacto', ctaLabel = 'Diagnóstico' } = Astro.props;
+const { ctaHref = '/contacto', ctaLabel = 'Contactar' } = Astro.props;
 ---
 <nav class="mbar" aria-label="Contacto rápido">
   <a class="mbar__call" href={SITE.phoneHref} data-track="click_to_call" data-track-loc="barra-movil">

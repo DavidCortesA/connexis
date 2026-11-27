@@ -28,6 +28,9 @@ export type Service = {
   imageAlt: string;
   image2: string;
   image2Alt: string;
+  /** Texto y botón de la tarjeta del servicio en el home. */
+  homeText: string;
+  homeCta: string;
   /** Conversión principal de la página (texto del CTA). */
   cta: string;
   formValue: string;
@@ -42,6 +45,82 @@ export type Service = {
 };
 
 export const services: Service[] = [
+  {
+    slug: 'redes-empresariales',
+    name: 'Redes de comunicaciones',
+    short: 'Diseñamos, instalamos y optimizamos redes cableadas e inalámbricas con conectividad estable, rápida y segura.',
+    metaTitle: 'Redes de comunicaciones y Wi‑Fi en Monterrey | ConneXis',
+    metaDescription:
+      'Diseño e instalación de redes cableadas e inalámbricas para empresas en Monterrey: cobertura Wi‑Fi, estabilidad, segmentación y mantenimiento.',
+    intent: 'Comercial-local: "redes de comunicaciones Monterrey", "redes empresariales Monterrey", "instalación de red wifi para empresa".',
+    eyebrow: 'Redes de comunicaciones',
+    h1: 'Una red que no se cae, cubre todo el espacio y separa lo que debe ir separado',
+    lead:
+      'Diseñamos, instalamos y optimizamos redes cableadas e inalámbricas que garantizan una conectividad estable, rápida y segura en oficinas e industrias de Monterrey. Cada dispositivo queda conectado de manera eficiente para maximizar la productividad, porque una empresa bien conectada es más competitiva y tiene mayor potencial de crecimiento.',
+    tldr: [
+      'Qué es: diseño e instalación de la red cableada y Wi‑Fi de su empresa.',
+      'Para quién: empresas con zonas sin señal, caídas frecuentes o que se mudan o crecen.',
+      'Qué incluye: estudio de cobertura, switches, puntos de acceso, VLAN y mantenimiento.',
+      'Por qué importa: una red mal diseñada frena la operación y abre huecos de seguridad.',
+      'Primer paso: diagnóstico de red con mapa de cobertura y cotización.',
+    ],
+    image: 'cables-utp-patch-panel',
+    imageAlt: 'Patch panel numerado con cables de red UTP azules y grises conectados',
+    image2: 'fibra-optica-switch-red',
+    image2Alt: 'Switch de red en rack con cables de fibra óptica amarillos conectados',
+    homeText: 'Diseñamos, configuramos e instalamos la red en empresas que necesitan redes estables, eficientes y confiables.',
+    homeCta: 'Conocer soluciones de redes',
+    cta: 'Solicitar diagnóstico de red',
+    formValue: 'Redes de comunicaciones',
+    risks: [
+      { icon: 'Signal', title: 'Zonas sin señal', text: 'Puntos de acceso domésticos o mal ubicados dejan áreas completas sin Wi‑Fi estable.' },
+      { icon: 'Gauge', title: 'Caídas y lentitud', text: 'Equipos saturados y sin configuración profesional cortan la red en las horas de más uso.' },
+      { icon: 'Split', title: 'Todo en la misma red', text: 'Invitados, cámaras y equipos de oficina mezclados: una falla o intrusión afecta a todos.' },
+    ],
+    includes: [
+      { icon: 'Wifi', title: 'Estudio de cobertura Wi‑Fi', text: 'Medimos el espacio y ubicamos cada punto de acceso donde realmente se necesita.' },
+      { icon: 'Network', title: 'Diseño de red', text: 'Topología, switches administrables y capacidad dimensionada para crecer.' },
+      { icon: 'Layers', title: 'Segmentación (VLAN)', text: 'Redes separadas para oficinas, invitados, cámaras y punto de venta.' },
+      { icon: 'Router', title: 'Red inalámbrica empresarial', text: 'Puntos de acceso administrados desde una consola, con roaming sin cortes.' },
+      { icon: 'Activity', title: 'Monitoreo y estabilidad', text: 'Alertas de caídas y saturación para actuar antes de que el equipo lo note.' },
+      { icon: 'Wrench', title: 'Mantenimiento', text: 'Actualizaciones, respaldos de configuración y soporte en sitio.' },
+    ],
+    comparison: {
+      caption: 'Red improvisada frente a red empresarial diseñada por ConneXis',
+      head: ['Aspecto', 'Red improvisada', 'Red empresarial ConneXis'],
+      rows: [
+        ['Cobertura', 'Zonas muertas y repetidores', 'Estudio de cobertura y puntos de acceso empresariales'],
+        ['Estabilidad', 'Caídas en horas pico', 'Equipos dimensionados y monitoreados'],
+        ['Segmentación', 'Una sola red para todo', 'VLAN para oficinas, invitados y cámaras'],
+        ['Administración', 'Cada equipo por separado', 'Consola central y respaldos de configuración'],
+        ['Mantenimiento', 'Solo cuando algo falla', 'Revisiones programadas'],
+      ],
+    },
+    scenarios: [
+      { icon: 'Building2', title: 'Oficinas', text: 'Wi‑Fi estable para salas de juntas, videollamadas y red de invitados aislada.' },
+      { icon: 'Warehouse', title: 'Bodegas y naves', text: 'Cobertura para lectores y terminales móviles en pasillos y andenes.' },
+      { icon: 'Hospital', title: 'Clínicas', text: 'Red separada para equipos médicos, recepción y pacientes.' },
+    ],
+    benefits: [
+      { title: 'Menos interrupciones', text: 'Una red diseñada y monitoreada elimina la mayoría de las caídas.' },
+      { title: 'Cobertura total', text: 'Señal estable en oficinas, bodegas y áreas abiertas.' },
+      { title: 'Más seguridad', text: 'La segmentación limita el alcance de cualquier falla o intrusión.' },
+      { title: 'Más competitiva', text: 'Una empresa conectada de forma eficiente es más productiva y tiene mayor potencial de crecimiento.' },
+    ],
+    process: [
+      { title: 'Diagnóstico', text: 'Visitamos el sitio, medimos cobertura y revisamos sus equipos actuales.' },
+      { title: 'Diseño y cotización', text: 'Topología, equipos, segmentación, tiempos y costo cerrado.' },
+      { title: 'Instalación', text: 'Montaje y configuración con mínima interrupción a la operación.' },
+      { title: 'Mantenimiento', text: 'Monitoreo, actualizaciones y soporte en sitio.' },
+    ],
+    faqs: [
+      { q: '¿Por qué mi Wi‑Fi se cae aunque tengo buen internet?', a: 'Casi siempre es la red interna, no el proveedor: equipos domésticos saturados, puntos de acceso mal ubicados o interferencia. Un diagnóstico de red identifica la causa exacta.' },
+      { q: '¿Qué es segmentar la red?', a: 'Es dividirla en redes virtuales (VLAN) para que invitados, cámaras, punto de venta y oficinas no compartan el mismo espacio. Mejora el rendimiento y limita el daño de cualquier incidente.' },
+      { q: '¿Trabajan con mis equipos actuales?', a: 'Sí. Revisamos lo que ya tiene y solo recomendamos reemplazar lo que no cumple o no se puede administrar.' },
+      { q: '¿Cuánto tarda la instalación de una red?', a: 'Una oficina mediana suele quedar en una a dos semanas. Bodegas y plantas se planean por etapas.' },
+      { q: '¿Ofrecen mantenimiento?', a: 'Sí, con revisiones programadas, respaldos de configuración y soporte en sitio en Monterrey y su área metropolitana.' },
+    ],
+  },
   {
     slug: 'ciberseguridad',
     name: 'Ciberseguridad',
@@ -65,6 +144,8 @@ export const services: Service[] = [
     imageAlt: 'Racks de servidores con cables de red de colores en un cuarto de telecomunicaciones',
     image2: 'panel-led-ciberseguridad',
     image2Alt: 'Circuito iluminado en tonos verde azulado sobre fondo oscuro',
+    homeText: 'Identificamos riesgos e implementamos la tecnología necesaria para proteger la información y la operación de su empresa.',
+    homeCta: 'Conocer soluciones de ciberseguridad',
     cta: 'Solicitar evaluación de seguridad',
     formValue: 'Ciberseguridad',
     risks: [
@@ -117,80 +198,6 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: 'redes-empresariales',
-    name: 'Redes empresariales',
-    short: 'Diseñamos, instalamos y optimizamos redes cableadas e inalámbricas con conectividad estable, rápida y segura.',
-    metaTitle: 'Redes empresariales y Wi‑Fi en Monterrey | ConneXis',
-    metaDescription:
-      'Diseño e instalación de redes cableadas e inalámbricas para empresas en Monterrey: cobertura Wi‑Fi, estabilidad, segmentación y mantenimiento.',
-    intent: 'Comercial-local: "redes empresariales Monterrey", "instalación de red wifi para empresa".',
-    eyebrow: 'Redes empresariales',
-    h1: 'Una red que no se cae, cubre todo el espacio y separa lo que debe ir separado',
-    lead:
-      'Diseñamos, instalamos y optimizamos redes cableadas e inalámbricas que garantizan una conectividad estable, rápida y segura en oficinas e industrias de Monterrey. Cada dispositivo queda conectado de manera eficiente para maximizar la productividad, porque una empresa bien conectada es más competitiva y tiene mayor potencial de crecimiento.',
-    tldr: [
-      'Qué es: diseño e instalación de la red cableada y Wi‑Fi de su empresa.',
-      'Para quién: empresas con zonas sin señal, caídas frecuentes o que se mudan o crecen.',
-      'Qué incluye: estudio de cobertura, switches, puntos de acceso, VLAN y mantenimiento.',
-      'Por qué importa: una red mal diseñada frena la operación y abre huecos de seguridad.',
-      'Primer paso: diagnóstico de red con mapa de cobertura y cotización.',
-    ],
-    image: 'cables-utp-patch-panel',
-    imageAlt: 'Patch panel numerado con cables de red UTP azules y grises conectados',
-    image2: 'fibra-optica-switch-red',
-    image2Alt: 'Switch de red en rack con cables de fibra óptica amarillos conectados',
-    cta: 'Solicitar diagnóstico de red',
-    formValue: 'Redes empresariales',
-    risks: [
-      { icon: 'Signal', title: 'Zonas sin señal', text: 'Puntos de acceso domésticos o mal ubicados dejan áreas completas sin Wi‑Fi estable.' },
-      { icon: 'Gauge', title: 'Caídas y lentitud', text: 'Equipos saturados y sin configuración profesional cortan la red en las horas de más uso.' },
-      { icon: 'Split', title: 'Todo en la misma red', text: 'Invitados, cámaras y equipos de oficina mezclados: una falla o intrusión afecta a todos.' },
-    ],
-    includes: [
-      { icon: 'Wifi', title: 'Estudio de cobertura Wi‑Fi', text: 'Medimos el espacio y ubicamos cada punto de acceso donde realmente se necesita.' },
-      { icon: 'Network', title: 'Diseño de red', text: 'Topología, switches administrables y capacidad dimensionada para crecer.' },
-      { icon: 'Layers', title: 'Segmentación (VLAN)', text: 'Redes separadas para oficinas, invitados, cámaras y punto de venta.' },
-      { icon: 'Router', title: 'Red inalámbrica empresarial', text: 'Puntos de acceso administrados desde una consola, con roaming sin cortes.' },
-      { icon: 'Activity', title: 'Monitoreo y estabilidad', text: 'Alertas de caídas y saturación para actuar antes de que el equipo lo note.' },
-      { icon: 'Wrench', title: 'Mantenimiento', text: 'Actualizaciones, respaldos de configuración y soporte en sitio.' },
-    ],
-    comparison: {
-      caption: 'Red improvisada frente a red empresarial diseñada por ConneXis',
-      head: ['Aspecto', 'Red improvisada', 'Red empresarial ConneXis'],
-      rows: [
-        ['Cobertura', 'Zonas muertas y repetidores', 'Estudio de cobertura y puntos de acceso empresariales'],
-        ['Estabilidad', 'Caídas en horas pico', 'Equipos dimensionados y monitoreados'],
-        ['Segmentación', 'Una sola red para todo', 'VLAN para oficinas, invitados y cámaras'],
-        ['Administración', 'Cada equipo por separado', 'Consola central y respaldos de configuración'],
-        ['Mantenimiento', 'Solo cuando algo falla', 'Revisiones programadas'],
-      ],
-    },
-    scenarios: [
-      { icon: 'Building2', title: 'Oficinas', text: 'Wi‑Fi estable para salas de juntas, videollamadas y red de invitados aislada.' },
-      { icon: 'Warehouse', title: 'Bodegas y naves', text: 'Cobertura para lectores y terminales móviles en pasillos y andenes.' },
-      { icon: 'Hospital', title: 'Clínicas', text: 'Red separada para equipos médicos, recepción y pacientes.' },
-    ],
-    benefits: [
-      { title: 'Menos interrupciones', text: 'Una red diseñada y monitoreada elimina la mayoría de las caídas.' },
-      { title: 'Cobertura total', text: 'Señal estable en oficinas, bodegas y áreas abiertas.' },
-      { title: 'Más seguridad', text: 'La segmentación limita el alcance de cualquier falla o intrusión.' },
-      { title: 'Más competitiva', text: 'Una empresa conectada de forma eficiente es más productiva y tiene mayor potencial de crecimiento.' },
-    ],
-    process: [
-      { title: 'Diagnóstico', text: 'Visitamos el sitio, medimos cobertura y revisamos sus equipos actuales.' },
-      { title: 'Diseño y cotización', text: 'Topología, equipos, segmentación, tiempos y costo cerrado.' },
-      { title: 'Instalación', text: 'Montaje y configuración con mínima interrupción a la operación.' },
-      { title: 'Mantenimiento', text: 'Monitoreo, actualizaciones y soporte en sitio.' },
-    ],
-    faqs: [
-      { q: '¿Por qué mi Wi‑Fi se cae aunque tengo buen internet?', a: 'Casi siempre es la red interna, no el proveedor: equipos domésticos saturados, puntos de acceso mal ubicados o interferencia. Un diagnóstico de red identifica la causa exacta.' },
-      { q: '¿Qué es segmentar la red?', a: 'Es dividirla en redes virtuales (VLAN) para que invitados, cámaras, punto de venta y oficinas no compartan el mismo espacio. Mejora el rendimiento y limita el daño de cualquier incidente.' },
-      { q: '¿Trabajan con mis equipos actuales?', a: 'Sí. Revisamos lo que ya tiene y solo recomendamos reemplazar lo que no cumple o no se puede administrar.' },
-      { q: '¿Cuánto tarda la instalación de una red?', a: 'Una oficina mediana suele quedar en una a dos semanas. Bodegas y plantas se planean por etapas.' },
-      { q: '¿Ofrecen mantenimiento?', a: 'Sí, con revisiones programadas, respaldos de configuración y soporte en sitio en Monterrey y su área metropolitana.' },
-    ],
-  },
-  {
     slug: 'seguridad-electronica',
     name: 'Seguridad electrónica',
     short: 'Videovigilancia, alarmas, control de acceso, cercos eléctricos y monitoreo inteligente para proteger lo que más le importa.',
@@ -213,6 +220,8 @@ export const services: Service[] = [
     imageAlt: 'Dos cámaras de videovigilancia tipo bala montadas en un muro de concreto',
     image2: 'equipo-oficina-escritorios',
     image2Alt: 'Oficina amplia con personas trabajando en sus escritorios frente a computadoras',
+    homeText: 'Instalamos cámaras de seguridad, alarmas, control de acceso y monitoreo para proteger sus instalaciones, su personal y sus activos.',
+    homeCta: 'Conocer soluciones de seguridad electrónica',
     cta: 'Solicitar visita de asesoría',
     formValue: 'Seguridad electrónica',
     risks: [
