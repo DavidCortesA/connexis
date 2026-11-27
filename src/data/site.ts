@@ -32,10 +32,14 @@ export const SITE = {
   hoursLabel: 'Lunes a viernes, 9:00 a 18:00',
   areaServed: ['Monterrey', 'San Nicolás de los Garza', 'San Pedro Garza García', 'Apodaca', 'Guadalupe', 'Escobedo', 'Santa Catarina'],
   // Deja vacío lo que no exista; el footer y el schema solo muestran lo que tenga URL.
+  // Redes ocultas a petición del cliente. Para mostrarlas de nuevo, restaure las URLs:
+  // linkedin: 'https://www.linkedin.com/company/connexis-mx/'
+  // facebook: 'https://www.facebook.com/share/14GhoWJVgx4/'
+  // instagram: 'https://www.instagram.com/connexis_mty/'
   social: {
-    linkedin: 'https://www.linkedin.com/company/connexis-mx/',
-    facebook: 'https://www.facebook.com/share/14GhoWJVgx4/',
-    instagram: 'https://www.instagram.com/connexis_mty/',
+    linkedin: '',
+    facebook: '',
+    instagram: '',
   },
 } as const;
 
